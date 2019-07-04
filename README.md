@@ -10,20 +10,23 @@ V2Ray 配置指南（下称本指南）是网友自发编写的关于 V2Ray 如�
 
 ## 简介
 
-### 什么是 V2Ray？
-
 V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构建特定网络环境工具的项目，而 V2Ray 属于最核心的一个。 官方中介绍`Project V 提供了单一的内核和多种界面操作方式。内核（V2Ray）用于实际的网络交互、路由等针对网络数据的处理，而外围的用户界面程序提供了方便直接的操作流程。`不过从时间上来说，先有 V2Ray 才有 Project V。
 如果还是不理解，那么简单地说，V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网（翻墙）学习国外先进科学技术。
 
-V2Ray 用户手册：[https://www.v2ray.com](https://www.v2ray.com)（已被墙）
-              [https://v2ray.cool](https://v2ray.cool)（已被墙）
-              [https://mux.cool](https://mux.cool)（还没被墙）
+V2Ray 用户手册：
+ - [https://www.v2ray.com](https://www.v2ray.com)（已被墙）
+ - [https://v2ray.cool](https://v2ray.cool)（已被墙）
+ - [https://mux.cool](https://mux.cool)（还没被墙）
 
 V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
 
 V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
 
-### V2Ray 跟 Shadowsocks 有什么区别？
+
+## 常见问题：Q&A
+
+
+#### V2Ray 跟 Shadowsocks 有什么区别？
 
 区别还是有的，Shadowsocks 只是一个简单的代理工具，而 V2Ray 定位为一个平台，任何开发者都可以利用 V2Ray 提供的模块开发出新的代理软件。
 
@@ -33,7 +36,7 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
 
 简单来说，Shadowsocks 功能单一，V2Ray 功能强大。听起来似乎有点贬低 Shadowsocks 呢？当然不！换一个角度来看，Shadowsocks 简单好上手，V2Ray 复杂配置多。
 
-### 既然 V2Ray 复杂，为什么要用它？
+#### 既然 V2Ray 复杂，为什么要用它？
 
 童鞋，某事物的优点和缺点总是相生相随的。相对来说，V2Ray 有以下优势：
 
@@ -48,13 +51,13 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
     * WebSocket 协议：可以 PaaS 平台搭建V2Ray，通过 WebSocket 代理。也可以通过它使用 CDN 中转，抗封锁效果更好
     * Mux:多路复用，进一步提高科学上网的并发性能
 
-### 哪有十全十美的东西？
+#### 哪有十全十美的东西？
 
 少年悟性很高啊！当然没有！目前来说，V2Ray 有下面的缺点：
 - 配置复杂
 - 产业链不成熟
 
-### 为什么要写这篇文章？
+#### 为什么要写这篇文章？
 
 虽然其文档很详细，换个说法就是很长，一般用户看到这么长的使用文档都有点望而却步。另外我用 Google 搜索过 V2Ray，搜出来的文章非常少，只能寥寥数篇，而且至少都是好几月之前的，由于 V2Ray 的迭代速度快，一些文章对目前的 V2Ray 已经不适用了。所以我希望通过本指南：
 - 让大家了解到最新的 V2Ray 是什么样子的
@@ -64,11 +67,11 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
 
 然而最重要的是希望大家能够通过我写的配置指南看懂 V2Ray 的手册。
 
-### 听你说了这么多，好像 V2Ray 还不错的样子。但我只是要翻翻墙而已，不想花太多时间怎么办？
+#### 听你说了这么多，好像 V2Ray 还不错的样子。但我只是要翻翻墙而已，不想花太多时间怎么办？
 
 无论做什么都是有代价的，付出不一定有收获，但是不付出肯定没有收获。
 
-### 我决定尝试一下 V2Ray，那么我该如何使用这个指南？
+#### 我决定尝试一下 V2Ray，那么我该如何使用这个指南？
 
 V2Ray 的用户手册非常详细地解释了 V2Ray，本指南主要以实际可用的配置从易到难来讲解 V2Ray 的功能特性，力求降低新手使用 V2Ray 的难度。
 
@@ -76,7 +79,7 @@ V2Ray 的用户手册非常详细地解释了 V2Ray，本指南主要以实际�
 
 本指南可以看作 V2Ray 用户手册的简易版本，也可以看作 V2Ray 的应用举例。你可以在不参考 V2Ray 用户手册的情况下按照本指南的指导去搭建配置 V2Ray ，但我并不建议你这么做。因为本指南只是引导大家如何理解和配置 V2Ray，相较于用户手册来说有一定的取舍，会忽略一部分东西。所以我希望大家也花时间去阅读 V2Ray 用户手册。
 
-### 刚开始使用 V2Ray，有什么需要注意的吗？
+#### 刚开始使用 V2Ray，有什么需要注意的吗？
 
 由于许多 V2Ray 用户都有使用过 Shadowsocks 的经验，基本上可以按照使用 Shadowsocks 那样使用。但是 V2Ray 还是和 Shadowsocks 不太一样，所以我大概说一下使用上的差异。请注意，差异不代表好坏或优劣，如果一个事物必须拥有其他同类所拥有的东西，那么它也就没有了存在的意义。
 
