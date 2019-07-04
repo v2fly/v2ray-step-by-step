@@ -1,5 +1,3 @@
-# Node rules:
-## Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
 ## Dependency directory
@@ -20,4 +18,9 @@ pa.md
 #
 build.sh
 .vscode
+<<<<<<< HEAD
+=======
+.vuepress/dist
+.DS_Store
+>>>>>>> a1324f2e2e2d0842c723fdedb42861a0ff3ed856
 
