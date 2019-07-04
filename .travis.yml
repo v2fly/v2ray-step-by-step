@@ -5,3 +5,4 @@ branches:
   only:
   - master
 script: bash ./deploy.sh
+test
