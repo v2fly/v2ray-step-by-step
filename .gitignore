@@ -13,14 +13,9 @@ _book
 *.mobi
 *.pdf
 old_dir_SUMMARY.md
-pa.md
 
 #
 build.sh
 .vscode
-<<<<<<< HEAD
-=======
 .vuepress/dist
 .DS_Store
->>>>>>> a1324f2e2e2d0842c723fdedb42861a0ff3ed856
-
