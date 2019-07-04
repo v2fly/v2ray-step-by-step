@@ -15,8 +15,9 @@ _book
 *.mobi
 *.pdf
 old_dir_SUMMARY.md
+pa.md
 
 #
 build.sh
 .vscode
-pa.md
+
