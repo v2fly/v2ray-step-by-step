@@ -4,7 +4,7 @@
 
 This repository is a fork of `ToutyRater/v2ray-guide`, due to we want to maintain this document but cannot contact with the author. If you are the author, you are welcome to contact us by either telegram group or email.
 
-Thanks `ToutyRater` maintain the [original version](https://github.com/ToutyRater/v2ray-guide) of this documentation. The document is licenced under [BY-CC 4.0](https://creativecommons.org/licenses/by/4.0/), details see in [LICENSE.md](LICENSE.md).
+Thanks `ToutyRater` maintain the [orginal](https://github.com/ToutyRater/v2ray-guide) version of these documentations. The documents now licenced under BY-CC 4.0, details see in `LICENCE.md`.
 
 V2Ray 配置指南（下称本指南）是网友自发编写的关于 V2Ray 如何配置及使用的指南，与 V2Ray 官方并无任何关系。尽管 V2Ray 厚爱将本指南的链接放到了其官网首页，这并不意味着本指南的建议或推荐为 V2Ray 官方所主张。
 
@@ -14,12 +14,13 @@ V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构�
 如果还是不理解，那么简单地说，V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网（翻墙）学习国外先进科学技术。
 
 V2Ray 用户手册：
- - [https://www.v2ray.com](https://www.v2ray.com)（原官网）
- - [https://v2fly.org](https://v2fly.org)（新官网）
+ - [https://www.v2ray.com](https://www.v2ray.com)（已被墙）
+ - [https://v2ray.cool](https://v2ray.cool)（已被墙）
+ - [https://mux.cool](https://mux.cool)（还没被墙）
 
 V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
 
-V2Ray Telegram 使用群链接：[https://t.me/v2fly_chat](https://t.me/v2fly_chat)
+V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
 
 
 ## 常见问题：Q&A
