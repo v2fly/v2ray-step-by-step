@@ -1,10 +1,10 @@
 # WebSocket
 
-WebSocket 的配置其实很简单，就跟 mKCP 一样把 network 一改就行了。话不多说，直接上配置。
+It is simple to configure websocket, the only line of the configuration file to change is the "network" option. Let's see the config example.
 
-## 配置
+## Configuration Example
 
-### 服务器配置
+### Server-side Configuration
 
 ```javascript
 {
@@ -34,7 +34,7 @@ WebSocket 的配置其实很简单，就跟 mKCP 一样把 network 一改就行�
 }
 ```
 
-### 客户端配置
+### Client-side Configuration
 
 ```javascript
 {
@@ -76,6 +76,6 @@ WebSocket 的配置其实很简单，就跟 mKCP 一样把 network 一改就行�
 }
 ```
 
-## 更新历史
+## Updates
 
-- 2018-11-17 V4.0+ 配置
+- 2018-11-17 Adapted for V4.0+
