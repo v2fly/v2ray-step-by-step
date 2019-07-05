@@ -16,11 +16,10 @@ TLS requires a registered domain, either free or paid are available and usable, 
 
 **The following configuration example will assume the registered domain is `mydomian.me`. Remember to replace it with your own ones.**
 
-## Generate certificate
+## Generate Certificate
 
 TLS is a certificate authentication mechanism, so a certificate is required to enable TLS, and certificates could also be free or paid. In this document, a free certificate is used. The certificate authority is [Let's Encrypt](https://letsencrypt.org/).
 There are many ways to generate a certificate. The simpler method is used here: Using [acme.sh](https://github.com/Neilpang/acme.sh) bash script to generate a certificate. Some of instructions in this section are referred from [acme.sh README](https://github.com/Neilpang/acme.sh/blob/master/README.md).
-
 
 There are two types of certificates, one is the ECC certificate (the built-in public key is the ECDSA public key), and the other one is the RSA certificate (the built-in RSA public key). In other words, ECCs of the same length are more secure than RSA, which means that with the same security, the ECC key length is much shorter than RSA (so encryption and decryption will be faster). However, the ECC certificate have worse compatibility compared with the RSA certificate, and it is not supported by Android 4.x and Windows XP. As long as your devices are not unearthed artifacts, you are highly recommended to use an ECC certificate.
 
@@ -121,7 +120,6 @@ $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force
 
 ** As we were generating certificates into `/etc/v2ray` folder, you also need to copy the renewed certificate into /etc/v2ray. **
 
-
 ### Install Certificate and Private Key
 
 #### ECC Certificate
@@ -147,7 +145,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 {
   "inbounds": [
     {
-      "port": 443, // 建议使用 443 端口
+      "port": 443, // recommended port
       "protocol": "vmess",    
       "settings": {
         "clients": [
@@ -159,12 +157,12 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
       },
       "streamSettings": {
         "network": "tcp",
-        "security": "tls", // security 要设置为 tls 才会启用 TLS
+        "security": "tls", // set security to tls to enable tls feature
         "tlsSettings": {
           "certificates": [
             {
-              "certificateFile": "/etc/v2ray/v2ray.crt", // 证书文件
-              "keyFile": "/etc/v2ray/v2ray.key" // 密钥文件
+              "certificateFile": "/etc/v2ray/v2ray.crt", // certificate file
+              "keyFile": "/etc/v2ray/v2ray.key" // corresponding private key file
             }
           ]
         }
@@ -203,7 +201,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
       "settings": {
         "vnext": [
           {
-            "address": "mydomain.me", // tls 需要域名，所以这里应该填自己的域名
+            "address": "mydomain.me", // tls needs domain, so fill in your own.
             "port": 443,
             "users": [
               {
@@ -216,7 +214,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
       },
       "streamSettings": {
         "network": "tcp",
-        "security": "tls" // 客户端的 security 也要设置为 tls
+        "security": "tls" // set security to tls to enable tls feature.
       }
     }
   ]
@@ -228,7 +226,6 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 Usually, after doing above steps, V2Ray client already can connected to internet, which means the TLS configuration is working. However, with a reliable way to verify if it is enabled will make it more convinced.
 
 ** NOTE: Qualys SSL Labs's SSL Server Test runs check on port 443, so you have to configure your server's inbound port to 443. **
-
 
 Open [Qualys SSL Labs's SSL Server Test](https://www.ssllabs.com/ssltest/index.html) and put in your domain in "Hostname" text box, then click submit. Result would prompt in minutes.
 ![](/resource/images/tls_test1.png)
@@ -242,6 +239,7 @@ Here it is your certificate information. In this screenshot we can see it is val
 ## Tip
 
 ** V2Ray is using a REAL TLS implementation rather than cloaking or obfuscation, that's why it needs domain and certificate. Also, the Websocket is REAL as well, which we'll talk about later. **
+
 
 -----
 ## Updates
