@@ -9,7 +9,7 @@ ls -lah
 echo -e "\n\nIf everything looks fine, press any key to continue..."
 read
 
-rm -rv advanced app basics en_US prep README.md resource routing
+rm -rv advanced app basics en_US LICENSE.md prep README.md resource routing
 
 echo -e "\nStart fetching from remote transifex branch..."
 git fetch origin transifex --progress
