@@ -61,11 +61,29 @@ module.exports = {
           title: '基本篇',
           children: [
             'basics/log',
+            'basics/Shadowsocks',
+            'basics/vmess',
+            // 'basics/routing/',
+            [
+              'basics/routing/', {
+                title: 'routing'，
+                // collapsable:false,
+                children:[
+                  '',
+                  'cndirect',
+                  'adblock',
+                  'notice'
+                ]
+              }
+            ],
+            // 'basics/routing/cndirect',
+            // 'basics/routing/adblock',
+            // 'basics/routing/notice',
             'basics/sumup'
           ]
         }
       ],
     displayAllHeaders: true,
-    sidebarDepth: 4
+    sidebarDepth: 3
   }
 }
