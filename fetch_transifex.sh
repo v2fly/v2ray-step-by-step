@@ -21,3 +21,4 @@ mv -v zh_CN/* ./
 rmdir -v zh_CN
 
 echo -e "If no errors prompted, zh_CN folder should already been deleted, and all files are located at root directory."
+echo -e "You can now run deploy.sh if needed."
