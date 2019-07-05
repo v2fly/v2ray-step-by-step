@@ -160,7 +160,7 @@ mydomain.me
 ```
 ### 注意事项
 
-- V2Ray 暂时不支持 TLS1.3，如果开启并强制 TLS1.3 会导致 V2Ray 无法连接
+- V2Ray 自4.18.1后支持TLS1.3，如果开启并强制 TLS1.3 请注意v2ray客户端版本.
 - 较低版本的nginx的location需要写为 /ray/ 才能正常工作
 - 如果在设置完成之后不能成功使用，可能是由于 SElinux 机制(如果你是 CentOS 7 的用户请特别留意 SElinux 这一机制)阻止了 Nginx 转发向内网的数据。如果是这样的话，在 V2Ray 的日志里不会有访问信息，在 Nginx 的日志里会出现大量的 "Permission Denied" 字段，要解决这一问题需要在终端下键入以下命令：
   ```
@@ -184,4 +184,5 @@ mydomain.me
 - 2018-08-19 Update
 - 2018-08-30 Add configuration for Apache2
 - 2018-11-17 V4.0+ 配置
+- 2019-7-5   TLS 1.3 notice
 
