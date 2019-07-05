@@ -1,8 +1,8 @@
-# 广告过滤
+# Ads Filtering
 
-## 配置
+## Configuration Example
 
-### 客户端
+### Client-side
 
 ```javascript
 {
@@ -94,7 +94,7 @@
 }
 ```
 
-### 服务器
+### Server-side
 
 ```javascript
 {
@@ -126,11 +126,11 @@
 }
 ```
 
-## 说明
+## Explanation
 
-相对于上小节，在本小节的配置变化只在于客户端配置的 outbounds 和 routing 添加了新的内容，请大家自行比较。
+Comparing with last section, this only adding new content to outbounds and routing in configuration.
 
-在 routing 中，新添加了两个规则：
+In routing section, two rules are added:
 
 ```javascript
 {
@@ -155,12 +155,13 @@
 }
 ```
 
-在第一个规则中，域名包含有 tanx.com 或 baidu.com 的就会被阻止连接，如果想拦截某些网站，往 adblock 的规则中写想要拦截的域名就可以了。在第二个规则当中，域名中包含有 amazon.com 或 microsoft.com 或 youku.com 或 baidu.com 的会直连。有一个问题大家发现没有，两个规则都有 baidu.com ，那么会执行哪个呢？答案是只会执行第一个（即adblock)，原因是：
-1. 规则是放在 routing.rules 这个数组当中，数组的内容是有顺序的，也就是说在这里规则是有顺序的，匹配规则时是从上往下匹配；
-2. 当路由匹配到一个规则时就会跳出匹配而不会对之后的规则进行匹配；
+In the first rule added, connection would be denied if the domain contains tanx.com or baidu.com. If you want to fitler out some connections to specific domains, just add those into the adblock rule.
+In the second rule,  if domains are amazon.com, microsoft.com, youku.com, or baidu.com, connection would go through direct route. Consider baidu.com appeared in both rules, only the first would be actually implement (which is adblock), because:
+1. rules are stored in routing.rules vector, which is in-order data structure, and the rule matching process would follow the order.
+2. Therefore it would only apply the match that dispatcher first hits.
 
-关于路由更多内容请参考 [V2Ray 用户手册](https://www.v2ray.com/chapter_02/03_routing.html)
+For more information, please refer [V2Ray Official Guide](https://v2fly.org/chapter_02/03_routing.html).
 
-## 更新历史
+## Updates
 
-- 2018-11-09 跟进 v4.0+ 配置格式
+- 2018-11-09 Adapt to v4.0+ configuration format.
