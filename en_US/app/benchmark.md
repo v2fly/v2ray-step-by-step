@@ -1,14 +1,14 @@
-# 性能测试
+# Benchmark
 
-单位 MB/s，仅供参考。测试方法及测试工具参见[传说中的性能测试](https://steemit.com/cn/@v2ray/3cjiux) 。
+Unit is MBytes/s, for reference only. The test method and tools may refer to this article [Benchmark for V2ray](https://steemit.com/cn/@v2ray/3cjiux) 
 
-## PC 虚拟机(amd64)
+## PC Virtual machine (amd64)
 
-### VMess 性能
+### VMess performance
 
--|直连|freedom( V2Ray v3.10 ) |freedom( V2Ray v3.5 ) | freedom(V2Ray v2.46 )| freedom( V2Ray v2.19 )
+-|Direct connect|freedom( V2Ray v3.10 ) |freedom( V2Ray v3.5 ) | freedom(V2Ray v2.46 )| freedom( V2Ray v2.19 )
 -|:-:|:-:| :-:|:-:|:-:|
-速度|2925|1137|249|1024|426
+Speed|2925|1137|249|1024|426
 
  -|TCP( v3.10 ) | TCP( v3.5 ) | WS( v3.5 )| TCP( v2.46 ) | WS( v2.46 )|TCP( v2.19 ) | WS( v2.19 )|
 -|:-:|:-:|:-:|:-:|:-:|:-:|:-:
@@ -17,9 +17,9 @@ AES-128-GCM|341|151|124|341|307|256|256
 CHACHA20-POLY1305|236|128|105|246|219|227|227
 NONE|563|163|105|192|153|292|292
 
-### Shadowsocks 性能
+### Shadowsocks performance
 
--| V2Ray( v3.5 ) 内置 | ss-libev( 3.1.2 )| ss-libev( 2.6.3 ) |
+-| V2Ray( v3.5 ) implementation | ss-libev( 3.1.2 )| ss-libev( 2.6.3 ) |
 -|:-:|:-:|:-:|:-:
 AES-128-CFB|105|73|52
 AES-256-CFB|97|66|45
@@ -28,11 +28,11 @@ AES-256-GCM|146|45|-
 CHACHA20-POLY1305|128|73|-
 
 
-## 树莓派 3b
+## Raspberry Pi 3 Model b
 
--|直连|freedom( V2Ray v3.5 ) | freedom(V2Ray v2.46 )
+-|Direct connect|freedom( V2Ray v3.5 ) | freedom(V2Ray v2.46 )
 -|:-:|:-:|:-:
-速度|320|27|27
+Speed|320|27|27
 
  -| TCP( v3.5 ) | WS( v3.5 ) | TCP( v2.46 )
 -|:-:|:-:|:-:
