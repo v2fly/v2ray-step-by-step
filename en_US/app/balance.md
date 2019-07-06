@@ -1,10 +1,10 @@
-## 负载均衡
+## Load Balancing
 
-相较于 Shadowsocks 等其它的代理，V2Ray 可以配置多服务器实现负载均衡。此处的负载均衡并非是自动选择一个延迟或网速最好的服务器进行连接，而是指多个服务器共同承担网络流量，从而减小单个服务器的资源占用及提高服务器的利用率。举个实际例子，早期的时候 V2Ray 优化稍差，再加上我的小鸡特别小，恰恰网络带宽非常大，所以每当使用代理全力下载大文件时 VPS 负荷很大，当时 CPU 占用率都在 80% 以上，时而超过 95%。这样的情况使得我下载东西时基本都限一下速，就怕商家停了我的机子。后来我突然想到 V2Ray 可以均衡负载，配置好双服务器均衡之后大流量下载虽然 CPU 占用率还有 50% 左右，但至少我可以毫无顾忌地大流量下载了。如今过了一年，我的小鸡全换了，V2Ray 也没当时那么吃性能了，我就再也没用过负载均衡，但是时不时有人问到，于是献出本文。
+Unlike Shadowsocks and other protocals, V2Ray supports multi-server load-balancing configurations. To be clear, load-balancing means the traffic is split up and sent to multiple servers, rather than the client selecting the best server based on ping or speed and sending all traffic through the single server. The result is a lower resource cost on individual servers and a more spread out traffic balance among the servers. Here's my story as an example. Back in the days when V2Ray was less optimized and all I had was low-spec VPS's with plentiful bandwidth, whenever downloading full speed through a server, I could see CPU usage on the server staying above 80% constantly and sometimes reaching above 95%. I had to limit my download speed in case the VPS provider cancel my services. In contrast, with load-balancing configured on my client, CPU usage of my servers would go 50% tops and I didn't have to limit my download speed anymore. More than 1 year later I've moved on from the low-spec servers, coupled with a more efficient V2Ray protocol, I found there's no need to load-balance for saving CPU time. However, as people still ask about it now and then, I'll still writing all these down so you'll know load-balancing is still an option in case you need it.
 
-## 配置
+## Configuration Example
 
-实现负载均衡很简单，在客户端配置同一个 outbound 的 vnext 写入各个服务器的配置即可(前提是服务器已经部署好并能正常使用)。形如：
+Configuring load-balancing is an easy job on the client. In the configuration file, simply list all the servers (that are already up and running) in the vnext section in the "outbound" rule. For example: 
 ```javascript
 {
   "inbounds": [
@@ -35,7 +35,7 @@
               }
             ]
           }
-          // 如果还有更多服务器可继续添加
+          //list more servers if needed
         ]
       },
       "streamSettings": {
@@ -47,16 +47,16 @@
 }
 ```
 
-## 原理
+## Mechanism
 
-V2Ray 是以轮询的方式均衡负载，也就是说当有流量需要通过代理时，首先走第一个 vnext 配置的服务器，有第二个连接就走第二个服务器，接着第三个，以此类推。轮询完一遍又头开始轮询。这样的方式虽然简单粗暴，特别是对于拥有多个性能差的 VPS 的人来说比较有用。另外也能减小长时间大流量连接单个 IP 的特征（由于没有足够的样本，我个人对这样的条件作为代理判据持怀疑态度），给自己一个心理安慰。
+Load-balancing is implemented by polling the servers in order. When traffic comes through the tunnel, the first connection goes to the first server listed in "vnext" section, the next connection goes to the next server. After the last server was polled, the first server in the list would be up next, so on and so forth. It sounds stupidly simple and it works very well if you own multiple low-spec VPS's. Load-balancing reduces the chance of transmitting a significant amount of traffic to and from a specific IP address during an extended amount of time. Although I really doubt these are the characteristics the firewalls are looking for (given there's not enough samples), it's better than nothing I guess.
 
-## 注意事项
+## Note
 
-如端口、id 这些在 vnext 数组内的配置项可以各不相同，但是它们的传输层配置（streamSettings）必须一致。
+Make sure values such as port, ID for each individual servers  in the "vmess" section match the ones in "streamSettings".
 
-## 更新历史
+## Updates
 
-- 2018-01-03 初版
+- 2018-01-03 Initial Version.
 - 2018-04-05 Update
-- 2019-01-13 v4.0+ 配置格式
+- 2019-01-13 v4.0+ Adaptation
