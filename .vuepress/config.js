@@ -56,30 +56,78 @@ module.exports = {
           children: [
             '',
           ]
-        },
+        }, // Preface
+        {
+          title: '开篇',
+          children: [
+            'prep/',
+            'prep/start',
+            'prep/install',
+            'prep/json'
+          ]
+        }, // first chapter
         {
           title: '基本篇',
           children: [
+            'basics/',
             'basics/log',
             'basics/Shadowsocks',
             'basics/vmess',
-            // 'basics/routing/',
-            [
-              'basics/routing/', {
-                title: '路由功能',
-                // collapsable:false,
-                children:[
-                  '',
-                  'cndirect',
-                  'adblock',
-                  'notice'
-                ]
-              }
-            ],
-            // 'basics/routing/cndirect',
-            // 'basics/routing/adblock',
-            // 'basics/routing/notice',
+            'basics/routing/',
+            // [
+            //   'basics/routing/', {
+            //     title: '路由功能',
+            //     // collapsable:false,
+            //     children:[
+            //       '',
+            //       'cndirect',
+            //       'adblock',
+            //       'notice'
+            //     ]
+            //   }
+            // ],
+            'basics/routing/cndirect',
+            'basics/routing/adblock',
+            'basics/routing/notice',
             'basics/sumup'
+          ]
+        }, // Basics chapter
+        {
+          title: '高级篇',
+          children:[
+            'advanced/',
+            'advanced/mux',
+            'advanced/mkcp',
+            'advanced/dynamicport',
+            'advanced/outboundproxy',
+            'advanced/httpfake',
+            'advanced/tls',
+            'advanced/websocket',
+            'advanced/wss_and_web',
+            'advanced/h2',
+            'advanced/cdn',
+            'advanced/not_recommend'
+          ]
+        },
+        {
+          title: '应用篇',
+          children:[
+            'app/transparent_proxy',
+            'app/reverse',
+            'app/reverse2',
+            'app/dns',
+            'app/balance',
+            'app/docker-deploy-v2ray',
+            'app/benchmark',
+            'app/optimization'
+          ]
+        },
+        {
+          title: '路由篇',
+          children:[
+            'routing/sitedata',
+            'routing/bittorrent',
+            'routing/balance2'
           ]
         }
       ],
