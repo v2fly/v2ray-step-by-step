@@ -1,3 +1,116 @@
+var Path = require('path');
+
+const i18nMap = {
+  zh_CN: {
+    advanced: '高级篇',
+    basics: '基本篇',
+    before_start: '开篇',
+    practical: '应用篇',
+    preface: '前言',
+    routing: '路由',
+    routing_function: '路由功能'
+  },
+  en_US: {
+    advanced: 'Advanced',
+    basics: 'Basics',
+    before_start: 'Before start',
+    practical: 'Practical',
+    routing: 'Routing',
+    routing_function: 'Routing function',
+    preface: 'Preface'
+  }
+}
+
+function i18n(locale, key) {
+  return i18nMap[locale][key];
+}
+
+function i18nPath(locale, path) {
+  if (locale === 'zh_CN') {
+    locale = '';
+  }
+
+  return Path.join('/', locale, '/', path);
+}
+
+function i18nSidebar(locale) {
+  return [
+    {
+      title: i18n(locale, 'preface'),
+      collapsable: false,
+      children: [
+        i18nPath(locale, ''),
+      ]
+    },
+    {
+      title: i18n(locale, 'before_start'),
+      path: i18nPath(locale, '/prep/'),
+      children: [
+        i18nPath(locale, 'prep/start'),
+        i18nPath(locale, 'prep/install'),
+        i18nPath(locale, 'prep/json')
+      ]
+    },
+    {
+      title: i18n(locale, 'basics'),
+      path: i18nPath(locale, '/basics/'),
+      children: [
+        i18nPath(locale, 'basics/vmess'),
+        i18nPath(locale, 'basics/shadowsocks'),
+        i18nPath(locale, 'basics/log'),
+        {
+          title: i18n(locale, 'routing_function'),
+          path: i18nPath(locale, '/basics/routing/'),
+          children: [
+            i18nPath(locale, 'basics/routing/cndirect'),
+            i18nPath(locale, 'basics/routing/adblock'),
+            i18nPath(locale, 'basics/routing/notice')
+          ]
+        },
+        i18nPath(locale, 'basics/sumup')
+      ]
+    },
+    {
+      title: i18n(locale, 'advanced'),
+      path: i18nPath(locale, '/advanced/'),
+      children: [
+        i18nPath(locale, 'advanced/mux'),
+        i18nPath(locale, 'advanced/mkcp'),
+        i18nPath(locale, 'advanced/dynamicport'),
+        i18nPath(locale, 'advanced/outboundproxy'),
+        i18nPath(locale, 'advanced/httpfake'),
+        i18nPath(locale, 'advanced/tls'),
+        i18nPath(locale, 'advanced/websocket'),
+        i18nPath(locale, 'advanced/wss_and_web'),
+        i18nPath(locale, 'advanced/h2'),
+        i18nPath(locale, 'advanced/cdn'),
+        i18nPath(locale, 'advanced/not_recommend')
+      ]
+    },
+    {
+      title: i18n(locale, 'practical'),
+      children: [
+        i18nPath(locale, 'app/transparent_proxy'),
+        i18nPath(locale, 'app/reverse'),
+        i18nPath(locale, 'app/reverse2'),
+        i18nPath(locale, 'app/dns'),
+        i18nPath(locale, 'app/balance'),
+        i18nPath(locale, 'app/docker-deploy-v2ray'),
+        i18nPath(locale, 'app/benchmark'),
+        i18nPath(locale, 'app/optimization')
+      ]
+    },
+    {
+      title: i18n(locale, 'routing'),
+      children: [
+        i18nPath(locale, 'routing/sitedata'),
+        i18nPath(locale, 'routing/bittorrent'),
+        i18nPath(locale, 'routing/balance2')
+      ]
+    }
+  ];
+}
+
 module.exports = {
   title: '新 V2Ray 白话文指南',
   description: 'Just playing around',
@@ -39,86 +152,22 @@ module.exports = {
     }
   },
   themeConfig: {
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Official Guide', link: 'https://v2fly.org' },
-    ],
-    sidebar: [
-      {
-        title: '前言',
-        collapsable: false,
-        children: [
-          '',
-        ]
-      }, // Preface
-      {
-        title: '开篇',
-        path: '/prep/',
-        children: [
-          'prep/start',
-          'prep/install',
-          'prep/json'
-        ]
-      }, // first chapter
-      {
-        title: '基本篇',
-        path: '/basics/',
-        children: [
-          'basics/vmess',
-          'basics/shadowsocks',
-          'basics/log',
-          {
-            title: '路由功能',
-            path: '/basics/routing/',
-            collapsable: false,
-            children: [
-              'basics/routing/cndirect',
-              'basics/routing/adblock',
-              'basics/routing/notice'
-            ]
-          },
-          'basics/sumup'
-        ]
-      }, // Basics chapter
-      {
-        title: '高级篇',
-        path: '/advanced/',
-        children: [
-          'advanced/mux',
-          'advanced/mkcp',
-          'advanced/dynamicport',
-          'advanced/outboundproxy',
-          'advanced/httpfake',
-          'advanced/tls',
-          'advanced/websocket',
-          'advanced/wss_and_web',
-          'advanced/h2',
-          'advanced/cdn',
-          'advanced/not_recommend'
-        ]
+    locales: {
+      '/': {
+        nav: [
+          { text: '首页', link: '/' },
+          { text: '官方手册', link: 'https://v2fly.org' },
+        ],
+        sidebar: i18nSidebar('zh_CN')
       },
-      {
-        title: '应用篇',
-        children: [
-          'app/transparent_proxy',
-          'app/reverse',
-          'app/reverse2',
-          'app/dns',
-          'app/balance',
-          'app/docker-deploy-v2ray',
-          'app/benchmark',
-          'app/optimization'
-        ]
-      },
-      {
-        title: '路由篇',
-        children: [
-          'routing/sitedata',
-          'routing/bittorrent',
-          'routing/balance2'
-        ]
+      '/en_US/': {
+        nav: [
+          { text: 'Home', link: '/' },
+          { text: 'Official Guide', link: 'https://v2fly.org' },
+        ],
+        sidebar: i18nSidebar('en_US')
       }
-    ],
+    },
     sidebarDepth: 3
   }
 }
