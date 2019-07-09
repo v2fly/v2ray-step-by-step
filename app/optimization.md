@@ -18,7 +18,7 @@ $ sudo systemctl daemon-reload && sudo systemctl restart v2ray.service
 
 在上面的通过环境变量修改缓存大小中，有一个问题是 v2ray.ray.buffer.size 的单位是 Mbytes，最小只能改成 1 Mbytes，如果改成 0 的话就意味着缓存无限制。不过在配置文件中也可以修改缓存大小，单位是 Kbytes，在配置中设成 0 的话表示禁用缓存，需要将缓存设得更小的朋友可以参考 V2Ray 官方文档的本地策略一节，配置比较简单，这里就不详述了。
 
-## 更新历史
+#### 更新历史
 
 - 2018-05-01 初版
 - 2018-08-02 添加配置文件修改缓存
