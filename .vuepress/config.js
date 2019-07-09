@@ -119,7 +119,6 @@ module.exports = {
         ]
       }
     ],
-    displayAllHeaders: true,
     sidebarDepth: 3
   }
 }
