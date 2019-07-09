@@ -53,8 +53,8 @@ module.exports = {
       }, // Preface
       {
         title: '开篇',
+        path: '/prep/',
         children: [
-          'prep/',
           'prep/start',
           'prep/install',
           'prep/json'
@@ -62,8 +62,8 @@ module.exports = {
       }, // first chapter
       {
         title: '基本篇',
+        path: '/basics/',
         children: [
-          'basics/',
           'basics/vmess',
           'basics/shadowsocks',
           'basics/log',
@@ -82,8 +82,8 @@ module.exports = {
       }, // Basics chapter
       {
         title: '高级篇',
-        children:[
-          'advanced/',
+        path: '/advanced/',
+        children: [
           'advanced/mux',
           'advanced/mkcp',
           'advanced/dynamicport',
@@ -99,7 +99,7 @@ module.exports = {
       },
       {
         title: '应用篇',
-        children:[
+        children: [
           'app/transparent_proxy',
           'app/reverse',
           'app/reverse2',
@@ -112,7 +112,7 @@ module.exports = {
       },
       {
         title: '路由篇',
-        children:[
+        children: [
           'routing/sitedata',
           'routing/bittorrent',
           'routing/balance2'
