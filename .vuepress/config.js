@@ -64,9 +64,9 @@ module.exports = {
         title: '基本篇',
         children: [
           'basics/',
-          'basics/log',
-          'basics/Shadowsocks',
           'basics/vmess',
+          'basics/shadowsocks',
+          'basics/log',
           {
             title: '路由功能',
             path: '/basics/routing/',
