@@ -158,16 +158,23 @@ module.exports = {
           { text: '首页', link: '/' },
           { text: '官方手册', link: 'https://v2fly.org' },
         ],
-        sidebar: i18nSidebar('zh_CN')
+        sidebar: i18nSidebar('zh_CN'),
+        editLinkText: '在 GitHub 上编辑此页',
+        lastUpdated: '上次更新'
       },
       '/en_US/': {
         nav: [
           { text: 'Home', link: '/' },
           { text: 'Official Guide', link: 'https://v2fly.org' },
         ],
-        sidebar: i18nSidebar('en_US')
+        sidebar: i18nSidebar('en_US'),
+        editLinkText: 'Edit this page on GitHub',
+        lastUpdated: 'Last Updated'
       }
     },
-    sidebarDepth: 3
+    sidebarDepth: 3,
+    repo: 'v2fly/v2ray-step-by-step',
+    docsBranch: 'dev',
+    editLinks: true
   }
 }
