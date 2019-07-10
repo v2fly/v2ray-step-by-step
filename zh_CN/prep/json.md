@@ -27,7 +27,7 @@ V2Ray 的配置文件为 JSON 格式，Shadowsocks 的配置也是 JSON 格式�
   上面两个 JSON 实际上是等效的
 
 
-  ## 更新历史
+  #### 更新历史
 
   - 2018-04-05 Update
   - 2018-07-08 Update

@@ -115,7 +115,7 @@ iptables -t mangle -A PREROUTING -p udp -j V2RAY_MASK
 
 -------
 
-## 更新历史
+#### 更新历史
 
 * 2017-12-05 初版
 * 2017-12-24 修复无法访问国内网站问题
