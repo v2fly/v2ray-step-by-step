@@ -174,7 +174,7 @@ module.exports = {
     },
     sidebarDepth: 3,
     repo: 'v2fly/v2ray-step-by-step',
-    docsBranch: 'dev',
-    editLinks: true
+    docsBranch: 'transifex',
+    editLinks: false
   }
 }
