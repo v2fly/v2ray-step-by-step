@@ -3,6 +3,9 @@
 echo -e "Start building..."
 vuepress build .
 
+echo -e "\n\nCheck if build prompted any errors.\nPress any key to countinue..."
+read
+
 cd .vuepress/dist
 echo "guide.v2fly.org" > CNAME
 git init
