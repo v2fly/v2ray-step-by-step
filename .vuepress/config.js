@@ -175,6 +175,9 @@ module.exports = {
     sidebarDepth: 3,
     repo: 'v2fly/v2ray-step-by-step',
     docsBranch: 'transifex',
-    editLinks: false
+    editLinks: true
+  },
+  extendPageData ($page) {
+    $page.frontmatter.editLink = ('/' === $page._computed.$localePath)
   }
 }
