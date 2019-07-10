@@ -84,7 +84,6 @@ function i18nSidebar(locale) {
         i18nPath(locale, 'advanced/wss_and_web'),
         i18nPath(locale, 'advanced/h2'),
         i18nPath(locale, 'advanced/cdn'),
-        i18nPath(locale, 'advanced/traffic'),
         i18nPath(locale, 'advanced/not_recommend')
       ]
     },
