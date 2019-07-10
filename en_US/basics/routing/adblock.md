@@ -45,12 +45,12 @@
     {
       "protocol": "freedom",
       "settings": {},
-      "tag": "direct"//如果要使用路由，这个 tag 是一定要有的，在这里 direct 就是 freedom 的一个标号，在路由中说 direct V2Ray 就知道是这里的 freedom 了
+      "tag": "direct"// If you want to use routing feature, this tag is necessary. Here direct is a tag of freedom. Then we use direct to tell V2ray, use freedom outbound.
     },
     {
       "protocol": "blackhole",
       "settings": {},
-      "tag": "adblock"//同样的，这个 tag 也是要有的，在路由中说 adblock 就知道是这里的 blackhole（黑洞） 了
+      "tag": "adblock"// As same as direct, this tag is necessary. Then we used adblock tag to tell V2ray point these links to blackhole.
     }
   ],
   "routing": {
@@ -162,6 +162,6 @@ In the second rule,  if domains are amazon.com, microsoft.com, youku.com, or bai
 
 For more information, please refer [V2Ray Official Guide](https://v2fly.org/chapter_02/03_routing.html).
 
-## Updates
+#### Updates
 
 - 2018-11-09 Adapt to v4.0+ configuration format.
