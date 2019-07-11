@@ -1,3 +1,3 @@
-# 路由篇
+# Routing
 
-就感觉 V2Ray 的路由功能很强大，值得我单独另起一章。本章内容没什么规划，可能会写得很零散。
+Just thinking it's so powerful that V2Ray's routing features worth me start a separated chapter. Currently had few plan, this chapter may be relatively less organized.
