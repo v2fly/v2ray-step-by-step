@@ -4,7 +4,7 @@
 
 This repository is a fork of `ToutyRater/v2ray-guide`, due to we want to maintain this document but cannot contact with the author. If you are the author, you are welcome to contact us by either telegram group or email.
 
-Thanks `ToutyRater` maintain the [orginal](https://github.com/ToutyRater/v2ray-guide) version of these documentations. The documents now licenced under BY-CC 4.0, details see in `LICENCE.md`.
+Thanks `ToutyRater` maintain the [original](https://github.com/ToutyRater/v2ray-guide) version of these documentations. The documents now licensed under BY-CC 4.0, details see in `LICENSE.md`.
 
 V2Ray 配置指南（下称本指南）是网友自发编写的关于 V2Ray 如何配置及使用的指南，与 V2Ray 官方并无任何关系。尽管 V2Ray 厚爱将本指南的链接放到了其官网首页，这并不意味着本指南的建议或推荐为 V2Ray 官方所主张。
 
