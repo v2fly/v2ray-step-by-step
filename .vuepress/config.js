@@ -1,4 +1,5 @@
-var Path = require('path');
+const Path = require('path');
+const Fs = require('fs')
 
 const i18nMap = {
   zh_CN: {
@@ -22,15 +23,58 @@ const i18nMap = {
 }
 
 function i18n(locale, key) {
-  return i18nMap[locale][key];
+  if (i18nMap[locale] && i18nMap[locale][key]) {
+    return i18nMap[locale][key];
+  } else {
+    return `i18n_${locale}_${key}`;
+  }
 }
 
-function i18nPath(locale, path) {
-  if (locale === 'zh_CN') {
-    locale = '';
+function absolute(relativePath) {
+  absolutePath = Path.join(Path.resolve(__dirname, '..'), relativePath);
+  return absolutePath.endsWith('/')
+    ? Path.join(absolutePath, 'README.md')
+    : `${absolutePath}.md`;
+}
+
+function i18nPath(locale, paths) {
+  let multi = Array.isArray(paths);
+  let single = !multi;
+  if (single) {
+    // blank string
+    if (0 === paths.length || !paths.trim()) {
+      paths = ['/'];
+    } else {
+      paths = [paths];
+    }
   }
 
-  return Path.join('/', locale, '/', path);
+  if (locale === 'zh_CN') {
+    locale = '/';
+  }
+
+  let result = [];
+  paths.forEach(path => {
+    if (typeof path !== 'string' && !(path instanceof String)) {
+      result.push(path);
+      return;
+    }
+
+    relativePath = Path.join('/', locale, path);
+    if (Fs.existsSync(absolute(relativePath))) {
+      // still return relativePath, let vuepress handle this.
+      result.push(relativePath);
+    } else {
+      // TODO: fallback to default language.
+      console.warn('\x1b[33m%s\x1b[0m', `WARN! ${relativePath} dose not exists!`);
+    }
+  });
+
+  if (single) {
+    return result[0];
+  }
+
+  return result;
 }
 
 function i18nSidebar(locale) {
@@ -44,70 +88,68 @@ function i18nSidebar(locale) {
     },
     {
       title: i18n(locale, 'before_start'),
-      path: i18nPath(locale, '/prep/'),
-      children: [
-        i18nPath(locale, 'prep/start'),
-        i18nPath(locale, 'prep/install'),
-        i18nPath(locale, 'prep/json')
-      ]
+      path: i18nPath(locale, '/prep/prep'),
+      children: i18nPath(locale, ['prep/start', 'prep/install', 'prep/json'])
     },
     {
       title: i18n(locale, 'basics'),
-      path: i18nPath(locale, '/basics/'),
-      children: [
-        i18nPath(locale, 'basics/vmess'),
-        i18nPath(locale, 'basics/shadowsocks'),
-        i18nPath(locale, 'basics/log'),
+      path: i18nPath(locale, '/basics/basics'),
+      children: i18nPath(locale, [
+        'basics/vmess',
+        'basics/shadowsocks',
+        'basics/log',
         {
           title: i18n(locale, 'routing_function'),
-          path: i18nPath(locale, '/basics/routing/'),
-          children: [
-            i18nPath(locale, 'basics/routing/cndirect'),
-            i18nPath(locale, 'basics/routing/adblock'),
-            i18nPath(locale, 'basics/routing/notice')
-          ]
+          path: i18nPath(locale, '/basics/routing/basics_routing'),
+          children: i18nPath(locale, [
+            'basics/routing/cndirect',
+            'basics/routing/adblock',
+            'basics/routing/notice'
+          ])
         },
-        i18nPath(locale, 'basics/sumup')
-      ]
+        'basics/sumup'
+      ])
     },
     {
       title: i18n(locale, 'advanced'),
-      path: i18nPath(locale, '/advanced/'),
-      children: [
-        i18nPath(locale, 'advanced/mux'),
-        i18nPath(locale, 'advanced/mkcp'),
-        i18nPath(locale, 'advanced/dynamicport'),
-        i18nPath(locale, 'advanced/outboundproxy'),
-        i18nPath(locale, 'advanced/httpfake'),
-        i18nPath(locale, 'advanced/tls'),
-        i18nPath(locale, 'advanced/websocket'),
-        i18nPath(locale, 'advanced/wss_and_web'),
-        i18nPath(locale, 'advanced/h2'),
-        i18nPath(locale, 'advanced/cdn'),
-        i18nPath(locale, 'advanced/traffic'),
-        i18nPath(locale, 'advanced/not_recommend')
-      ]
+      path: i18nPath(locale, '/advanced/advanced'),
+      children: i18nPath(locale, [
+        'advanced/mux',
+        'advanced/mkcp',
+        'advanced/dynamicport',
+        'advanced/outboundproxy',
+        'advanced/httpfake',
+        'advanced/tls',
+        'advanced/websocket',
+        'advanced/wss_and_web',
+        'advanced/h2',
+        'advanced/cdn',
+        'advanced/traffic',
+        'advanced/not_recommend',
+      ])
     },
     {
       title: i18n(locale, 'practical'),
-      children: [
-        i18nPath(locale, 'app/transparent_proxy'),
-        i18nPath(locale, 'app/reverse'),
-        i18nPath(locale, 'app/reverse2'),
-        i18nPath(locale, 'app/dns'),
-        i18nPath(locale, 'app/balance'),
-        i18nPath(locale, 'app/docker-deploy-v2ray'),
-        i18nPath(locale, 'app/benchmark'),
-        i18nPath(locale, 'app/optimization')
-      ]
+      path: i18nPath(locale, '/app/app'),
+      children: i18nPath(locale, [
+        'app/transparent_proxy',
+        'app/reverse',
+        'app/reverse2',
+        'app/dns',
+        'app/balance',
+        'app/docker-deploy-v2ray',
+        'app/benchmark',
+        'app/optimization',
+      ])
     },
     {
       title: i18n(locale, 'routing'),
-      children: [
-        i18nPath(locale, 'routing/sitedata'),
-        i18nPath(locale, 'routing/bittorrent'),
-        i18nPath(locale, 'routing/balance2')
-      ]
+      path: i18nPath(locale, '/routing/routing'),
+      children: i18nPath(locale, [
+        'routing/sitedata',
+        'routing/bittorrent',
+        'routing/balance2',
+      ])
     }
   ];
 }
