@@ -1,24 +1,24 @@
-# 流量统计
+# Traffic Statistics
 
-v2ray 内包含了流量记录器功能，但是默认并不启用。流量统计分两类：`inbound`和`user`。
+V2ray includes a traffic stats service, but it's not enabled by default. Traffic are statisticed into two major class: `inbound` and `user`.
 
-* `inbound` 即配置内各个inbound的入站的统计，需要根据`tag`来记录入站流量。
-* `user` 即vmess协议用户里面的统计，用户的`email`既是统计和区分的依据。socks, shadowsocks, http等其他协议内的用户不支持被统计。
+* `inbound` means each inbound service, they are identified by the `tag` attribute.
+* `user` is the `email` attrbute in vmess client settings, stats usage for each client. Note: clients in socks/shadowsocks/http are not counted.
 
-## 配置统计功能
+## Configuration of Stats
 
-要实现流量统计功能，配置内需要确保存在以下配置：
+To enable traffic statistic, following items must present in configuraton
 
-1. `"stats":{}`对象的存在
-2. `"api"`配置对象里面有`StatsService`
-3. `"policy"`中的统计开关为true，除了各个用户的统计，还有全局统计
-4. clients里面要有email
-5. 专用的`dokodemo-door`协议的入口，tag为api
-6. routing里面有inboundTag:api -> outboundTag:api的规则
+1. `"stats":{}` must set
+2. `"api"` includes `StatsService`
+3. `"policy"`  switches attributes starting with stats must set to true
+4. clients settings must include email attribute
+5. a `dokodemo-door` protocol inbound, tag set to api for grpc connection, used for connection of the API 
+6. routing rules include an inboundTag:api -> outboundTag:api rule
 
-注意： 统计的`email`/`tag`是当前的v2ray进程实例的数据，比如在服务器上统计，客户端写的email对服务器没有意义；如果在客户端统计，输出的就是客户端本身的数据。
+Note: `email`/`tag` stats data are generated is from the v2ray process you querys, client/server side won't exchange their data.  The email in client side has nothing to do with the one on server-side, even they use the same uuid. If you query on client process, the data is only abount the client process.
 
-## 配置实例
+## Configuration Example
 
 ```json
 {
@@ -96,27 +96,27 @@ v2ray 内包含了流量记录器功能，但是默认并不启用。流量统�
 }
 ```
 
-## 查看流量信息
+## Viewing the traffic stats data
 
-查看流量信息是`v2ctl`的其中一个功能。使用`v2ctl api -h`可见查询例子。 配置内设置的api dokodemo-door端口，即为`--server`参数的端口。
+one of the functions in `v2ctl` program is to connect to API.  Run `v2ctl api -h` will show help text and example about them. The configured port of api tagged dokodemo, used here as `--server` argument.
 
 ```bash
 v2ctl api --server=127.0.0.1:10050 StatsService.QueryStats 'pattern: "" reset: false'
 v2ctl api --server=127.0.0.1:10050 StatsService.GetStats 'name: "inbound>>>statin>>>traffic>>>downlink" reset: false'
 ```
 
-注意如果在windows的cmd内运行，里面的引号要特别处理：
+Note: if you are running v2ctl.exe in windows cmd, the quotes need to be repeated to be passed as program arguments.
 
 ```cmd
 v2ctl.exe api --server="127.0.0.1:10085" StatsService.GetStats "name: """"inbound>>>statin>>>traffic>>>downlink"""" reset: false"
 ```
 
-可调用的api有两个：
+There are 2 APIs about traffic stats.
 
-* `QueryStats`用来查询匹配的记录，可以使用参数`pattern`和`reset`；pattern留空则是匹配所有记录；reset使匹配的单元数值置零。
-* `GetStats`用来其中一个的记录，接受`name`和`reset`，name可参考QueryStats的输出结果构建，reset使该单元数值置零。
+* `QueryStats` is used to query matched record,  with argument `pattern`and`reset`; empty pattern matches all records, while reset set them to zero after the query.
+* `GetStats` retrives a single record, accepting arguments: `name` and `reset`.  Follow the "name" in the result of QueryStats to construct the record. And, reset set the record value to zero.
 
-输出例子：
+Example of output:
 
 ```text
 $ /usr/bin/v2ray/v2ctl api --server=127.0.0.1:10085 StatsService.GetStats 'name:"inbound>>>ws>>>traffic>>>uplink"'
@@ -175,13 +175,13 @@ stat: <
 >
 ```
 
-结果中的`name`可作为`GetStats`API查询单个计数单元的值，name的组成规律请自行概括，这里不再详谈；value的计数单位是字节。
+As noted before, the `name` here can be used as `GetStats` parameter if one of the value is your concern. The unit of value is byte.
 
-## 流量信息的处理
+## Processing of Traffic Stats
 
-上述配置是让v2ray打开一个`grpc`协议的查询接口，除了使用v2ctl，可以用各种支持grpc协议的程序查询上述数值并另外处理（如入库统计、用户计费、图表报告）。不过，本文不会深入探讨。既然有`v2ctl`现成的命令行程序，我们可以用简单的shell脚本生成足够可读的报表。
+Usage above is connecting v2ray with `grpc` protocol, aside from v2ctl, any program supports grpc could also connect to v2ray to get those records, and process to other forms, (eg: storing in database, accounting to users, graphical reports) but the article won't cover those topics. We stick to the `v2ctl` cmd program, and use basic shell script to process the data into a readable form.
 
-尝试把以下脚本保存到`traffic.sh`，注意使用`chmod 755 traffic.sh`授予执行权限。注意调整修改`_APISERVER`一行的连接具体的端口参数。
+Save the following bash script as `traffic.sh`, set exec permission by `chmod 755 traffic.sh`. Change the `_APISERVER` line if you use different dokodemo-door port.
 
 ```bash
 #!/bin/bash
@@ -228,7 +228,7 @@ print_sum() {
 v2_query_all $1
 ```
 
-运行效果：
+Example of output
 
 ```text
 $ ./traffic.sh
@@ -250,5 +250,5 @@ TOTAL->down       2.7KB
 -----------------------------
 ```
 
-脚本使用`reset`参数让调用的计数单元置零，配合watch命令，即可查看流经v2ray的每秒实时流量速度：
+Setting `reset` argument to script reset stats values to zero on each call. Use together with bash command watch, you can view traffic speed going through v2ray on real time:
 `watch ./traffic.sh reset`
