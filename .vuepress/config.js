@@ -66,7 +66,7 @@ function i18nPath(locale, paths) {
       result.push(relativePath);
     } else {
       // TODO: fallback to default language.
-      console.warn('\x1b[33m%s\x1b[0m', `WARN! ${relativePath} dose not exists!`);
+      console.warn('\x1b[33m%s\x1b[0m', `WARN! ${relativePath} does not exists!`);
     }
   });
 
