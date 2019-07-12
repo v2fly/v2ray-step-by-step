@@ -53,7 +53,9 @@ Configuration OK.
 
 以下给出了 VMess 的配置文件，包含客户端和服务器端，将你的配置替换成下面给出的配置，然后将服务器地址修改成你的就可以正常使用。修改完配置之后要重启 V2Ray 才能使用新配置生效。
 
-**VMess 协议的认证基于时间，一定要保证服务器和客户端的系统时间相差要在90秒以内。**
+::: danger 注意
+VMess 协议的认证基于时间，一定要保证服务器和客户端的系统时间相差要在90秒以内。
+:::
 
 ### 客户端配置
 
@@ -183,19 +185,19 @@ Configuration OK.
 
 修正方法：请仔细检查配置文件并修改正确。
 
-#### 客户端提示 Socks: unknown Socks version:
+#### 客户端提示 `Socks: unknown Socks version`
 
 可能原因：客户端配置的 inboud 设置成了 socks 而浏览器的代理协议设置为 http。
 
 修正方法：修改配置文件使客户端的 inboud 的 protocol 和浏览器代理设置的协议保持一致。
 
-#### 客户端提示 Proxy|HTTP: failed to read http request > malformed HTTP request "\x05\x01\x00"
+#### 客户端提示 `Proxy|HTTP: failed to read http request > malformed HTTP request "\x05\x01\x00"`
 
 可能原因：客户端配置的 inboud 设置成了 https 而浏览器的代理协议设置为 socks4 或者 socks5。
 
 修正方法：修改配置文件使客户端的 inboud 的 protocol 和浏览器代理设置的协议保持一致。
 
-#### 服务器执行 `systemctl status v2ray` 输出提示 Main: failed to read config file...
+#### 服务器执行 `systemctl status v2ray` 输出提示 `Main: failed to read config file...`
 
 可能原因：服务器的配置文件不正确。
 
