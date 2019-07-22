@@ -30,7 +30,7 @@ This section provides just enough introduction of JSON file for configuring V2Ra
   The above two JSONs are actually equivalent.
 
 
-#### Updates
+  #### Updates
 
   - 2018-04-05 Update
   - 2018-07-08 Update
