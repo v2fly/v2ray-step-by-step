@@ -52,26 +52,25 @@
 
 ```
 server {
-  listen  443 ssl;
+  listen 443 ssl;
   ssl on;
   ssl_certificate       /etc/v2ray/v2ray.crt;
   ssl_certificate_key   /etc/v2ray/v2ray.key;
   ssl_protocols         TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers           HIGH:!aNULL:!MD5;
   server_name           mydomain.me;
-        location /ray { # 与 V2Ray 配置中的 path 保持一致
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:10000;#假设WebSocket监听在环回地址的10000端口上
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $http_host;
-        
-        # Show realip in v2ray access.log
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
+    location /ray { # 与 V2Ray 配置中的 path 保持一致
+      proxy_redirect off;
+      proxy_pass http://127.0.0.1:10000; # 假设WebSocket监听在环回地址的10000端口上
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+     
+      # Show real IP in v2ray access.log
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
 }
 ```
 
