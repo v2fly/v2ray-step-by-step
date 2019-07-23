@@ -6,8 +6,6 @@ This repository is a fork of `ToutyRater/v2ray-guide`, due to we want to maintai
 
 Thanks `ToutyRater` maintain the [original](https://github.com/ToutyRater/v2ray-guide) version of these documentations. The documents now licensed under BY-CC 4.0, details see in `LICENSE.md`.
 
-V2Ray 配置指南（下称本指南）是网友自发编写的关于 V2Ray 如何配置及使用的指南，与 V2Ray 官方并无任何关系。尽管 V2Ray 厚爱将本指南的链接放到了其官网首页，这并不意味着本指南的建议或推荐为 V2Ray 官方所主张。
-
 ## 简介
 
 V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构建特定网络环境工具的项目，而 V2Ray 属于最核心的一个。 官方中介绍`Project V 提供了单一的内核和多种界面操作方式。内核（V2Ray）用于实际的网络交互、路由等针对网络数据的处理，而外围的用户界面程序提供了方便直接的操作流程。`不过从时间上来说，先有 V2Ray 才有 Project V。
@@ -15,12 +13,11 @@ V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构�
 
 V2Ray 用户手册：
  - [https://www.v2ray.com](https://www.v2ray.com)（已被墙）
- - [https://v2ray.cool](https://v2ray.cool)（已被墙）
- - [https://mux.cool](https://mux.cool)（还没被墙）
+ - [https://v2fly.org](https://v2fly.org)
 
 V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
 
-V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
+V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/v2fly_chat)
 
 
 ## 常见问题：Q&A
@@ -28,7 +25,7 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
 
 #### V2Ray 跟 Shadowsocks 有什么区别？
 
-区别还是有的，Shadowsocks 只是一个简单的代理工具，而 V2Ray 定位为一个平台，任何开发者都可以利用 V2Ray 提供的模块开发出新的代理软件。
+Shadowsocks 是一个纯粹的代理工具，而 V2Ray 定位为一个平台，任何开发者都可以利用 V2Ray 提供的模块开发出新的代理软件。
 
 了解 Shadowsocks 历史的同学都知道，Shadowsocks 是 clowwindy 开发的自用的软件，开发的初衷只是为了让自己能够简单高效地科学上网，自己使用了很长一段时间后觉得不错才共享出来的。V2Ray 是 clowwindy 被喝茶之后 V2Ray 项目组为表示抗议开发的，一开始就致力于让大家更好更快的科学上网。
 
@@ -46,9 +43,9 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
     * mKCP: KCP 协议在 V2Ray 上的实现，不必另行安装 kcptun
     * 动态端口：动态改变通信的端口，对抗对长时间大流量端口的限速封锁
     * 路由功能：可以随意设定指定数据包的流向，去广告、反跟踪都可以
-    * 传出代理：看名字可能不太好理解，其实差不多可以称之为多重代理。类似于 Tor 的代理
+    * 传出代理：也可称为链式代理，通过不断接力加强隐蔽性
     * 数据包伪装：类似于 Shadowsocks-rss 的混淆，另外对于 mKCP 的数据包也可伪装，伪装常见流量，令识别更困难
-    * WebSocket 协议：可以 PaaS 平台搭建V2Ray，通过 WebSocket 代理。也可以通过它使用 CDN 中转，抗封锁效果更好
+    * WebSocket 协议：可以单独使用 WebSocket 代理。也可以通过它使用 CDN 中转，抗封锁效果更好
     * Mux:多路复用，进一步提高科学上网的并发性能
 
 #### 哪有十全十美的东西？
@@ -91,4 +88,3 @@ V2Ray 的用户手册非常详细地解释了 V2Ray，本指南主要以实际�
 - 密码：V2Ray(VMesss) 只有 id（使用 UUID 的格式），作用类似于 Shadowsocks 的密码，但随机性远好于 Shadowsocks 的密码，只是不太方便记忆(安全和方便的矛盾)。
 - UDP 转发：VMess 是基于 TCP 的协议，对于 UDP 包 V2Ray 会转成 TCP 再传输的，即 UDP over TCP。要 UDP 转发功能在客户端的 socks 协议中开启 UDP 即可。
 - 路由器翻墙：实际上它们并没有什么区别，不要以为没有插件就不能在路由器上用，看事物请看本质。
-
