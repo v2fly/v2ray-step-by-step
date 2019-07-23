@@ -1,15 +1,8 @@
-# 应用篇
+# Application
 
-本篇名为应用。在本篇当中不再有详尽的配置，最多只会给出配置的结构，及一些注意点。本篇的内容可能分为三种：
+This chapter is called as application. There is no more detailed configuration in this article, at most only the configuration structure, and some points of attention.
 
-1. 实际验证可行
-2. 理论上可行，但没在 V2Ray 上验证过
-3. 纯属猜测，没有数据或者根据表明可行性
+If you can't understand the contents of this chaoter, then you may think:
 
-在每节当中，如果符合第 2 或第 3 点，都会特别说明。
-
-如果本篇的内容你看不懂，那么说明：
-
-1. 不适合你
-2. 你需要学习了
-3. 我的水平太差
+1. Not work for you
+2. You need to study more
