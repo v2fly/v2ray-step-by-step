@@ -1,10 +1,10 @@
 # CDN
 
-So you can use Cloudflare CDN, which support WebSockets at this moment. But the speed may be low due to highly congestion.
+Currently you can use Cloudflare CDN, which support WebSockets, but bandwidth and latency may be limited due to congestion.
 
-## Configuration Example
+## Configuration
 
-It should be pretty much the same as Cloudflare's configuration, so omitted example this time.
+It should be pretty much the same as Cloudflare's configuration, so I didn't put an detailed version here.
 
 #### Updates
 
