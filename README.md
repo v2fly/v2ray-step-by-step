@@ -2,11 +2,11 @@
 
 ## 声明
 
-This repository is a fork of `ToutyRater/v2ray-guide`, due to we want to maintain this document but cannot contact with the author. If you are the author, you are welcome to contact us by either telegram group or email.
+感谢 ToutyRater 最初撰写了这份指南，帮助了无数人跨越长城走向世界。
 
-Thanks `ToutyRater` maintain the [original](https://github.com/ToutyRater/v2ray-guide) version of these documentations. The documents now licensed under BY-CC 4.0, details see in `LICENSE.md`.
+现在 [原始指南](https://github.com/ToutyRater/v2ray-guide) 将交由v2fly社区继续维护，欢迎任何形式贡献，分享你的经验和配置或者是勘误/翻译等等。
 
-V2Ray 配置指南（下称本指南）是网友自发编写的关于 V2Ray 如何配置及使用的指南，与 V2Ray 官方并无任何关系。尽管 V2Ray 厚爱将本指南的链接放到了其官网首页，这并不意味着本指南的建议或推荐为 V2Ray 官方所主张。
+目前指南使用 [BY-CC 4.0](`LICENSE.md`) 授权协议
 
 ## 简介
 
@@ -15,12 +15,11 @@ V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构�
 
 V2Ray 用户手册：
  - [https://www.v2ray.com](https://www.v2ray.com)（已被墙）
- - [https://v2ray.cool](https://v2ray.cool)（已被墙）
- - [https://mux.cool](https://mux.cool)（还没被墙）
+ - [https://v2fly.org](https://v2fly.org)
 
 V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
 
-V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
+V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/v2fly_chat)
 
 
 ## 常见问题：Q&A
@@ -28,7 +27,7 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
 
 #### V2Ray 跟 Shadowsocks 有什么区别？
 
-区别还是有的，Shadowsocks 只是一个简单的代理工具，而 V2Ray 定位为一个平台，任何开发者都可以利用 V2Ray 提供的模块开发出新的代理软件。
+Shadowsocks 是一个纯粹的代理工具，而 V2Ray 定位为一个平台，任何开发者都可以利用 V2Ray 提供的模块开发出新的代理软件。
 
 了解 Shadowsocks 历史的同学都知道，Shadowsocks 是 clowwindy 开发的自用的软件，开发的初衷只是为了让自己能够简单高效地科学上网，自己使用了很长一段时间后觉得不错才共享出来的。V2Ray 是 clowwindy 被喝茶之后 V2Ray 项目组为表示抗议开发的，一开始就致力于让大家更好更快的科学上网。
 
@@ -46,9 +45,9 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
     * mKCP: KCP 协议在 V2Ray 上的实现，不必另行安装 kcptun
     * 动态端口：动态改变通信的端口，对抗对长时间大流量端口的限速封锁
     * 路由功能：可以随意设定指定数据包的流向，去广告、反跟踪都可以
-    * 传出代理：看名字可能不太好理解，其实差不多可以称之为多重代理。类似于 Tor 的代理
+    * 传出代理：也可称为链式代理，通过不断接力加强隐蔽性
     * 数据包伪装：类似于 Shadowsocks-rss 的混淆，另外对于 mKCP 的数据包也可伪装，伪装常见流量，令识别更困难
-    * WebSocket 协议：可以 PaaS 平台搭建V2Ray，通过 WebSocket 代理。也可以通过它使用 CDN 中转，抗封锁效果更好
+    * WebSocket 协议：可以单独使用 WebSocket 代理。也可以通过它使用 CDN 中转，抗封锁效果更好
     * Mux:多路复用，进一步提高科学上网的并发性能
 
 #### 哪有十全十美的东西？
@@ -56,16 +55,6 @@ V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projec
 少年悟性很高啊！当然没有！目前来说，V2Ray 有下面的缺点：
 - 配置复杂
 - 产业链不成熟
-
-#### 为什么要写这篇文章？
-
-虽然其文档很详细，换个说法就是很长，一般用户看到这么长的使用文档都有点望而却步。另外我用 Google 搜索过 V2Ray，搜出来的文章非常少，只能寥寥数篇，而且至少都是好几月之前的，由于 V2Ray 的迭代速度快，一些文章对目前的 V2Ray 已经不适用了。所以我希望通过本指南：
-- 让大家了解到最新的 V2Ray 是什么样子的
-- 让大家知道利用 V2Ray 可以做些什么
-- 尝试用浅显易懂的语言来讲解 V2Ray 的配置
-- 分享一些配置案例
-
-然而最重要的是希望大家能够通过我写的配置指南看懂 V2Ray 的手册。
 
 #### 听你说了这么多，好像 V2Ray 还不错的样子。但我只是要翻翻墙而已，不想花太多时间怎么办？
 
@@ -77,7 +66,9 @@ V2Ray 的用户手册非常详细地解释了 V2Ray，本指南主要以实际�
 
 **本指南的目标用户是有一定的 Linux 操作基础，像怎么注册 VPS，怎么用 SSH 登录 VPS，怎么使用 nano（或 vim） 编辑一个文本以及一些 Linux 基本命令的使用件网上有一大堆的指南，没必要重复造轮子再写一篇教程，如果这些你不会，强烈建议你去学会了再来尝试搭建 V2Ray。**
 
-本指南可以看作 V2Ray 用户手册的简易版本，也可以看作 V2Ray 的应用举例。你可以在不参考 V2Ray 用户手册的情况下按照本指南的指导去搭建配置 V2Ray ，但我并不建议你这么做。因为本指南只是引导大家如何理解和配置 V2Ray，相较于用户手册来说有一定的取舍，会忽略一部分东西。所以我希望大家也花时间去阅读 V2Ray 用户手册。
+本指南可以看作 V2Ray 用户手册的简易版本，也可以看作 V2Ray 的实践指导。
+
+你可以在不参考用户手册的情况下按照本指南的指导去搭建配置 V2Ray ，但我并不建议你这么做。因为本指南只是引导大家如何理解和配置 V2Ray，相较于用户手册来说有一定的取舍，会忽略一部分东西。所以我希望大家也花时间去阅读 V2Ray 用户手册。
 
 #### 刚开始使用 V2Ray，有什么需要注意的吗？
 
@@ -91,4 +82,3 @@ V2Ray 的用户手册非常详细地解释了 V2Ray，本指南主要以实际�
 - 密码：V2Ray(VMesss) 只有 id（使用 UUID 的格式），作用类似于 Shadowsocks 的密码，但随机性远好于 Shadowsocks 的密码，只是不太方便记忆(安全和方便的矛盾)。
 - UDP 转发：VMess 是基于 TCP 的协议，对于 UDP 包 V2Ray 会转成 TCP 再传输的，即 UDP over TCP。要 UDP 转发功能在客户端的 socks 协议中开启 UDP 即可。
 - 路由器翻墙：实际上它们并没有什么区别，不要以为没有插件就不能在路由器上用，看事物请看本质。
-
