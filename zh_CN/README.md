@@ -7,9 +7,6 @@
 现在 [原始指南](https://github.com/ToutyRater/v2ray-guide) 将交由v2fly社区继续维护，欢迎任何形式贡献，分享你的经验和配置或者是勘误/翻译等等。
 
 目前指南使用 [BY-CC 4.0](`LICENSE.md`) 授权协议
-This repository is a fork of `ToutyRater/v2ray-guide`, due to we want to maintain this document but cannot contact with the author. If you are the author, you are welcome to contact us by either telegram group or email.
-
-Thanks `ToutyRater` maintain the [original](https://github.com/ToutyRater/v2ray-guide) version of these documentations. The documents now licensed under BY-CC 4.0, details see in `LICENSE.md`.
 
 ## 简介
 
