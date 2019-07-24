@@ -1,8 +1,8 @@
 # Application
 
-This chapter is called as application. There is no more detailed configuration in this article, at most only the configuration structure, and some points of attention.
+This chapter is called "application". No detailed configuration example would be given in this chapter, but more about structure and tips for different applications.
 
-If you can't understand the contents of this chaoter, then you may think:
+If you can't understand the content of this chapter, you might:
 
-1. Not work for you
-2. You need to study more
+1. not fit to this chapter considering your current knowledge base.
+2. need to learn more in related aspects.
