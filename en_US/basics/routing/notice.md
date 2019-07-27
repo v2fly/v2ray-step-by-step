@@ -1,11 +1,11 @@
 
-# 关于路由规则的注意事项
+# Notes for routing rules
 
-本节记录了一些新手朋友使用 V2Ray 使用路由功能时常范的错误，希望大家能够避免。
+In this section, we organised some common mistakes from beginners' feedbacks. We hope you can avoid these common mistakes
 
-## 通配符
+## Wildcard
 
-如果我想让淘宝和京东的域名直连，路由功能的规则写成下面这样的，你觉得这样的规则有问题吗？
+If I want taobao.com and jd.com to be directly connected, the rules of the routing function are written as below. Do you think there is a problem with this rule?
 
 ```javascript
 [
@@ -19,7 +19,7 @@
     }
 ]
 ```
-看起来没有什么问题，但事实上，有。如果使用了这样的规则，你会发现根本没有走 direct 直连。很奇怪？这并不奇怪。这是因为你的经验在作祟。在 V2Ray 中，星号 \* 不具备通配符的意义，只是一个普通的字符而已，是你以为星号 \* 是通配符，这是臆想。如果想要匹配所有子域名的话，可以这么写规则：
+It seems that it is fine, but in fact, it isn't. If you use such a rule, you will find that there is no direct connect for that domain. Very wired? This is not surprising. This is because of your experience. In V2Ray, the asterisk '*' does not have the meaning of a wildcard, just an ordinary character. You think that the asterisk '*' is a wildcard, which is a mistake. If you want to match all subdomains, you can write the rules like this:
 
 ```javascript
 [
@@ -33,7 +33,7 @@
     }
 ]
 ```
-`domain:` 代表子域名，如 "domain:taobao.com" 这样一条规则包含了所有 taobao.com 域名及其子域名。
+`domain:` represents a subdomain, such as "domain:taobao.com". This rule contains all taobao.com domain names and their subdomains.
 
 ## IP & domain
 
@@ -52,7 +52,7 @@
 ]
 ```
 
-这样的一个规则的严格来说没有问题，真正的问题在与使用者不理解规则的配置。如果要匹配以上的规则，那么代表这有一个数据包的目标地址域名是 taobao.com 并且 IP 属于 192.168.0.0.1/16。通常情况下这是不可能的，所以你访问淘宝是不会匹配这个规则。如果你要满足域名和 IP 任一条件都能够匹配规则，那么应该这么写：
+There is no problem with such a strict rule. The real problem is that the user does not understand the configuration of the rule. If you want to match the above rules, then the domain name of the destination address that represents this packet is taobao.com and the IP belongs to 192.168.0.0.1/16. Usually, this is not possible, so your visit to Taobao will not match this rule. If you want to match the domain name and IP conditions to match the rules, then you should write:
 
 ```javascript
 [
