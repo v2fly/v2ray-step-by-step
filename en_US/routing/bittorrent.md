@@ -1,11 +1,11 @@
-# 禁用 BT
+# Restricting BitTorrent
 
-国外版权意识比较重，如果下载盗版的影音文件很有可能会吃官司，所以大多数国外的 VPS 的使用条例都不允许下载 BT。但是一些人并不清楚这点，经常使用朋友分享给他的翻墙账号进行 BT 下载最终导致 VPS 被提供商封禁。尽管有时候说了不能使用代理下载 BT，对方也表示明白了清楚了，但总是有软件喜欢设置系统代理，也总有软件喜欢使用系统代理，好像也有不少人把路由器翻墙当成了不可或缺的，最终还是逃不了封禁的厄运。这个问题似乎从进入到 VPS 翻墙时代就困扰这大家，于是各种禁止 BT 的一键脚本也随之应运而生，也时常有人在讨论哪个脚本比较好用，其实最根本的几乎全是 IPTABLES 的字符串匹配。
+Some countries have strict copyright protection. As downloading pirated audio and video files are likely to receive warnings, most VPS service providers do not allow BT downloading. However, some people are not aware of this. They often use the proxy shared by friends to do BT downloads, which eventually causes a VPS suspension. Even though sometimes we told friends that they can't use BT downloading client, some people like set V2Ray client as a system global proxy, so BT clients' traffic will also go through the proxy. This problem seems to have troubled many people from deploy proxy server on VPS, so all kinds of one-click shell scripts that prohibit BT have also emerged. It is also often discussed which script is easier to use. Many of them are based on the string matching of IPTABLES. 
 
-在 V2Ray,修改配置文件的路由配置即可禁用 BT。不过，你要说用那些一键脚本比配置 V2Ray 更简单。嗯，你说得挺对的，很有道理。单从禁用 BT 来说的话，也许IPTABLES 的方式会好一些，也可能不是。但是别忘了，V2Ray 的路由功能可不是只能禁止连接而已，本质应该是转发。也就是说，如果你有一台无视版权的 VPS，那么大可将 BT 流量转到这台 VPS 上。
- 
- 
-## 服务器配置
+Actually, you can edit the configuration file to prohibit the BT protocol. If disabling BT traffic is your only need, maybe the IPTABLES method is better. But don't forget, V2Ray's routing feature doesn't not only prohibit the connection, but also relays your traffic. Then you can set bypass proxy to some VPSs they don't care about copyright, and use BT download as you want.
+
+
+## Server-side Configuration
 
 ```javascript
 {
@@ -61,11 +61,11 @@
 }
 ```
 
-`注意`: inbound 的 sniffing 必须开启。
+Attention: `sniffing` must be turned on in the inbound options.
 
-## 客户端配置
+## Client-side Configuration
 
-#### 更新历史
+#### Updates
 
-- 2018-08-07 初版
-- 2019-01-13 v4.0+ 配置格式
+- 2018-08-07 Initial Version
+- 2019-01-13 v4.0+ Adaptation

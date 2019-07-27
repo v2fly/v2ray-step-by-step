@@ -1,94 +1,87 @@
-# V2Ray 配置指南
+# Guide to V2Ray configuration
 
-## 声明
+## Disclaimer
 
-This repository is a fork of `ToutyRater/v2ray-guide`, due to we want to maintain this document but cannot contact with the author. If you are the author, you are welcome to contact us by either telegram group or email.
+This repository is a fork of `ToutyRater/v2ray-guide`, thank you to help many people cross the GFW.
 
-Thanks `ToutyRater` maintain the [original](https://github.com/ToutyRater/v2ray-guide) version of these documentations. The documents now licensed under BY-CC 4.0, details see in `LICENSE.md`.
+As we want to make [the original guide of V2Ray](https://github.com/ToutyRater/v2ray-guide) more well-maintained and up-to-date, as well as multi-lingual, we forked this new repository. You are welcome to contribute your experience, translation and making a correction to this document by opening an issue.
 
-V2Ray 配置指南（下称本指南）是网友自发编写的关于 V2Ray 如何配置及使用的指南，与 V2Ray 官方并无任何关系。尽管 V2Ray 厚爱将本指南的链接放到了其官网首页，这并不意味着本指南的建议或推荐为 V2Ray 官方所主张。
+The documents now licensed under [BY-CC 4.0](`LICENSE.md`).
 
-## 简介
+## Introduction
 
-V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构建特定网络环境工具的项目，而 V2Ray 属于最核心的一个。 官方中介绍`Project V 提供了单一的内核和多种界面操作方式。内核（V2Ray）用于实际的网络交互、路由等针对网络数据的处理，而外围的用户界面程序提供了方便直接的操作流程。`不过从时间上来说，先有 V2Ray 才有 Project V。
-如果还是不理解，那么简单地说，V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网（翻墙）学习国外先进科学技术。
+V2Ray is a tool under Project V. Project V is a project that includes a set of tools for building specific network environments, and V2Ray is the core one. The Project V manual said `Project V is a set of tools to help you build your own privacy network over the internet. The core of Project V, named V2Ray, is responsible for network protocols and communications. It can work alone, as well as combine with other tools.` However, in terms of starting time, Project V is before than V2Ray.
 
-V2Ray 用户手册：
- - [https://www.v2ray.com](https://www.v2ray.com)（已被墙）
- - [https://v2ray.cool](https://v2ray.cool)（已被墙）
- - [https://mux.cool](https://mux.cool)（还没被墙）
+If you still don't understand, then we simply say, V2Ray is a similar proxy software to Shadowsocks. V2Ray can be used to access the internet (over the censorship) to learn advanced foreign science and technology.
 
-V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
+V2Ray User manual:
+ - [https://www.v2ray.com](https://www.v2ray.com) (Has been blocked in China)
+ - [https://v2fly.org](https://v2fly.org)
 
-V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/projectv2ray)
+V2Ray repository address: [https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
+V2Ray repository address (V2Fly repository): [https://github.com/v2ray/v2ray-core](https://github.com/v2fly/v2ray-core)
 
-
-## 常见问题：Q&A
+V2Ray Telegram user discussion group: [https://t.me/projectv2ray](https://t.me/v2fly_chat)
 
 
-#### V2Ray 跟 Shadowsocks 有什么区别？
+## Frequent questions: Q&A
 
-区别还是有的，Shadowsocks 只是一个简单的代理工具，而 V2Ray 定位为一个平台，任何开发者都可以利用 V2Ray 提供的模块开发出新的代理软件。
 
-了解 Shadowsocks 历史的同学都知道，Shadowsocks 是 clowwindy 开发的自用的软件，开发的初衷只是为了让自己能够简单高效地科学上网，自己使用了很长一段时间后觉得不错才共享出来的。V2Ray 是 clowwindy 被喝茶之后 V2Ray 项目组为表示抗议开发的，一开始就致力于让大家更好更快的科学上网。
+#### What is the difference between V2Ray and Shadowsocks?
 
-由于出生时的历史背景不同，导致了它们性格特点的差异。
+The difference is still that Shadowsocks is just a simple proxy tool; it is a protocol of encryption. However, V2Ray is positioned as a platform, and any developer can use the modules provided by V2Ray to develop new proxy software.
 
-简单来说，Shadowsocks 功能单一，V2Ray 功能强大。听起来似乎有点贬低 Shadowsocks 呢？当然不！换一个角度来看，Shadowsocks 简单好上手，V2Ray 复杂配置多。
+Anyone who knows the history of Shadowsocks knows that Shadowsocks is a self-using software developed by clowwindy. The original intention of the development is to make it easy and efficient to cross the firewall. It has been used for a long time, and he found it would be beneficial to make it opensource. V2Ray is developed after clowwindy receive the menace from the Chinese government, the Project V team developed as a protest. 
 
-#### 既然 V2Ray 复杂，为什么要用它？
+Due to the different historical backgrounds at birth, they have different characteristics of their features.
 
-童鞋，某事物的优点和缺点总是相生相随的。相对来说，V2Ray 有以下优势：
+Merely speaking, Shadowsocks has a single proxy protocol, and V2Ray is more complicated than a single protocol proxy. Sounds a bit bleak to Shadowsocks? of course not! From another point of view, Shadowsocks is easy to get started, and V2Ray has a lot of complicated configurations.
 
-* **更完善的协议:** V2Ray 使用了新的自行研发的 VMess 协议，改正了 Shadowsocks 一些已有的缺点，更难被墙检测到
-* **更强大的性能:** 网络性能更好，具体数据可以看 [V2Ray 官方博客](https://steemit.com/cn/@v2ray/3cjiux)
-* **更丰富的功能:** 以下是部分 V2Ray 的功能
-    * mKCP: KCP 协议在 V2Ray 上的实现，不必另行安装 kcptun
-    * 动态端口：动态改变通信的端口，对抗对长时间大流量端口的限速封锁
-    * 路由功能：可以随意设定指定数据包的流向，去广告、反跟踪都可以
-    * 传出代理：看名字可能不太好理解，其实差不多可以称之为多重代理。类似于 Tor 的代理
-    * 数据包伪装：类似于 Shadowsocks-rss 的混淆，另外对于 mKCP 的数据包也可伪装，伪装常见流量，令识别更困难
-    * WebSocket 协议：可以 PaaS 平台搭建V2Ray，通过 WebSocket 代理。也可以通过它使用 CDN 中转，抗封锁效果更好
-    * Mux:多路复用，进一步提高科学上网的并发性能
+#### Since V2Ray is complicated, why using it?
 
-#### 哪有十全十美的东西？
+The advantages and disadvantages of something always come along. Relatively speaking, V2Ray has the following advantages:
 
-少年悟性很高啊！当然没有！目前来说，V2Ray 有下面的缺点：
-- 配置复杂
-- 产业链不成熟
+* **A new and powerful protocol: ** V2Ray uses the new self-developed VMess protocol, which improves some of the existing shortcomings of Shadowsocks and is more difficult to detect by the firewall.
+* **Better performance: ** Better network performance, specific data can be seen [V2Ray official blog](https://steemit.com/cn/@v2ray/3cjiux)
+* **More features:** The following are some of the features of V2Ray:
+    * mKCP: KCP protocol implementation on V2Ray, you don't need to install another kcptun.
+    * Dynamic port: dynamically change the communication port to combat the speed limit blocking of long-term high-flow ports
+    * Routing feature: you can freely set the flow direction of the specified data packet, to block advertisements and enable anti-tracking
+    * Outbound proxy, or say chain proxy, uses many links for better privacy
+    * Obfuscation: similar to the obfuscation of ShadowsocksR, and the data package for mKCP can also be obfuscated. Obfuscating the traffic packets other protocol traffic, making inspection more difficult
+    * WebSocket protocol: Only use WebSocket proxy, or for CDN intermediate proxy (better anti-blocking)
+    * Mux: Multiplexing, further improving the concurrent performance of the proxy
 
-#### 为什么要写这篇文章？
+#### No sliver bullet
 
-虽然其文档很详细，换个说法就是很长，一般用户看到这么长的使用文档都有点望而却步。另外我用 Google 搜索过 V2Ray，搜出来的文章非常少，只能寥寥数篇，而且至少都是好几月之前的，由于 V2Ray 的迭代速度快，一些文章对目前的 V2Ray 已经不适用了。所以我希望通过本指南：
-- 让大家了解到最新的 V2Ray 是什么样子的
-- 让大家知道利用 V2Ray 可以做些什么
-- 尝试用浅显易懂的语言来讲解 V2Ray 的配置
-- 分享一些配置案例
+For now, V2Ray has the following disadvantages:
+- Complex configuration
+- Lack of 3rd-party clients and services
 
-然而最重要的是希望大家能够通过我写的配置指南看懂 V2Ray 的手册。
+#### It seems V2Ray good, but I just want to cross the internet censorship, don't want to waste too long time. How can I do?
 
-#### 听你说了这么多，好像 V2Ray 还不错的样子。但我只是要翻翻墙而已，不想花太多时间怎么办？
+No matter what you do, there is a effort. Effort does not mean success, but no effort definitely suggest no gains.
 
-无论做什么都是有代价的，付出不一定有收获，但是不付出肯定没有收获。
+#### I decided to try V2Ray, so how do I use this guide?
 
-#### 我决定尝试一下 V2Ray，那么我该如何使用这个指南？
+V2Ray's user manual explains everything in great detail. This guide mainly explains the features of V2Ray from easy to difficult in practically available configurations, and strives to reduce the difficulty of newcomers using V2Ray.
 
-V2Ray 的用户手册非常详细地解释了 V2Ray，本指南主要以实际可用的配置从易到难来讲解 V2Ray 的功能特性，力求降低新手使用 V2Ray 的难度。
+**The users of this guide should have some Linux shell experiences, such as how to buy a VPS, how to log in to VPS with SSH, how to use nano (or vim) to edit a text and some basic Linux commands. There are many guides online. There is no need to repeat them and write a tutorial. If you don't have any experience, you are strongly encouraged that you learn them in prior, then deploy V2Ray. **
 
-**本指南的目标用户是有一定的 Linux 操作基础，像怎么注册 VPS，怎么用 SSH 登录 VPS，怎么使用 nano（或 vim） 编辑一个文本以及一些 Linux 基本命令的使用件网上有一大堆的指南，没必要重复造轮子再写一篇教程，如果这些你不会，强烈建议你去学会了再来尝试搭建 V2Ray。**
+This guide can be seen as a simple version of the V2Ray user manual or as a practical guide to V2Ray.
 
-本指南可以看作 V2Ray 用户手册的简易版本，也可以看作 V2Ray 的应用举例。你可以在不参考 V2Ray 用户手册的情况下按照本指南的指导去搭建配置 V2Ray ，但我并不建议你这么做。因为本指南只是引导大家如何理解和配置 V2Ray，相较于用户手册来说有一定的取舍，会忽略一部分东西。所以我希望大家也花时间去阅读 V2Ray 用户手册。
+You can follow the instructions in this guide to build V2Ray without reading this user manual, but we don't recommend it. Because this guide is just to guide you on how to configure V2Ray. There are certain shortcuts compared to the user manual, and something is ignored. So we hope everyone spends to read the V2Ray user manual.
 
-#### 刚开始使用 V2Ray，有什么需要注意的吗？
+#### Just starting to use V2Ray, what do you I to pay attention to?
 
-由于许多 V2Ray 用户都有使用过 Shadowsocks 的经验，基本上可以按照使用 Shadowsocks 那样使用。但是 V2Ray 还是和 Shadowsocks 不太一样，所以我大概说一下使用上的差异。请注意，差异不代表好坏或优劣，如果一个事物必须拥有其他同类所拥有的东西，那么它也就没有了存在的意义。
+Since many V2Ray users have experience with Shadowsocks, they can basically use V2Ray like Shadowsocks. However, V2Ray is not quite the same as Shadowsocks so that we will introduce the differences in usage. Please note that the difference does not mean good or bad. If a thing must have something owned by the same kind, then it has no meaning of existence.
 
-- 客户端：V2Ray 本身只是一个内核，V2Ray 上的图形客户端大多是调用 V2Ray 内核套一个图形界面的外壳，类似于 Linux 内核和 Linux 操作系统的关系；而 Shadowsocks 的客户端都是自己重新实现了一遍 Shadowsocks 协议。本文的内容短期内不涉及图形客户端的使用。
-- 分流：也许大家第一反映是 PAC，实际上无论是 Shadowsocks (特指 Shadowsocks-libev) 还是 V2Ray 本身不支持 PAC，都是客户端加进来的；Shadowsocks 的分流使用 ACL，V2Ray 使用自己实现的路由功能，孰优孰劣只是仁者智者的问题。
-- 分享链接/二维码：V2Ray 不像 Shadowsocks 那样有统一规定的 URL 格式，所以各个 V2Ray 图形客户端的分享链接/二维码不一定通用。
-- 加密方式：V2Ray (特指 VMess 协议) 不像 Shadowsocks 那样看重对加密方式的选择，并且 VMess 的加密方式是由客户端指定的，服务器自适应。
-- 时间：使用 V2Ray 要保证时间准确，因为这是为了安全设计的。
-- 密码：V2Ray(VMesss) 只有 id（使用 UUID 的格式），作用类似于 Shadowsocks 的密码，但随机性远好于 Shadowsocks 的密码，只是不太方便记忆(安全和方便的矛盾)。
-- UDP 转发：VMess 是基于 TCP 的协议，对于 UDP 包 V2Ray 会转成 TCP 再传输的，即 UDP over TCP。要 UDP 转发功能在客户端的 socks 协议中开启 UDP 即可。
-- 路由器翻墙：实际上它们并没有什么区别，不要以为没有插件就不能在路由器上用，看事物请看本质。
+- Client: V2Ray itself is just a kernel. The GUI client of V2Ray is mostly a shell called V2Ray kernel, similar to the relationship between Linux kernel and Linux operating system. But many clients of Shadowsocks are re-implemented the protocol by author. The content of this article does not involve the use of GUI clients at this moment.
+- Policy proxy: Perhaps the first imagination is PAC. Whether Shadowsocks (specifically Shadowsocks-libev) or V2Ray themselves do not support PAC, it controlled by the user client. Whereas Shadowsocks uses ACL, V2Ray uses its routing function, and we do not say which is good or bad. You can choose the better one, depends on you.
 
+- Share Link/QR Code: V2Ray does not have a uniform URL format like Shadowsocks, so the shared link/QR code of each V2Ray graphics client is not necessarily universal. However, we are working on the protocol implementation of the V2Ray endpoint protocol. It will provides a universal link for V2Ray clients.
+- Encryption: V2Ray (specifically VMess protocol) does not like Shadowsocks, which emphasizes the choice of encryption, and VMess encryption is specified by the client, the server is adaptive.
+- Time: Use V2Ray to ensure accurate time, as this is for safe design.
+- Password: V2Ray (VMesss) only uses UUID, which acts like Shadowsocks' password, but randomness is much better than Shadowsocks' password, but it is not convenient to remember (safety and convenience contradiction).
+- UDP relay: VMess is a TCP-based stream protocol. For UDP packets, V2Ray will be converted to TCP and then relay packets. That is, UDP over TCP. To enable UDP, you can enable UDP in the client's socks protocol.
+- Gateway proxy: In fact, they are no different. Don't think that you can't use them on the router without plug-ins.

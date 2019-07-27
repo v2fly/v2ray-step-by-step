@@ -1,7 +1,7 @@
-# 基本篇
+# Basics
 
-本篇是一些基本简单的配置。
+Here are some basic configuration examples.
 
-在本篇当中会有大量描述语言对配置进行讲解，目的是为了让大家简要理解 V2Ray 的工作方式。
+In this chapter big portion are regarding how to configure, which also helps you understand the mechanism beneath V2Ray.
 
-本章每小节的提供配置样例都有服务器和客户端的，也就是说你可以直接复制到你的机器上然后修改一下服务器地址即可使用，这是最少工作量的，你也可以针对自己的情况对其它的选项参数作调整。
+The configuration examples provided in each section of this chapter have both server side and client side, means you can copy them directly to your machine and modify the server address to use them. That is the minimum amount of work. However, you can also modify various options to fit different network environments.
