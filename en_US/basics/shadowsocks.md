@@ -12,7 +12,7 @@
 
 #### 客户端配置
 
-```javascript
+```json
 {
   "inbounds": [
     {
@@ -48,7 +48,7 @@
 
 #### 服务器配置
 
-```javascript
+```json
 {
   "inbounds": [
     {

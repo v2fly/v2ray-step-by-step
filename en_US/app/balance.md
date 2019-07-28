@@ -5,7 +5,7 @@ Unlike Shadowsocks and other protocals, V2Ray supports multi-server load-balanci
 ## Configuration Example
 
 Configuring load-balancing is an easy job on the client. In the configuration file, simply list all the servers (that are already up and running) in the vnext section in the "outbound" rule. For example: 
-```javascript
+```json
 {
   "inbounds": [
   ...

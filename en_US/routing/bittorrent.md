@@ -7,7 +7,7 @@ Actually, you can edit the configuration file to prohibit the BT protocol. If di
 
 ## Server-side Configuration
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",

@@ -4,7 +4,7 @@
 
 ### 客户端
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",
@@ -72,7 +72,7 @@
 
 ### 服务器
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",

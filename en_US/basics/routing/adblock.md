@@ -4,7 +4,7 @@
 
 ### Client-side
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",
@@ -96,7 +96,7 @@
 
 ### Server-side
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",
@@ -132,7 +132,7 @@ Comparing with last section, this only adding new content to outbounds and routi
 
 In routing section, two rules are added:
 
-```javascript
+```json
 {
   "domain": [
     "tanx.com",

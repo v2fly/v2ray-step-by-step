@@ -143,7 +143,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 
 ### Server-side
 
-```javascript
+```json
 {
   "inbounds": [
     {
@@ -182,7 +182,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 
 ### Client-side
 
-```javascript
+```json
 {
   "inbounds": [
     {

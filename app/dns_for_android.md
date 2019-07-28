@@ -23,7 +23,7 @@
 4. 导入配置文件到 Android 客户端
 
 配置文件形如：
-```javascript
+```json
 {
   "inbound": {
   "domainOverride": ["tls","http"],

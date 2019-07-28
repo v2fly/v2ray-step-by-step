@@ -10,7 +10,7 @@
 
 ### 客户端配置
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning", // 日志级别
@@ -54,7 +54,7 @@
 
 ### 服务器配置
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",

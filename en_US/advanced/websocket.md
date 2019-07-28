@@ -6,7 +6,7 @@ It is simple to configure websocket, the only line of the configuration file to 
 
 ### Server-side Configuration
 
-```javascript
+```json
 {
   "inbounds": [
     {
@@ -36,7 +36,7 @@ It is simple to configure websocket, the only line of the configuration file to 
 
 ### Client-side Configuration
 
-```javascript
+```json
 {
   "inbounds": [
     {

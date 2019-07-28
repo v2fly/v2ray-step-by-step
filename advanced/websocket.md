@@ -6,7 +6,7 @@ WebSocket 的配置其实很简单，就跟 mKCP 一样把 network 一改就行�
 
 ### 服务器配置
 
-```javascript
+```json
 {
   "inbounds": [
     {
@@ -36,7 +36,7 @@ WebSocket 的配置其实很简单，就跟 mKCP 一样把 network 一改就行�
 
 ### 客户端配置
 
-```javascript
+```json
 {
   "inbounds": [
     {

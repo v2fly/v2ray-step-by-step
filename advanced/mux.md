@@ -43,7 +43,7 @@ Mux 实质上不能提高网速，但对并发连接比较有效，如浏览图�
 
 Mux 只需在客户端开启，服务器会自动识别，所以只给客户端的配置。也就是只要在 outbound 或 outboundDetour 加入 `"mux": {"enabled": true}` 即可：
 
-```javascript
+```json
 {
   "inbounds": [
     {
