@@ -19,4 +19,5 @@ build.sh
 .vscode
 .vuepress/dist
 .DS_Store
-
+Untitled.code-workspace
+.gitignore
