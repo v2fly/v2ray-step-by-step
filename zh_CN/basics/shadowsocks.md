@@ -2,9 +2,7 @@
 
 本节讲述 Shadowsocks 的配置。
 
-什么？这不是 V2Ray 吗？怎么说配置 Shadowsocks 呢？
-
-骚年别紧张。V2Ray 集成有 Shadowsocks 模块的，用 V2Ray 配置成 Shadowsocks 服务器或者 Shadowsocks 客户端都是可以的，兼容 Shadowsocks-libev。
+其实，作为一个代理工具集合，V2Ray 集成有 Shadowsocks 模块。用 V2Ray 配置成 Shadowsocks 服务器或者 Shadowsocks 客户端都是可以的，兼容 Shadowsocks-libev, go-shadowsocks2 等基于 Shadowsocks 协议的客户端。
 
 配置与 VMess 大同小异，客户端服务器端都要有入口和出口，只不过是协议(protocol)和相关设置(settings)不同，不作过多说明，直接给配置，如果你配置过 Shadowsocks，对比之下就能够明白每个参数的意思(配置还有注释说明呢)。
 
@@ -73,7 +71,7 @@
 ## 注意事项
 
 - 因为协议漏洞，Shadowsocks 已放弃 OTA(一次认证) 转而使用 AEAD，V2Ray 的 Shadowsocks 协议已经跟进 AEAD，但是仍然兼容 OTA。建议使用 AEAD (method 为 aes-256-gcm、aes-128-gcm、chacha20-poly1305 即可开启 AEAD), 使用 AEAD 时 OTA 会失效；
-- ~~可以搭配 simple-obfs 使用，具体我没试过，有这个需要的就自己研究吧~~(Shadowsocks 已经弃用 simple-obfs)；
+- Shadowsocks 已经弃用 simple-obfs，可使用基于 V2Ray 的新版混淆插件（但也可以使用 V2Ray 的 Websocket/http2 + TLS ）；
 - 可以使用 V2Ray 的传输层配置（详见[高级篇](/advanced/README.md)），~~但如果这么设置了将与原版 Shadowsocks 不兼容~~（兼容 Shadowsocks 新增的 [v2ray-plugin](https://github.com/shadowsocks/v2ray-plugin)插件)。
 
 ---
