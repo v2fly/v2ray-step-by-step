@@ -62,7 +62,7 @@ The authorisation of the VMess protocol is based on time. It must be ensured tha
 ### Client-side Configuration
 
 The following is the client-side configuration, edit the client's config.json file to the following content, and restart V2Ray after the modification is complete to make the modified configuration applied.
-```javascript
+```json
 {
   "inbounds": [
     {
@@ -108,7 +108,7 @@ In the configuration, there is an id used for authorization (in this case is b83
 ### Server-side Configuration
 
 Below is the server configuration. Editing the config.json file in the `/etc/v2ray` directory of the server to the following JSON. After the modification is complete, restart V2Ray to make the modified configuration applied.
-```javascript
+```json
 {
   "inbounds": [
     {
