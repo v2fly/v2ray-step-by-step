@@ -6,7 +6,7 @@
 
 V2Ray 的配置文件格式就像这样：
 
-```javascript
+```json
 {
   "log": {},
   "inbounds": [],

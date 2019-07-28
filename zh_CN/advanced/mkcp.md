@@ -11,7 +11,7 @@ mKCP 的配置比较简单，只需在服务器的 inbounds 和 客户端的 out
 
 ### 服务器配置
 
-```javascript
+```json
 {
   "inbounds": [
     {
@@ -49,7 +49,7 @@ mKCP 的配置比较简单，只需在服务器的 inbounds 和 客户端的 out
 
 ### 客户端配置
 
-```javascript
+```json
 {
   "inbounds": [
     {

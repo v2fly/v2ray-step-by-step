@@ -11,7 +11,7 @@ This section provides just enough introduction of JSON file for configuring V2Ra
 - Boolean types do not need to be double quoted. Only two booleans are true and false.
 - Objects are unordered, so the order of the contents enclosed by braces `{ }` doesn't matter, for example:
 
-  ```javascript
+  ```json
   {
     "ip":"8.8.8.8",
     "port":53,
@@ -19,7 +19,7 @@ This section provides just enough introduction of JSON file for configuring V2Ra
   }
   ```
 
-  ```javascript
+  ```json
   {
     "ip":"8.8.8.8",
     "isDNS":true,

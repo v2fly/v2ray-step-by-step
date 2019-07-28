@@ -10,7 +10,7 @@ sidebar: auto
 
 先简单举几个例子，都是客户端的。
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",
@@ -54,7 +54,7 @@ sidebar: auto
 
 像上面这个配置就是前面 VMess 的客户端配置文件，假如改一下 outbound 的内容，变成这样：
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",
@@ -92,7 +92,7 @@ V2Ray 客户端从 inbound 接收到数据之后没有经过 VPS 中转，而是
 
 再来看下面这个:
 
-```javascript
+```json
 {
   "log":{
     "loglevel": "warning",
@@ -126,7 +126,7 @@ V2Ray 客户端从 inbound 接收到数据之后没有经过 VPS 中转，而是
 
 当然不是！在 V2Ray 的配置中，`outbounds` 是出口协议的集合，你可以在里面放任意多个出口协议，不仅 3 个，300 个都可以。下面给出放 3 个出口协议配置的例子。
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",

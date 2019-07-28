@@ -17,7 +17,7 @@ chinasites 或者路由规则是域名的话不起作用。
 ## 方式一
 
 这种方式是在客户端上开启，方法是在`客户端`的 inbound(Detour) 中加入 `"domainOverride": ["http", "tls"]`，配置形如：
-```javascript
+```json
 {
   "routing": {},
   "inbound": {

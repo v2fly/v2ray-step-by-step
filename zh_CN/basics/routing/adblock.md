@@ -4,7 +4,7 @@
 
 ### 客户端
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",
@@ -96,7 +96,7 @@
 
 ### 服务器
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",
@@ -132,7 +132,7 @@
 
 在 routing 中，新添加了两个规则：
 
-```javascript
+```json
 {
   "domain": [
     "tanx.com",

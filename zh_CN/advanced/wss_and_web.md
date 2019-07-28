@@ -14,7 +14,7 @@
 
 #### 服务器 V2Ray 配置 
 
-```javascript
+```json
 {
   "inbounds": [
     {
@@ -111,7 +111,7 @@ mydomain.me
 
 ### 客户端配置
 
-```javascript
+```json
 {
   "inbounds": [
     {

@@ -17,7 +17,7 @@ V2Ray 提供了代理转发功能，利用它可以实现中转（在没有中�
 
 客户端：
 
-```javascript
+```json
 {
   "outbounds": [
     {
@@ -63,7 +63,7 @@ V2Ray 提供了代理转发功能，利用它可以实现中转（在没有中�
 
 如果你有多个 Shadowsocks 或 VMess 账户，那么你可以这样:
 
-```javascript
+```json
 {
   "outbounds": [
     {

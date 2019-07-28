@@ -43,7 +43,7 @@ The document has moved
 ```
 
 4. 在网关的配置，添加 dokodemo door 协议的入站配置 ，并开启 sniffing；还要在所有 outbound 的 streamSettins 添加 SO_MARK。配置形如（配置中的`...`代表原来客户端的通常配置）：
-```javascript
+```json
 {
   "routing": {...},
   "inbounds": [

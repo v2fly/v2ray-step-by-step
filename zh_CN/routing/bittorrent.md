@@ -7,7 +7,7 @@
  
 ## 服务器配置
 
-```javascript
+```json
 {
   "log": {
     "loglevel": "warning",

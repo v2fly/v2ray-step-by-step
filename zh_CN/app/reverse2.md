@@ -24,7 +24,7 @@
 
 A 的配置与上一节无变化。
 
-```javascript
+```json
 {  
   "reverse":{ 
     // 这是 A 的反向代理设置，必须有下面的 bridges 对象
@@ -93,7 +93,7 @@ A 的配置与上一节无变化。
 
 B 的配置只有 inbound 部分发生了变化。
 
-```javascript
+```json
 {  
   "reverse":{  //这是 B 的反向代理设置，必须有下面的 portals 对象
     "portals":[  

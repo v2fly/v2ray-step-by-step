@@ -6,7 +6,7 @@ As mentioned in the previous chapter, we can load balancing with a V2Ray feature
 
 The load balancing configuration is located in the routing section and only need to be configure on the client side. In routing, configure a array of balancers that represents the rules for load balancing, each object contains a load-balanced unique label, an equalization strategy (the current strategy seems to have only a random selection), and an optional outbound proxy. Then configure specific traffic for load balancing as needed in the routing rules. In this example, the last routing rule is load balancing. According to the example, it can be known that the destination address is private IP or mainland China traffic direct connection, and all other traffic is load balancing b1 (that is, choose between jp1 and jp2). Load balancing to b2 is not used in this example.
 
-```javascript
+```json
 {
 
   "inbounds": [
