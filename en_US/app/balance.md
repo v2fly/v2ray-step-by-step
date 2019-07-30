@@ -55,7 +55,7 @@ Load-balancing is implemented by polling the servers in order. When traffic come
 
 Make sure values such as port, ID for each individual servers  in the "vmess" section match the ones in "streamSettings".
 
-## Updates
+#### Updates
 
 - 2018-01-03 Initial Version.
 - 2018-04-05 Update
