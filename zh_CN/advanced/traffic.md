@@ -209,7 +209,7 @@ api2column() {
             f=1; gsub(/^"|"$/, "", $2); split($2, p,  ">>>");
             print p[1]":"p[2]"->"p[4];
         }
-        else if (match($1, /value:/)){ f=0; print $2}
+        else if (match($1, /value:/)){ f=0; printf "%.0f\n", $2; }
         else if (match($0, /^>$/) && f == 1) print "0"
         else {}
     }'  | sed '$!N;s/\n/ /; s/link//'
@@ -219,8 +219,8 @@ print_sum() {
     local DATA="$1"
     local PREFIX="$2"
     local UDATA=$(echo "$DATA" | grep "^${PREFIX}" | sort -r)
-    local UPSUM=$(echo "$UDATA" | awk '/->up/{sum+=$2;}END{print sum;}')
-    local DOWNSUM=$(echo "$UDATA" | awk '/->down/{sum+=$2;}END{print sum;}')
+    local UPSUM=$(echo "$UDATA" | awk '/->up/{sum+=$2;}END{printf "%.0f\n", sum;}')
+    local DOWNSUM=$(echo "$UDATA" | awk '/->down/{sum+=$2;}END{printf "%.0f\n", sum;}')
     UDATA="${UDATA}\nTOTAL->up ${UPSUM}\nTOTAL->down ${DOWNSUM}"
     echo -e "$UDATA" | numfmt --field=2 --suffix=B --to=iec | column -t
 }
