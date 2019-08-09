@@ -1,14 +1,10 @@
----
-sidebarDepth: 1
-sidebar: auto
----
-# 路由功能
+# Routing of V2Ray
 
-本小节将介绍路由功能的使用。V2Ray 的一大特点就是内置了路由功能，用大白话说就是可以根据自己的实际情况制定一些规则来满足自己的上网需求，最简单最常见的就是直连国内网站、拦截特站点以及代理被墙网站。
+In this section, we will introduce the built-in routing feature of V2Ray. In other words, it is possible to customize some rules according to your network environment. The simplest and most common is to directly connect to specific websites of countries, or intercept sites, and proxy the blocked sites.
 
-## 路由简介
+## Introduction of routing
 
-先简单举几个例子，都是客户端的。
+There are some simple example of client-side
 
 ```json
 {
@@ -52,7 +48,7 @@ sidebar: auto
 }
 ```
 
-像上面这个配置就是前面 VMess 的客户端配置文件，假如改一下 outbound 的内容，变成这样：
+The configuration above is the client configuration file of the previous VMess. If you change the content of the outbound, it becomes like this:
 
 ```json
 {
@@ -72,7 +68,7 @@ sidebar: auto
   ],
   "outbounds": [
     {
-      "protocol": "freedom", //原来是 VMess，现在改成 freedom
+      "protocol": "freedom", // In previous section, here is V2Ray, we replace it with freedom
       "settings": {
       }
     }
@@ -80,17 +76,17 @@ sidebar: auto
 }
 ```
 
-如果修改成这个配置重启客户端之后，你会发现这个时候浏览器设不设置代理其实是一样的，像 Google 这类被墙的网站没法访问了，taobao 这种国内网站还是跟平常一样能上。如果是前面的介绍 VMess，数据包的流向是:
+If you change this configuration and restarting the client, you will find that the browser does not set the proxy at this time. The website that is walled like Google cannot be accessed. The domestic website of Taobao can still be used as usual. If it is the previous introduction to VMess, the flow of the packet is:
 ```
-{浏览器} <--(socks)--> {V2Ray 客户端 inbound <-> V2Ray 客户端 outbound} <--(VMess)-->  {V2Ray 服务器 inbound <-> V2Ray 服务器 outbound} <--(Freedom)--> {目标网站}
+{browser} <--(socks)--> {V2Ray client inbound  <->  V2Ray client outbound} <--(VMess)--> {V2Ray server inbound  <->  V2Ray server outbound} <--(Freedom)--> {Target site}
 ```
-但因为现在 V2Ray 客户端的 outbound 设成了 freedom，freedom 就是直连，所以呢修改后数据包流向变成了这样：
+Because the outbound of the V2Ray client is now set to freedom, freedom is directly connected, the modified packet flow becomes like this:
 ```
-{浏览器} <--(socks)--> {V2Ray 客户端 inbound <-> V2Ray 客户端 outbound} <--(Freedom)--> {目标网站}
+{Browser} <--(socks)--> {V2Ray client inbound <-> V2Ray client outbound} <--(Freedom)--> {Website}
 ```
-V2Ray 客户端从 inbound 接收到数据之后没有经过 VPS 中转，而是直接由 freedom 发出去了，所以效果跟直接访问一个网站是一样的。
+After receiving the data from inbound, the V2Ray client does not pass through the VPS, but is sent directly by freedom, so the effect is the same as directly accessing a website.
 
-再来看下面这个:
+Then looking at this:
 
 ```json
 {
@@ -118,13 +114,13 @@ V2Ray 客户端从 inbound 接收到数据之后没有经过 VPS 中转，而是
 }
 ```
 
-这样的配置生效之后，你会发现无论什么网站都无法访问。这是为什么呢？blackhole 是黑洞的意思，在 V2Ray 这里也差不多相当于是一个黑洞，就是说 V2Ray 从 inbound 接收到数据之后发到 outbound，因为 outbound 是 blackhole，来什么吞掉什么，就是不转发到服务器或者目标网站，相当于要访问什么就阻止访问什么。
+After this configuration loaded, you will find that no website is accessible. Why is this happening? In V2Ray, blackhole is almost equivalent to a black hole. That is to say, V2Ray sends outbound data after receiving data from inbound. Because outbound is blackhole, what is swallowed will not be forwarded to the server or the target website. What to block access to what you want to access.
 
-到这儿为止，总共介绍了 4 种出口协议：用于代理的 VMess 和 Shadowsocks 协议，用于直连的 freedom 协议，以及用于阻止连接的 blackhole 协议。我们可以利用这几种协议再配合路由功能可以灵活地根据自己的需求针对不同网站进行代理、直连或者拦截。举个简单的例子，比较大众的需求是被墙网站走代理，国内网站直连，其他一些不喜欢的则拦截(比如说百度的高精度定位)。
+Here four outbound protocols have been introduced, the VMess and Shadowsocks protocols for proxies, the freedom protocol for direct connections, and the blackhole protocol for blocking connections. These protocols work with the routing features to set a 'smart' proxy, directly connect or intercept different websites according to your own needs. To give a simple example, the most common case is proxying the blocked websites, direct connecting the Chinese website, and others website that we don't like are intercepted (for example, Baidu's high-precision positioning).
 
-等等！你这里有 VMess、freedom 和 blackhole 3 个出口，难道要运行 3 个 V2Ray 吗？
+Should we run for three V2Ray process for three outbounds?
 
-当然不是！在 V2Ray 的配置中，`outbounds` 是出口协议的集合，你可以在里面放任意多个出口协议，不仅 3 个，300 个都可以。下面给出放 3 个出口协议配置的例子。
+Not in the V2Ray configuration! Here the `outbounds` is a collection of export protocols. You can put as many export protocols as you want, not only 3 but 300. An example of placing three export protocol configurations is given below.
 
 ```json
 {
@@ -148,11 +144,11 @@ V2Ray 客户端从 inbound 接收到数据之后没有经过 VPS 中转，而是
       "settings": {
         "vnext": [
           {
-            "address": "serveraddr.com", // 服务器 IP 地址
-            "port": 16823,  // 服务器端口
+            "address": "serveraddr.com", // IP address of server
+            "port": 16823,  // Server listening port
             "users": [
               {
-                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，须与服务器端配置相同
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // UUID
                 "alterId": 64
               }
             ]
@@ -172,8 +168,8 @@ V2Ray 客户端从 inbound 接收到数据之后没有经过 VPS 中转，而是
 }
 ```
 
-当然这个配置只是包含了多个出口协议而已，在包含多个出口协议的情况下，只会以 outbounds 中的第一个出口作为默认的出口。要达到上面说的被墙网站走代理，国内网站直连，其他特殊网站拦截的效果，还得加入路由功能的配置。关于路由功能的配置见后面两小节。
+Of course, this configuration only contains multiple outgoing protocols. In the case of multiple outgoing protocols, only the first exit in outbounds is used as the default exit. In order to achieve the rules, the configuration of the routing term must be added. See the next two sections for the configuration of the routing features.
 
-#### 更新历史
+#### Updates
 
-- 2018-11-09 跟进 v4.0+ 的配置格式
+- 2018-11-09 Adapt to v4.0+ configuration format.
