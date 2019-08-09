@@ -179,7 +179,7 @@ stat: <
 
 ## 流量信息的处理
 
-上述配置是让v2ray打开一个`grpc`协议的查询接口，除了使用v2ctl，可以用各种支持grpc协议的程序查询上述数值并另外处理（如入库统计、用户计费、图表报告）。不过，本文不会深入探讨。既然有`v2ctl`现成的命令行程序，我们可以用简单的shell脚本生成足够可读的报表。
+上述配置是让v2ray打开一个`grpc`协议的查询接口，除了使用v2ctl，可以用各种支持grpc协议的程序查询上述数值并另外处理（如入库统计、用户计费、图表报告）。不过，本文不会深入探讨。既然有`v2ctl`现成的命令行程序，我们可以用简单的shell脚本awk工具来处理，生成足够可读的报表。
 
 尝试把以下脚本保存到`traffic.sh`，注意使用`chmod 755 traffic.sh`授予执行权限。注意调整修改`_APISERVER`一行的连接具体的端口参数。
 
@@ -189,64 +189,72 @@ stat: <
 _APISERVER=127.0.0.1:10085
 _V2CTL=/usr/bin/v2ray/v2ctl
 
-v2_query_all () {
+apidata () {
     local ARGS=
-    if [[ $1 == "reset" ]];  then
+    if [[ $1 == "reset" ]]; then
       ARGS="reset: true"
     fi
-    local DATA=$($_V2CTL api --server=$_APISERVER StatsService.QueryStats "${ARGS}" | api2column)
-    echo -e "\n------------Inbound----------"
-    print_sum "$DATA" "inbound"
-    echo "-----------------------------"
-    echo -e "\n-------------User------------"
-    print_sum "$DATA" "user"
-    echo "-----------------------------"
-}
-
-api2column() {
-    cat | awk '{
-        if (match($1, /name:/)){ 
-            f=1; gsub(/^"|"$/, "", $2); split($2, p,  ">>>");
-            print p[1]":"p[2]"->"p[4];
+    $_V2CTL api --server=$_APISERVER StatsService.QueryStats "${ARGS}" \
+    | awk '{
+        if (match($1, /name:/)) {
+            f=1; gsub(/^"|link"$/, "", $2);
+            split($2, p,  ">>>");
+            printf "%s:%s->%s\t", p[1],p[2],p[4];
         }
-        else if (match($1, /value:/)){ f=0; printf "%.0f\n", $2; }
-        else if (match($0, /^>$/) && f == 1) print "0"
-        else {}
-    }'  | sed '$!N;s/\n/ /; s/link//'
+        else if (match($1, /value:/) && f){ f = 0; printf "%.0f\n", $2; }
+        else if (match($0, /^>$/) && f) { f = 0; print 0; }
+    }'
 }
 
 print_sum() {
     local DATA="$1"
     local PREFIX="$2"
-    local UDATA=$(echo "$DATA" | grep "^${PREFIX}" | sort -r)
-    local UPSUM=$(echo "$UDATA" | awk '/->up/{sum+=$2;}END{printf "%.0f\n", sum;}')
-    local DOWNSUM=$(echo "$UDATA" | awk '/->down/{sum+=$2;}END{printf "%.0f\n", sum;}')
-    UDATA="${UDATA}\nTOTAL->up ${UPSUM}\nTOTAL->down ${DOWNSUM}"
-    echo -e "$UDATA" | numfmt --field=2 --suffix=B --to=iec | column -t
+    local SORTED=$(echo "$DATA" | grep "^${PREFIX}" | sort -r)
+    local SUM=$(echo "$SORTED" | awk '
+        /->up/{us+=$2}
+        /->down/{ds+=$2}
+        END{
+            printf "SUM->up:\t%.0f\nSUM->down:\t%.0f\nSUM->TOTAL:\t%.0f\n", us, ds, us+ds;
+        }')
+    echo -e "${SORTED}\n${SUM}" \
+    | numfmt --field=2 --suffix=B --to=iec \
+    | column -t
 }
 
-v2_query_all $1
+DATA=$(apidata $1)
+echo "------------Inbound----------"
+print_sum "$DATA" "inbound"
+echo "-----------------------------"
+echo
+echo "-------------User------------"
+print_sum "$DATA" "user"
+echo "-----------------------------"
 ```
 
 运行效果：
 
 ```text
 $ ./traffic.sh
-
 ------------Inbound----------
-inbound:ws->up      2.7KB
-inbound:ws->down    3.1KB
-inbound:api->up     161B
-inbound:api->down   724B
-TOTAL->up           2.9KB
-TOTAL->down         3.8KB
+inbound:ws->up      0B
+inbound:ws->down    0B
+inbound:tcp->up     47B
+inbound:tcp->down   0B
+inbound:kcp->up     259MB
+inbound:kcp->down   2.4GB
+inbound:api->up     2.0KB
+inbound:api->down   6.6KB
+SUM->up:            259MB
+SUM->down:          2.4GB
+SUM->TOTAL:         2.6GB
 -----------------------------
 
 -------------User------------
-user:u3@ws->up    2.4KB
-user:u3@ws->down  2.7KB
-TOTAL->up         2.4KB
-TOTAL->down       2.7KB
+user:me@kcp->up    240MB
+user:me@kcp->down  2.3GB
+SUM->up:           240MB
+SUM->down:         2.3GB
+SUM->TOTAL:        2.5GB
 -----------------------------
 ```
 
@@ -256,3 +264,4 @@ TOTAL->down       2.7KB
 #### 更新历史
 
 - 2019-08-07 统计脚本识别科学计数法的输出情况
+- 2019-08-09 优化流量脚本，增加了SUM->TOTAL的累加项
