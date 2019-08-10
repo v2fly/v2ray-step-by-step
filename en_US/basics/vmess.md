@@ -55,7 +55,9 @@ Configuration OK.
 
 We give the example configuration files as below, including server-side and client-side. You need to replace your configuration to the below one, and replace the server IP address/domain to yours; then you can enjoy uncensored internet. Note that, *the configuration will not be applied until you restart the V2Ray*.
 
-**The authorisation of the VMess protocol is based on time. It must be ensured that the system time between the server and the client is within 90 seconds. **
+::: danger Notice
+The authorisation of the VMess protocol is based on time. It must be ensured that the system time between the server and the client is within 90 seconds.
+:::
 
 ### Client-side Configuration
 
@@ -197,7 +199,7 @@ Possible cause: The inboud configured by the client is set to https and the prox
 
 Correction method: Modify the configuration file to make the protocol of the client's inbound and the protocol set by the browser proxy consistent.
 
-#### The server executes `systemctl status v2ray`, the output prompt: Main: failed to read config file...
+#### The server executes `systemctl status v2ray`, the output prompt: `Main: failed to read config file...`
 
 Possible cause: The server's configuration file is incorrect.
 

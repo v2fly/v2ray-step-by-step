@@ -1,3 +1,3 @@
-# 开篇
+# Before start
 
-本篇为开篇，只介绍 V2Ray 的安装方法以及 V2Ray 所使用的配置文件格式。这只是部署 V2Ray 过程中的第一步，故名开篇。
+This chapter is the first chapter for this tutorials set, only the installation of V2Ray and the configuration file format will be introduced. This is just the first step in deploying V2Ray.

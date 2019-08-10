@@ -45,7 +45,7 @@
     {
       "protocol": "freedom",
       "settings": {},
-      "tag": "direct"// If you want to use routing feature, this tag is necessary. Here direct is a tag of freedom. Then we use direct to tell V2ray, use freedom outbound.
+      "tag": "direct"// If you want to use routing feature, this tag is necessary. Here direct is a tag of freedom. Then we use directly to tell V2ray, use freedom outbound.
     },
     {
       "protocol": "blackhole",

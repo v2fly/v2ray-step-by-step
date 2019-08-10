@@ -41,9 +41,9 @@ Merely speaking, Shadowsocks has a single proxy protocol, and V2Ray is more comp
 
 The advantages and disadvantages of something always come along. Relatively speaking, V2Ray has the following advantages:
 
-* ** A new and powerful protocol: ** V2Ray uses the new self-developed VMess protocol, which improves some of the existing shortcomings of Shadowsocks and is more difficult to detect by the firewall.
-* ** Better performance: ** Better network performance, specific data can be seen [V2Ray official blog](https://steemit.com/cn/@v2ray/3cjiux)
-* ** More features:** The following are some of the features of V2Ray:
+* **A new and powerful protocol: ** V2Ray uses the new self-developed VMess protocol, which improves some of the existing shortcomings of Shadowsocks and is more difficult to detect by the firewall.
+* **Better performance: ** Better network performance, specific data can be seen [V2Ray official blog](https://steemit.com/cn/@v2ray/3cjiux)
+* **More features:** The following are some of the features of V2Ray:
     * mKCP: KCP protocol implementation on V2Ray, you don't need to install another kcptun.
     * Dynamic port: dynamically change the communication port to combat the speed limit blocking of long-term high-flow ports
     * Routing feature: you can freely set the flow direction of the specified data packet, to block advertisements and enable anti-tracking
@@ -66,7 +66,7 @@ No matter what you do, there is a effort. Effort does not mean success, but no e
 
 V2Ray's user manual explains everything in great detail. This guide mainly explains the features of V2Ray from easy to difficult in practically available configurations, and strives to reduce the difficulty of newcomers using V2Ray.
 
-** The users of this guide should have some Linux shell experiences, such as how to buy a VPS, how to log in to VPS with SSH, how to use nano (or vim) to edit a text and some basic Linux commands. There are many guides online. There is no need to repeat them and write a tutorial. If you don't have any experience, you are strongly encouraged that you learn them in prior, then deploy V2Ray. **
+**The users of this guide should have some Linux shell experiences, such as how to buy a VPS, how to log in to VPS with SSH, how to use nano (or vim) to edit a text and some basic Linux commands. There are many guides online. There is no need to repeat them and write a tutorial. If you don't have any experience, you are strongly encouraged that you learn them in prior, then deploy V2Ray. **
 
 This guide can be seen as a simple version of the V2Ray user manual or as a practical guide to V2Ray.
 

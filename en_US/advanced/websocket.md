@@ -1,6 +1,6 @@
 # WebSocket
 
-It is simple to configure websocket, the only line of the configuration file to change is the "network" option. Let's see the config example.
+It is simple to configure WebSocket, the only line of the configuration file to change is the "network" option. Let's see the config example.
 
 ## Configuration Example
 
@@ -76,6 +76,6 @@ It is simple to configure websocket, the only line of the configuration file to 
 }
 ```
 
-## Updates
+#### Updates
 
 - 2018-11-17 Adapted for V4.0+
