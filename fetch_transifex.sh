@@ -14,7 +14,7 @@ rm -rv advanced app basics en_US prep README.md resource routing
 echo -e "\nStart fetching from remote transifex branch..."
 git fetch origin transifex --progress
 
-echo -e"\nStart checking out files..."
+echo -e "\nStart checking out files..."
 git checkout origin/transifex -- zh_CN
 git checkout origin/transifex -- en_US
 mv -v zh_CN/* ./
