@@ -75,7 +75,7 @@ V2Ray 的用户手册非常详细地解释了 V2Ray，本指南主要以实际�
 由于许多 V2Ray 用户都有使用过 Shadowsocks 的经验，基本上可以按照使用 Shadowsocks 那样使用。但是 V2Ray 还是和 Shadowsocks 不太一样，所以我大概说一下使用上的差异。请注意，差异不代表好坏或优劣，如果一个事物必须拥有其他同类所拥有的东西，那么它也就没有了存在的意义。
 
 - 客户端：V2Ray 本身只是一个内核，V2Ray 上的图形客户端大多是调用 V2Ray 内核套一个图形界面的外壳，类似于 Linux 内核和 Linux 操作系统的关系；而 Shadowsocks 的客户端都是自己重新实现了一遍 Shadowsocks 协议。本文的内容短期内不涉及图形客户端的使用。
-- 分流：也许大家第一反映是 PAC，实际上无论是 Shadowsocks (特指 Shadowsocks-libev) 还是 V2Ray 本身不支持 PAC，都是客户端加进来的；Shadowsocks 的分流使用 ACL，V2Ray 使用自己实现的路由功能，孰优孰劣只是仁者智者的问题。
+- 分流：也许大家第一反应是 PAC，实际上无论是 Shadowsocks (特指 Shadowsocks-libev) 还是 V2Ray 本身不支持 PAC，都是客户端加进来的；Shadowsocks 的分流使用 ACL，V2Ray 使用自己实现的路由功能，孰优孰劣只是仁者智者的问题。
 - 分享链接/二维码：V2Ray 不像 Shadowsocks 那样有统一规定的 URL 格式，所以各个 V2Ray 图形客户端的分享链接/二维码不一定通用。
 - 加密方式：V2Ray (特指 VMess 协议) 不像 Shadowsocks 那样看重对加密方式的选择，并且 VMess 的加密方式是由客户端指定的，服务器自适应。
 - 时间：使用 V2Ray 要保证时间准确，因为这是为了安全设计的。
