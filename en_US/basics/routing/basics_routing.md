@@ -1,6 +1,6 @@
 # Routing of V2Ray
 
-In this section, we will introduce the built-in routing feature of V2Ray. In other words, it is possible to customize some rules according to your network environment. The simplest and most common is to directly connect to specific websites of countries, or intercept sites, and proxy the blocked sites.
+In this section, we will introduce the built-in routing feature of V2Ray, use which you can customize some rules according to your network environment with. The simplest and most common is to directly connect to specific websites of countries, or intercept sites, and proxy the blocked sites.
 
 ## Introduction of routing
 
