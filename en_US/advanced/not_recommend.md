@@ -1,15 +1,16 @@
-# 不推荐的配置
+# Not recommended configurations
 
-也许有一部分朋友发现了，高级篇的内容关于传输层的，各种配置的组合，可以搭配出非常多的配置。但是，有一些组合是我认为不值得或者是冗余的（仅代表个人意见），以下给出。
+
+You may find that the content of the advanced chapter mainly focusing on the transport layer protocol. If you combine various protocols and rules, there are many types of these combinations. However, there are some combinations we do not suggest and the reasons are given in this section.
 
 * TLS+KCP
 
-这是相当一部分人喜欢的组合。选用KCP的原因是为了在某些恶劣的网络环境下拥有比较好的上网体验。而使用 TLS 的原因大约有两种考虑：一是认为 TLS 拥有与 HTTPS 一样的特征不容易被墙；二是觉得TLS具有更好的加密效果不容易被墙。对于第一点，尽管 HTTPS 是基于 TLS，但并不等同与 TLS，因此 TLS 与 HTTPS 的特征一样的说法是错误的；对于第二点，使用更强的加密算法而被墙的几率更小这个观点并未得到论证。然而这并不是我不推荐的理由，真正的原因的是不使用 TLS 并没什么坏处，额外使用 TLS也没有足够的好处。
+This is a combination that quite a few people like. The reason for choosing KCP is to have a better online experience in some bad network environments. There are two reasons for using TLS: First, it is considered that TLS has the same features as HTTPS and is not easily walled; secondly, TLS has a better encryption effect and is not easily walled. For the first point, although HTTPS is based on TLS, it is not equivalent to TLS, so the same argument that TLS is the same as HTTPS is wrong; for the second point, the chance of being walled is stronger with a stronger encryption algorithm. The views have not been justified. However, this is not the reason I don't recommend it. The real reason is that there is no harm in not using TLS. There is not enough benefit to use TLS.
 
-* TLS+HTTP 伪装
+* TLS + HTTP obfuscating
 
-我并没有测试过这个组合，不清楚最外层是 TLS 还是 HTTP 伪装。无论哪一种，处于内层的配置将会失去其意义。
+I have not tested this combination, it is not clear whether the outermost layer is TLS or HTTP masquerading. Either way, the configuration in the inner layer will lose its meaning.
 
-* 单纯使用 Websocket
+* WebSocket only
 
-理论上，使用 Websocket 会比 TCP 性能差一些，单纯所以如果不是搭配 CDN、nginx 或者在 PaaS 上使用，那还是使用 TCP 吧。
+In theory, the WebSocket protocol has a lower performance than TCP, so if you are not using CDN, Nginx or on PaaS, then use TCP.
