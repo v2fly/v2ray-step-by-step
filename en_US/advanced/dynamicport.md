@@ -2,7 +2,11 @@
 
 V2Ray supports a feature called Dynamic Port. As plain as the name sounds, the port for V2Ray communications doesn’t have to be static, it could be dynamic! The feature was first introduced to avoid ISP throttling. However, dynamic port is rarely used by people so no solid statistics could show how much it benefit on avoiding detection by firewalls.
 
-## Basic Configurations
+## Notice
+
+In practice, currently the dynamic port is dedicated to vmess protocol, which is not available for others.
+
+## Basic Dynamic Port Configurations
 
 The main port is the port defined in “inbound” on the server side. Dynamic port is defined in “inboundDetour” on the server and no further configurations would be needed client side. The client would initiate the negotiation for which port to use next through the main port on the server side. 
 
