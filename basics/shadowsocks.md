@@ -72,7 +72,7 @@
 
 - 因为协议漏洞，Shadowsocks 已放弃 OTA(一次认证) 转而使用 AEAD，V2Ray 的 Shadowsocks 协议已经跟进 AEAD，但是仍然兼容 OTA。建议使用 AEAD (method 为 aes-256-gcm、aes-128-gcm、chacha20-poly1305 即可开启 AEAD), 使用 AEAD 时 OTA 会失效；
 - Shadowsocks 已经弃用 simple-obfs，可使用基于 V2Ray 的新版混淆插件（但也可以使用 V2Ray 的 Websocket/http2 + TLS ）；
-- 可以使用 V2Ray 的传输层配置（详见[高级篇](/advanced/README.md)），~~但如果这么设置了将与原版 Shadowsocks 不兼容~~（兼容 Shadowsocks 新增的 [v2ray-plugin](https://github.com/shadowsocks/v2ray-plugin)插件)。
+- 可以使用 V2Ray 的传输层配置（详见[高级篇](/advanced/advanced.md)），~~但如果这么设置了将与原版 Shadowsocks 不兼容~~（兼容 Shadowsocks 新增的 [v2ray-plugin](https://github.com/shadowsocks/v2ray-plugin)插件)。
 
 ---
 

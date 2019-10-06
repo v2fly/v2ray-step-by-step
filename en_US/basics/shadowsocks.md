@@ -1,29 +1,27 @@
 # Shadowsocks
 
-本节讲述 Shadowsocks 的配置。
+In this section, we will give the instructions about configuring Shadowsocks protocol with V2Ray
 
-什么？这不是 V2Ray 吗？怎么说配置 Shadowsocks 呢？
+As a proxy protocol toolbox, V2Ray supports the Shadowsocks protocol. V2Ray can be configured as either a Shadowsocks server or a client. The implementation of Shadowsocks in V2Ray is compatible with Shadowsocks-libev, Go-shadowsocks2 and other clients based on the Shadowsocks protocol.
 
-骚年别紧张。V2Ray 集成有 Shadowsocks 模块的，用 V2Ray 配置成 Shadowsocks 服务器或者 Shadowsocks 客户端都是可以的，兼容 Shadowsocks-libev。
+The configuration is similar to VMess. The client-server must have an incoming and outgoing configuration. The difference is that we use Shadowsocks protocol and its parameters. Therefore we directly give the example configuration. If you have configured Shadowsocks-libev before, compare with it, and you will able to understand the example in this section.
 
-配置与 VMess 大同小异，客户端服务器端都要有入口和出口，只不过是协议(protocol)和相关设置(settings)不同，不作过多说明，直接给配置，如果你配置过 Shadowsocks，对比之下就能够明白每个参数的意思(配置还有注释说明呢)。
+## Configuration
 
-### 配置
-
-#### 客户端配置
+### Client-side Configuration
 
 ```json
 {
   "inbounds": [
     {
-      "port": 1080, // 监听端口
-      "protocol": "socks", // 入口协议为 SOCKS 5
+      "port": 1080, // Listening port
+      "protocol": "socks", // Incoming protocol is Socks5
       "sniffing": {
         "enabled": true,
         "destOverride": ["http", "tls"]
       },
       "settings": {
-        "auth": "noauth"  // 不认证
+        "auth": "noauth"  // No authrisation of Socks5
       }
     }
   ],
@@ -33,10 +31,10 @@
       "settings": {
         "servers": [
           {
-            "address": "serveraddr.com", // Shadowsocks 的服务器地址
-            "method": "aes-128-gcm", // Shadowsocks 的加密方式
-            "ota": true, // 是否开启 OTA，true 为开启
-            "password": "sspasswd", // Shadowsocks 的密码
+            "address": "serveraddr.com", // Server address of Shadowsocks 
+            "method": "aes-128-gcm", // Encryption method of Shadowsocks 
+            "ota": false, // Whether enable OTA, default is false, we don't recommand enable this as decrepted by Shadowsocks
+            "password": "sspasswd", // Password of Shadowsocks 
             "port": 1024  
           }
         ]
@@ -46,18 +44,18 @@
 }
 ```
 
-#### 服务器配置
+### Server-side Configuration
 
 ```json
 {
   "inbounds": [
     {
-      "port": 1024, // 监听端口
+      "port": 1024, // Listening port 
       "protocol": "shadowsocks",
       "settings": {
         "method": "aes-128-gcm",
-        "ota": true, // 是否开启 OTA
-        "password": "sspasswd"
+        "ota": true, // Whether enable OTA or not
+        "password": "sspasswd" // Password of Shadowsocks
       }
     }
   ],
@@ -70,15 +68,18 @@
 }
 ```
 
-#### 注意事项
+## Notes
 
-- 因为协议漏洞，Shadowsocks 已放弃 OTA(一次认证) 转而使用 AEAD，V2Ray 的 Shadowsocks 协议已经跟进 AEAD，但是仍然兼容 OTA。建议使用 AEAD (method 为 aes-256-gcm、aes-128-gcm、chacha20-poly1305 即可开启 AEAD), 使用 AEAD 时 OTA 会失效；
-- ~~可以搭配 simple-obfs 使用，具体我没试过，有这个需要的就自己研究吧~~(Shadowsocks 已经弃用 simple-obfs)；
-- 可以使用 V2Ray 的传输层配置（详见[高级篇](/advanced/README.md)），~~但如果这么设置了将与原版 Shadowsocks 不兼容~~（兼容 Shadowsocks 新增的 [v2ray-plugin](https://github.com/shadowsocks/v2ray-plugin)插件)。
+- Because of the protocol bug, OTA (one-time authentication) of Shadowsocks has been deprecated and switched to AEAD (authenticated encryption with associated data). V2Ray's Shadowsocks protocol has been followed by AEAD, but it is still compatible with OTA. It is recommended to use AEAD ciphers (cipher could be aes-256-gcm, aes-128-gcm, chacha20-poly1305 for enabling AEAD), OTA will be invalid when enabling AEAD;
+- The simple-obfs plugin of Shadowsocks has been deprecated and you can use the new V2Ray-based obfuscation plugin (but V2Ray's Websocket/http2 + TLS also works);
+- You can use V2Ray's transport layer configuration (see [Advanced](/advanced/README.md)), it is compatible with Shadowsocks' new [v2ray based plugin](https://github.com/shadowsocks/v2ray-plugin).
+<!-- ~~ ~~-->
 
-#### 更新历史
+---
 
-- 2018-02-09 AEAD 更新
-- 2018-09-03 描述更新
-- 2018-11-09 跟进 v4.0+ 的配置格式
-- 2019-01-19 v2ray-plugin 
+#### Updates
+
+- 2018-02-09 Update for AEAD cipher
+- 2018-09-03 Update of description
+- 2018-11-09 Adapt to v4.0+ configuration format.
+- 2019-01-19 Update the information of v2ray-plugin of Shadowsocks
