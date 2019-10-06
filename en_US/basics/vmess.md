@@ -103,7 +103,7 @@ In the configuration, there is an id used for authorization (in this case is b83
 * The incoming UUID and the corresponded outgoing UUID of VMess protocol must be the same (if you don't understand this sentence well, you can simply understand that the server and client UUID must be the same).
 * Since the id uses the UUID format, we can use any UUID generation tool to generate the UUID as the id here. For example, [UUID Generator](https://www.uuidgenerator.net/). On this website, you can get a UUID as soon as you open or refresh this page, as shown below. Alternatively, it can be generated in Linux using the command `cat /proc/sys/kernel/random/uuid`.
 
-![](/resource/images/generate_uuid.png)
+![](../resource/images/generate_uuid.png)
 
 ### Server-side Configuration
 
