@@ -1,42 +1,49 @@
-# 部署之前
+# Before Deployment
 
-本节将说明在部署 V2Ray 的过程中需要注意的一些细节，看似无关紧要，但有些许差错可能就会造成部署失败。所以请大家请仔细阅读，在部署的过程如果遇到问题了，也请检查一下是不是哪些地方做得不到位。
+In this section, we will explain some of the details you need to be aware of when deploying V2Ray. Some of them may seem insignificant, while some can cause deployment failures. Therefore please read this section carefully. If you encounter problems during the deployment process, please check if you missed any instructions.
 
-## 时间是否准确
+## Are the server and client time synchronised?
 
-V2Ray 对于时间有比较严格的要求，要求服务器和客户端时间差绝对值不能超过 2 分钟，所以一定要保证时间足够准确。还好 V2Ray 并不要求时区一致。比如说自个儿电脑上的时间是北京时间（东 8 区）2017-07-31 12:08:31，但是 VPS 上的时区是东 9 区，所以 VPS 上的时间应该是2017-07-31 13:06:31 到 2017-07-31 13:10:31 之间才能正常使用 V2Ray。当然，也可以自行改成自己想要的时区。
+V2Ray has stricter requirements on system clock, and the absolute time difference between server and client must not exceed 2 minutes to get it connected. So make sure time on every device is accurate aligned. However, V2Ray does not require a consistent time zone. For example, the time on my computer is Beijing time (UTC+8 CST) 2017-07-31 12:08:31, but the time zone on the VPS is UTC+9, so the time on the VPS should be 2017-07-31 13 :06:31 to 2017-07-31 13:10:31 to use V2Ray properly. Of course, you can change to any time zone you want.
 
-## Linux 版本的问题
+## Issues with different Linux distributions
 
-由于 V2Ray 使用的编程语言的特点，V2Ray 可以不依赖其它软件（库）而运行，并且可以在许多操作系统上运行（Windows、Linux、BSD等），但是由于新手在学习使用过程中可能会遇到各种问题，却缺乏相应的解决问题的能力，因此在 VPS 上建议与本指南一样使用 Debian 8.x 操作系统，或者使用 Debian 9.x 以上以及 Ubuntu 16.04 以上的系统。请不要迷信某个（些）“最稳定”的系统或系统版本。
+Thanks to the features provided by the Go programming language and the original author's carefully design, V2Ray can run without dependency software (libraries) and provides cross-platform support (such as Windows, Linux, macOS, BSD, etc.). However, beginners may still encounter various problems during learning and deploying, and stucked on it. As a result, we recommend you use a popular distribution: Debian 9.x, Debian 10 or above or Ubuntu 18.04 or above Linux distributions on VPS. Please don't be superstitious about some "most stable" Linux distribution(s).
 
-## 防火墙
+## Firewall
 
-有些朋友非要使用最稳定的 Linux，或者 VPS 是从比较为客户考虑的商家里买的，因此正确部署了 V2Ray 之后可能还是连不上。这时候你就要检查一下是否可能是防火墙的问题了。具体情况你可以发工单问客服或 Google。
+Some Linux distributions, VPS service providers, and some cloud computing platforms provide features such as firewall/security groups by default, so V2Ray disconnected after proper deployment of V2Ray due to incorrect firewall/security group settings. At this moment, you have to check if it is a firewall problem. For details, you can ask for customer service or Google.
 
-## 启动问题
+## Issues with starting the V2ray service
 
-使用脚本新安装 V2Ray 后不会自动运行，而是要自己手动运行。另外如果修改了配置文件，要重新启动 V2Ray 新的配置才会生效。
+After installing V2Ray with a script, it will not run automatically. Instead, you have to run it yourself. Besides, if the configuration file is modified, the new configuration of V2Ray will not be applied by current running process, but until the V2Ray service restarted.
 
-## 配置文件的格式问题
+## Issues with configuration file
 
-因为 V2Ray 的配置文件比较长，层级也多，导致编辑时很容易出错，也难检查。如果使用在线的 JSON 工具（当然也有离线 的），可以检查文件格式是否正确。这种在线工具一搜一大把，就不打广告了。
+Because V2Ray has a long configuration file which contains many levels, it is easy to make mistakes when editing, and it is difficult to check. If you use the online JSON tool (and of course offline available), you can check if the file format is correct. There are many online JSON checking tools, you can Google for it.
 
-## 代理设置问题
+## Issues with proxy configuration
 
-在指南中使用的 FireFox 浏览器，设置的是 socks 代理。但是有的朋友喜欢用其它浏览器，那么我提示一下，客户端的 inbound 可以使用 HTTP 协议，并在 IE 选项中设置代理。或者也可以使用浏览器插件，如 SwitchyOmega 等。
+In the FireFox browser used in the guide, it supports Socks5 proxy. But for other browsers, as they may not support Socks5, one can use the client's inbound is the HTTP protocol and set the proxy in the Internet Explorer properties. Alternatively, you can use a browser extension such as SwitchyOmega.
 
-## 部署过程中的命令
+### Command during deployment
 
-本指南约定，所有以 $ 开头的都是命令行，不以 $ 开头的都不是命令。在实际输入命令时，都不需要将 $ 输进去。
+In this tutorial, all commands are starting with `$`, those without `$` are representing output, and don't put `$` in when entering commands.
 
-**另外，本指南当中所有带 sudo 的命令都需要 su 权限。如果你不明白这句话的意思，可以直接使用 root 账户，则在输入命令时不需要输入 sudo 这几个字符。**
+::: warning Notice
+In addition, all commands with `sudo` in this guide require superuser permission. If you don't understand the meaning of this sentence, you can use the root account directly, you do not need to enter the characters `sudo` when you enter the command.
+:::
 
-## 阅读的问题
+## Reading Instructions Carefully
 
-无论是在网络上，还是现实生活中，我发现不少人很喜欢跳跃式看文章/书/教程，自以为只看关键的东西就足够了，似乎这样子非常高效。实际上这样子做大多会花更多的时间才能达到同样的效果。所以如果你刚接触 V2Ray，又不太会使用，建议按照本指南的顺序并看完。
+Whether on the Internet or in real life, I found that many people like to skip reading articles/books/tutorials. I do think it is enough to look at only the key things. It seems that this is very efficient. In fact, most of this will take more time to achieve the same effect. So if you are new to V2Ray and you are not likely to use it, it is recommended to follow the instructions in this guide.
 
+## The ways of finally solving your problem(s)
 
-## 绝技！最终解决问题
+Unfortunately, we cannot predict all possible problems. However, most of the issues you met may have already encountered by other people. The corresponding solutions have been given (unless your network environment is really special, you need to let the experts help you solve them). So if you encounter issues, you may solve them through Google. Asking questions in the community is the last resort. In the process of deploying V2Ray, more than 90% of the issues encountered can be solved by Google and reading the related tutorials/documents from searching results. The problems need to answer by the community should be a small amount, about less than 5%. If you found it false, that indicates your ability of such Linux, network, or general problem-solving skills need to be improved. Of course, that's not meaning that we are not welcome you ask our communities.  But we don't want to answer the same questions every day as a repeater. If you have a question(s), before you asking, it is strongly recommended to read [How To Ask Questions The Smart Way](http://www.catb.org/~esr/faqs/smart-questions.html) by E.S Raymond first.
+<!-- _-->
 
-很遗憾，我没有能力预测所有可能出现的问题。但是，我可以告诉你，你遇到的所有问题都有人早就遇到了，并且还给出了相应的解决办法（除非你是该行业的顶尖人才，遇到的是需要调用浩瀚的资源才有希望解决的）。所以如果遇到问题，可以通过搜索引擎搜索解决，到社区里提问是迫不得已的办法。我可以很明确地说，在部署 V2Ray 的过程中，所遇到所有的问题有 90% 以上的问题可以通过搜索或者查看相关文档解决，要社区提问才能解决的不足 5%。如果不是，那么只能说明你的综合能力还需提高（比如查资料的能力、阅读理解能力的）。当然，我的意思并不是反对到社区提问，而是希望提问的东西能够有点意义，谁也不愿意自己就像个复读机一样天天回答网友们千篇一律的问题。如果有提问的需要，强烈建议先认真学习一个[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)。
+#### Updates
+
+- 2019-07-11 Modify the typesetting, revision descriptions, and follow up on the version description after the Linux release update.
+- 2019-09-07 typo fix
