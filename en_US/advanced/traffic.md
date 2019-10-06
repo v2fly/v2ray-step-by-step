@@ -179,7 +179,7 @@ As noted before, the `name` here can be used as `GetStats` parameter if one of t
 
 ## Processing of Traffic Stats
 
-Usage above is connecting v2ray with `grpc` protocol, aside from v2ctl, any program supports grpc could also connect to v2ray to get those records, and process to other forms, (eg: storing in database, accounting to users, graphical reports) but the article won't cover those topics. We stick to the `v2ctl` cmd program, and use basic shell script to process the data into a readable form.
+The configuration above is to open an interface for gRPC protocol. In addition to `v2ctl`, you can use any gRPC supported program to query the value. However, we are not going deep into the third-party applications since you may use `v2ctl` along with 'awk' to generate a holistic report. 
 
 Save the following bash script as `traffic.sh`, set exec permission by `chmod 755 traffic.sh`. Change the `_APISERVER` line if you use different dokodemo-door port.
 
@@ -189,66 +189,80 @@ Save the following bash script as `traffic.sh`, set exec permission by `chmod 75
 _APISERVER=127.0.0.1:10085
 _V2CTL=/usr/bin/v2ray/v2ctl
 
-v2_query_all () {
+apidata () {
     local ARGS=
-    if [[ $1 == "reset" ]];  then
+    if [[ $1 == "reset" ]]; then
       ARGS="reset: true"
     fi
-    local DATA=$($_V2CTL api --server=$_APISERVER StatsService.QueryStats "${ARGS}" | api2column)
-    echo -e "\n------------Inbound----------"
-    print_sum "$DATA" "inbound"
-    echo "-----------------------------"
-    echo -e "\n-------------User------------"
-    print_sum "$DATA" "user"
-    echo "-----------------------------"
-}
-
-api2column() {
-    cat | awk '{
-        if (match($1, /name:/)){ 
-            f=1; gsub(/^"|"$/, "", $2); split($2, p,  ">>>");
-            print p[1]":"p[2]"->"p[4];
+    $_V2CTL api --server=$_APISERVER StatsService.QueryStats "${ARGS}" \
+    | awk '{
+        if (match($1, /name:/)) {
+            f=1; gsub(/^"|link"$/, "", $2);
+            split($2, p,  ">>>");
+            printf "%s:%s->%s\t", p[1],p[2],p[4];
         }
-        else if (match($1, /value:/)){ f=0; print $2}
-        else if (match($0, /^>$/) && f == 1) print "0"
-        else {}
-    }'  | sed '$!N;s/\n/ /; s/link//'
+        else if (match($1, /value:/) && f){ f = 0; printf "%.0f\n", $2; }
+        else if (match($0, /^>$/) && f) { f = 0; print 0; }
+    }'
 }
 
 print_sum() {
     local DATA="$1"
     local PREFIX="$2"
-    local UDATA=$(echo "$DATA" | grep "^${PREFIX}" | sort -r)
-    local UPSUM=$(echo "$UDATA" | awk '/->up/{sum+=$2;}END{print sum;}')
-    local DOWNSUM=$(echo "$UDATA" | awk '/->down/{sum+=$2;}END{print sum;}')
-    UDATA="${UDATA}\nTOTAL->up ${UPSUM}\nTOTAL->down ${DOWNSUM}"
-    echo -e "$UDATA" | numfmt --field=2 --suffix=B --to=iec | column -t
+    local SORTED=$(echo "$DATA" | grep "^${PREFIX}" | sort -r)
+    local SUM=$(echo "$SORTED" | awk '
+        /->up/{us+=$2}
+        /->down/{ds+=$2}
+        END{
+            printf "SUM->up:\t%.0f\nSUM->down:\t%.0f\nSUM->TOTAL:\t%.0f\n", us, ds, us+ds;
+        }')
+    echo -e "${SORTED}\n${SUM}" \
+    | numfmt --field=2 --suffix=B --to=iec \
+    | column -t
 }
 
-v2_query_all $1
+DATA=$(apidata $1)
+echo "------------Inbound----------"
+print_sum "$DATA" "inbound"
+echo "-----------------------------"
+echo
+echo "-------------User------------"
+print_sum "$DATA" "user"
+echo "-----------------------------"
 ```
 
 Example of output
 
 ```text
 $ ./traffic.sh
-
 ------------Inbound----------
-inbound:ws->up      2.7KB
-inbound:ws->down    3.1KB
-inbound:api->up     161B
-inbound:api->down   724B
-TOTAL->up           2.9KB
-TOTAL->down         3.8KB
+inbound:ws->up      0B
+inbound:ws->down    0B
+inbound:tcp->up     47B
+inbound:tcp->down   0B
+inbound:kcp->up     259MB
+inbound:kcp->down   2.4GB
+inbound:api->up     2.0KB
+inbound:api->down   6.6KB
+SUM->up:            259MB
+SUM->down:          2.4GB
+SUM->TOTAL:         2.6GB
 -----------------------------
 
 -------------User------------
-user:u3@ws->up    2.4KB
-user:u3@ws->down  2.7KB
-TOTAL->up         2.4KB
-TOTAL->down       2.7KB
+user:me@kcp->up    240MB
+user:me@kcp->down  2.3GB
+SUM->up:           240MB
+SUM->down:         2.3GB
+SUM->TOTAL:        2.5GB
 -----------------------------
 ```
 
-Setting `reset` argument to script reset stats values to zero on each call. Use together with bash command watch, you can view traffic speed going through v2ray on real time:
+Setting `reset` argument to script reset values to zero on each call. Use together with command watch, you can view traffic speed going through v2ray in real time:
+
 `watch ./traffic.sh reset`
+
+#### Updates
+
+- 2019-08-07 Updated the stats script to process the output in Scientific notation
+- 2019-08-09 Optimized traffic statistics and added the SUM->TOTAL column
