@@ -15,10 +15,10 @@ V2Ray 使用 inbound(传入) 和 outbound(传出) 的结构，这样的结构非
 文本编辑器有许多，比如说 Sublime Text、VS code、atom、notepad++，上面这些都是跨平台的，具体如何使用请自行 Google 吧。这些软件都可以做到高亮显示、折叠、格式化等，建议使用，如果你不想安装软件，网上也有一些在线的 json 编辑器，还自动检查语法。如果你非要用 Windows 的记事本我也无话可说。
 
 下面是一张 Windows 自带的记事本对比 Sublime Text 查看同一个 json 文件的图片，孰优孰劣大家心中自有判断。
-![](/resource/images/notepad_vs_ST.png)
+![](../resource/images/notepad_vs_ST.png)
 
 又比如格式化功能：
-![](/resource/images/formatdemo.gif)
+![](../resource/images/formatdemo.gif)
 
 对于 Linux 有一个软件叫 jq，可以执行这样的指令检查配置文件的语法是否正确：
 ```
@@ -26,10 +26,10 @@ $ jq . config.json
 ```
 这里的 config.json 是当前目录下的 config.json。特别注意命令中的点 . 不能省去。
 
-![](/resource/images/jqdemo.png)
+![](../resource/images/jqdemo.png)
 当我把 "23ad6b10-8d1a-40f7-8ad0-e3e35cd38297" 后的逗号 , 删去时：
 
-![](/resource/images/jqerror.png)
+![](../resource/images/jqerror.png)
 
 （从 v2.11 起新增了一个注释功能，配置文件允许 `//` 和 `/**/` 注释。但是 JSON 的标准格式的没有注释的，也就是说如果你给配置文件加了注释，再使用上文我说的格式化功能会报错说你的 JSON 语法（格式）不对。）
 
