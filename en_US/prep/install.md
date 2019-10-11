@@ -136,17 +136,17 @@ Some attentive friends may notice that V2Ray has just released a new version on 
 
 <!-- ~~~~ -->
 You can actually run V2Ray by double-clicking v2ray.exe (or wv2ray.exe), and V2Ray will read the configuration in config.json to connect to the server.
-![](/resource/images/v2rayrunnig.png)
+![](../resource/images/v2rayrunnig.png)
 
 V2Ray gives all the options to the user, it does not automatically set the system proxy, so you also need to set the proxy in the browser. For example, Firefox (Firefox), click Menu -> Options -> Advanced -> Settings -> Manual Proxy Settings, fill in 127.0.0.1 in SOCKS Host, fill in 1080 in the following port, and then proxy DNS when using SOCKS v5 ( This tick option is called remote DNS in the old version. The operation diagram is as follows:
 
-![](/resource/images/firefox_proxy_setting1.png)
+![](../resource/images/firefox_proxy_setting1.png)
 
-![](/resource/images/firefox_proxy_setting2.png)
+![](../resource/images/firefox_proxy_setting2.png)
 
-![](/resource/images/firefox_proxy_setting3.png)
+![](../resource/images/firefox_proxy_setting3.png)
 
-![](/resource/images/firefox_proxy_setting4.png)
+![](../resource/images/firefox_proxy_setting4.png)
 
 If you are using another browser, please find out how to set up the SOCKS proxy on the Internet.
 
