@@ -16,10 +16,10 @@ In fact, you don't have to prepare anything as long as you have a text editor to
 Instead, VSCode is a useful tool for writing JSON, and it also supports reformatting, which is powerful for beginners. Moreover, there are plenty of other text editors, such as Sublime Text, Atom, Notepad++, etc. They are all versatile and easy to use, and you may Google them for details. These software have features like code highlighting, folding, reformatting, so again, they are highly recommended. If you don't want to install any software, there are also some online JSON editors you can find online, and the syntax will be checked automatically. 
 
 Here is a comparison of the notepad that came with Windows and Sublime Text viewing the same JSON file.
-![](../resource/images/notepad_vs_ST.png)
+![](/resource/images/notepad_vs_ST.png)
 
 Another example is reformatting feature
-![](../resource/images/formatdemo.gif)
+![](/resource/images/formatdemo.gif)
 
 There is a command line tool called `jq`, by executing the following command, you can check the grammar of configuration file.
 
@@ -28,10 +28,10 @@ $ jq . config.json
 ```
 Here `config.json` is the `config.json` file in the current directory. Pay special attention to the period in the command. You can't ignore it.
 
-![](../resource/images/jqdemo.png)
+![](/resource/images/jqdemo.png)
 When deleting the comma after "23ad6b10-8d1a-40f7-8ad0-e3e35cd38297", the result is:
 
-![](../resource/images/jqerror.png)
+![](/resource/images/jqerror.png)
 
 Note that, a comment feature has been added since V2Ray v2.11. The configuration file allows `//` and `/**/` comments which is not supported by official JSON format. Therefore it is supposed to be reported as error in some error-checking tools. Don't panic.
 
