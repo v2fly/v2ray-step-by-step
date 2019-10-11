@@ -135,17 +135,17 @@ V2Ray 的更新策略是快速迭代，每周更新(无意外的情况下)。版
 * `其它` 除上面的提到文件外，其他的不是运行 V2Ray 的必要文件。更详细的说明可以看 doc 文件夹下的 readme.md 文件，可以通过记事本或其它的文本编辑器打开查看
 
 实际上双击 v2ray.exe （或wv2ray.exe） 就可以运行 V2Ray 了，V2Ray 会读取 config.json 中的配置与服务器连接。~~默认的配置文件包含 V2Ray 官方服务器的配置，也就是说你可以不自己搭建服务器而直接使用 V2Ray 提供的服务器科学上网。在不修改 config.json 的情况下，双击运行 v2ray.exe，可以直接科学上网~~（V2Ray 官方服务器已下线）。
-![](../resource/images/v2rayrunnig.png)
+![](/resource/images/v2rayrunnig.png)
 
 V2Ray 将所有选择权交给用户，它不会自动设置系统代理，因此还需要在浏览器里设置代理。以火狐（Firefox）为例，点菜单 -> 选项 -> 高级 -> 设置 -> 手动代理设置，在 SOCKS Host 填上 127.0.0.1，后面的 Port 填 1080，再勾上使用 SOCKS v5 时代理 DNS (这个勾选项在旧的版本里叫做远程 DNS)。操作图见下：
 
-![](../resource/images/firefox_proxy_setting1.png)
+![](/resource/images/firefox_proxy_setting1.png)
 
-![](../resource/images/firefox_proxy_setting2.png)
+![](/resource/images/firefox_proxy_setting2.png)
 
-![](../resource/images/firefox_proxy_setting3.png)
+![](/resource/images/firefox_proxy_setting3.png)
 
-![](../resource/images/firefox_proxy_setting4.png)
+![](/resource/images/firefox_proxy_setting4.png)
 
 如果使用的是其它的浏览器，请自行在网上搜一下怎么设置 SOCKS 代理。
 
