@@ -155,17 +155,6 @@ function i18nSidebar(locale) {
 }
 
 module.exports = {
-  chainWebpack: (config, isServer) => {
-    if (!isServer) {
-      // mutate the config for client
-    }
-    config.module.rule('bmp').test(/\.bmp$/).use('file-loader').loader('file-loader').tap(options => {
-      options = {};
-      options.outputPath = 'assets/img';
-      options.name = '[name].[md5:hash:hex:8].[ext]';
-      return options
-    }).end()
-  },
   title: '新 V2Ray 白话文指南',
   description: 'Just playing around',
   locales: {
