@@ -35,7 +35,7 @@
     }
   ],
   "routing": {
-    "domainStrategy": "IPIfNonMatch",
+    "domainStrategy": "IPOnDemand",
     "balancers": [
       {
         "tag": "b1",
@@ -85,3 +85,4 @@
 #### 更新历史
 
 - 2018-11-09 初版
+- 2019-11-01 修正某些情况下 IP 规则无法匹配
