@@ -133,6 +133,7 @@ function i18nSidebar(locale) {
       path: i18nPath(locale, '/app/app'),
       children: i18nPath(locale, [
         'app/transparent_proxy',
+        'app/tproxy',
         'app/reverse',
         'app/reverse2',
         'app/dns',
@@ -161,7 +162,7 @@ module.exports = {
     '/': {
       lang: 'zh-CN',
       title: '新 V2Ray 白话文指南',
-      description: '你没有见过的船新版本'
+      description: 'v2fly社区维护的ToutyRater版新手向教程。'
     },
     '/en_US/': {
       lang: 'en-US',
