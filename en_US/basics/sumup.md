@@ -1,10 +1,10 @@
-# 小结
+# Summary
 
-现在对本章作个总结。
+Let's make a summary
 
-### 配置文件格式
+### Format of configuration file
 
-V2Ray 的配置文件格式就像这样：
+Configuration file of V2Ray is like below codes:
 
 ```json
 {
@@ -21,21 +21,23 @@ V2Ray 的配置文件格式就像这样：
 }
 ```
 
-总的来说，V2Ray 的配置有 10 个字段，每个字段都可以进一步展开成具体的配置。这些配置字段当中，本章有涉及到前面 4 项，关于 `dns` 、`transport` 和 `reverse` 将在后文说明。而 `api`、`policy` 和 `stats` 的内容我不考虑出，对这些感兴趣的仔细研究手册吧。
+In general, V2Ray's configuration has 10 terms, and each term can be further expanded into a more specific configuration. Among these configuration terms, this chapter refers to the first four terms. The terms `dns`, `transport`, and `reverse` will be explained later. The contents of `api`, `policy` and `stats` are not available yet, so please read the manual carefully. For details on the configuration file, refer to the  [user manual](https://www.v2ray.com/chapter_02/01_overview.html).
 
-要理解 V2Ray 的工作模式，首先得抛开客户端和服务器的概念(教程中说客户端和服务器是习惯了)，我们更应该以中转节点的概念来理解。 V2Ray 只是一个转发数据的软件，只要它从入口当中接收到数据包，不管 V2Ray 对这些数据包做了什么（加密、解密、协议转换等），到最后肯定是要把这些数据包从出口发出去。每一个运行的 V2Ray 都是一个节点，它从上一个节点接收数据，发送到下一个节点，在这样由多个节点组成的代理链中，首节点和末节点就是我们常说的客户端和服务器。更广义地说，每个节点对于上一个节点来说是服务器，对于下一个节点来说是客户端。
+To understand the working mechanism of V2Ray, we must first change the concept of client and server (the tutorial says that the client and server are used to it). We should understand the concept of a transit node. V2Ray is just a software that forwards data, as long as it receives packets from the portal, regardless of what V2Ray does for those packets (encryption, decryption, protocol conversion, etc.), in the end it must be sent out from the exit. Each running V2Ray is a node that receives data from the previous node and sends it to the next node. In such a proxy chain consisting of multiple nodes, the first node and the last node are the clients and servers we often say. More broadly, each node is a server for the previous node and a client for the next node.
 
 
-### 协议
 
-无论是出口还是入口，我们首先要明确的是协议，只有协议对了才能正常通信。
+### Protocol
 
-V2Ray 的传入协议有 HTTP、SOCKS、VMess、Shadowsocks、Dokodemo-door；传出协议有 VMess、Shadowsocks、Blackhole、Freedom、SOCKS。
+Whether it is incoming or outgoing, the first thing we need to make clear is the protocol. Only when the protocol parameters are correct we can communicate normally.
 
-在 inbounds 和 outbounds 当中，无论使用了什么协议，inbounds 或者 outbounds 的配置格式都是一样的，区别只在于不同的协议对应的 settings 内容不一样。
+The incoming protocols for V2Ray are HTTP, SOCKS, VMess, Shadowsocks, and Dokodemo-door; the outgoing protocols are VMess, Shadowsocks, Blackhole, Freedom, and SOCKS.
+
+In inbounds and outbounds terms, the configuration format of inbounds or outbounds is the same regardless of the protocol used. The only difference is that the settings of the different protocols are different.
 
 -----
-#### 更新历史
+#### Updates
 
-- 2018-04-05 补充
-- 2018-11-09 跟进 v4.0+ 配置格式
+- 2018-04-05 Add more details
+- 2018-11-09 Adapt to v4.0+ configuration format.
+- 2019-07-12 Update the link of manual
