@@ -1,8 +1,8 @@
 # Ads Filtering
 
-## Configuration Example
+## Configuration
 
-### Client-side
+### Client-side configuraion
 
 ```json
 {
@@ -94,7 +94,7 @@
 }
 ```
 
-### Server-side
+### Server-side configuration
 
 ```json
 {
@@ -165,3 +165,4 @@ For more information, please refer [V2Ray Official Guide](https://v2fly.org/chap
 #### Updates
 
 - 2018-11-09 Adapt to v4.0+ configuration format.
+- 2019-11-03 Fix editing mistakes
