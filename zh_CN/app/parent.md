@@ -104,6 +104,3 @@
 }
 ```
 **注意:使用HTTP为前置代理时,因为HTTP协议的特性无法代理UDP包,所以[底层传输协议](https://www.v2fly.org/chapter_02/05_transport.html)不要选择KCP,QUIC之类以UDP传输的协议**
-#### 更新历史
-
-- 2019-11-16 初版
