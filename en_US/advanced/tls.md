@@ -223,7 +223,9 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 
 ## Verify
 
-Usually, after doing above steps, V2Ray client already can connected to internet, which means the TLS configuration is working. However, with a reliable way to verify if it is enabled will make it more convinced.
+Usually, after doing the above steps, V2Ray client already can connect to the internet, which means the TLS configuration is working. However, with a reliable way to verify if it is enabled will make it more convinced.
+
+There are many ways to validate the TLS, but an easy one is from  [Qualys SSL Labs's SSL Server Test](https://www.ssllabs.com/ssltest/index.html).
 
 ** NOTE: Qualys SSL Labs's SSL Server Test runs check on port 443, so you have to configure your server's inbound port to 443. **
 
