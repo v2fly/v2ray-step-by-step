@@ -1,7 +1,8 @@
-# 域名文件
+# Domain file
 
-## 内置的域名文件
-在下载 V2Ray 的时候，下载的压缩包有一个 geosite.dat。这个文件是在路由功能里用到的，文件内置了许多[常见的网站域名](https://github.com/v2ray/domain-list-community)。配置方式如下，geosite 指 geosite.dat 文件，后面的 cn 是一个标签，代表着使用 geosite.dat 文件里的 cn 规则。
+## Domain list file downloaded with V2Ray
+
+When downloading V2Ray, the downloaded file contains a geosite.dat. This file is used in the routing feature, which has many built-in [common website domain names](https://github.com/v2ray/domain-list-community). The configuration is as follows, geosite refers to the geosite.dat file, and the following cn is a label, which represents the use of the cn rule in the geosite.dat file.
 ```json
 {
     "type": "field",
@@ -11,15 +12,17 @@
     ]
 }
 ```
-通过它可以设定这些国内域名走直连,这样就相当把规则的域名写到一个文件里，然后在配置中引用这个域名文件，其中有一个好处是配置比较简洁，看起来比较清爽。
+Through this file of the list, you can set these traffic of Chinese domains will not bypass the proxy, and simply setting these domains in one line in the configuration file. One of the advantages is that the configuration is relatively simple and clear.
 
-## 外置的域名文件
+## External domains list file
 
-很多时候，V2Ray 内置的国内域名不能满足使用。不过 V2Ray 可以使用外部自定义的像 geosite.dat 这样的域名文件，刚好我也制作了一个，可以供大家使用。
+Many times, V2Ray's built-in Chinese domain name does not cover all necessary websites. However, V2Ray can load an externally customized domains file like geosite.dat. Here we provide one, you can simply download it.
 
-1. 到 https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles 下载 h2y.dat 文件放到 V2Ray 运行文件的目录下。
-1. 按需要些路由规则，格式为 "ext:h2y.dat:tag"。ext 表示使用外部文件；h2y.dat 是具体的文件名；tag 泛指标签，有哪些标签由文件提供。上个步骤下载的 h2y.dat 文件目前只有 `ad` 和 `gfw` 两个标签，ad 包含着常见的广告域名，gfw 包含着常见的被 gfw 屏蔽的域名。它们各自所包含的域名在[这里](https://github.com/ToutyRater/v2ray-SiteDAT/tree/master/h2y)可以看到。这个域名文件每星期自动更新，如果你使用了我提供的域名文件也请定期更新(打开 https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles 看到的都是当时的最新版本)。路由配置示例如下。
-1. 运行 V2Ray。
+1. Go to the below link:
+(https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles)[https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles]
+You can download h2y.dat, and put it in the same directory of V2Ray configuration file
+1. For external domian list, the format is "ext:h2y.dat:tag". ext means to use an external file; h2y.dat is a specific file name; tag refers to a tag, and which tags are provided by the file. The h2y.dat file downloaded in the previous step currently has only two tags, `ad` and `gfw`, ad contains the common ad domain name, and gfw contains the common gfw-shielded domain name. The domain names they contain are visible in [here](https://github.com/ToutyRater/v2ray-SiteDAT/tree/master/h2y). This domain list file is automatically updated every week. If you use the domain list file here provided, please update it regularly (open https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles) and see the latest updates at the time. An example of routing configuration is as below:
+1. Run V2Ray
 ```json
 "rules":[
     {
@@ -39,9 +42,9 @@
 ]
 ```
 
-需要注意的是，目前所有第三方的 V2Ray GUI 客户端都不支持加载外置的域名文件。
+It should be noted that all third-party V2Ray GUI clients do not support loading external domain name files.
 
-#### 更新历史
+#### Updates
 
-- 2018-06-07 初版
-- 2018-11-06 删除不必要的标签
+- 2018-06-07 Initial release
+- 2018-11-06 Delete unnecessary tags
