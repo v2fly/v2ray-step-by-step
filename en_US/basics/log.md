@@ -1,20 +1,18 @@
-# 日志文件
+# Log File
 
-使用一个软件总是不可避免出现一些问题，比如说你用着某个软件突然间崩溃了，兴冲冲向开发者反馈说软件有崩溃现象。开发者问你日志，你没有；问你详细情况，你支支吾吾说不出来。比较和蔼的开发者可能会跟你说：好的，我知道了，这个问题会解决的。内心独白却是：mdzz，啥也说不出来，日志也没有还瞎 bb。
+This section is some explanation to configure the log output in V2ray. When trying to feedback software crashes or report some bugs, it's always appriciated to have a full runtime logs. Not having detailed log files cannot help you out for developers.
 
-以上纯属杜撰，我非计算机软件的从业人员，不清楚里边的情况，诸位看官一看笑过便好不必当真。
+More specifically, logging is an essential part of software development. It provides developers and supports teams with special 'scope' which enable them to see what the application code is doing. For a general user, you can know how the software runs, and again, when you meet any issue, providing logs will make developers fix the issue timely.
 
-但是，对于软件开发者来说使用查看日志是一种非常有效的调试手段。普通用户使用日志可以知道软件的运行状况，并且当软件出现异常时提供日志给开发者可以令开发者更加容易找到问题的根源，加快修复问题。
+## Configuration
 
-## 配置
-
-### 客户端配置
+### Client-side Configuration
 
 ```json
 {
   "log": {
-    "loglevel": "warning", // 日志级别
-    "access": "D:\\v2ray\\access.log",  // 这是 Windows 系统的路径
+    "loglevel": "warning", // Level of log
+    "access": "D:\\v2ray\\access.log",  // Your path of in windows
     "error": "D:\\v2ray\\error.log"
   },
   "inbounds": [
@@ -52,13 +50,13 @@
 }
 ```
 
-### 服务器配置
+### Server-side Configuration
 
 ```json
 {
   "log": {
     "loglevel": "warning",
-    "access": "/var/log/v2ray/access.log", // 这是 Linux 的路径
+    "access": "/var/log/v2ray/access.log", // Your path of log in Linux
     "error": "/var/log/v2ray/error.log"
   },
   "inbounds": [
@@ -84,21 +82,24 @@
 }
 ```
 
-依次看 log 的选项：
-* loglevel：日志级别，分别有5个，本例中设定的是 warning
-  - debug：最详细的日志信息，专用于软件调试
-  - info：比较详细的日志信息，可以看到 V2Ray 详细的连接信息
-  - warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用 warning
-  - error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行
-  - none：空。不记录任何信息
-* access：将访问的记录保存到文件中，这个选项的值是要保存到的文件的路径
-* error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径
-* error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout 即命令行中（terminal、cmd 等），便于排错
+Let's look at the settings of log:
+* `loglevel`: level of log, there are 5 levels,  `warning` level is used in this example.
+  - `debug`: the most detailed level, used for debugging
+  - `info`: detailed log information, will show each request through V2Ray
+  - `warning`: warning information, will contain some unimportant errors
+  - `error`: important errors, which relate to fatal information to V2ray running 
+  - none: will not prompt any information
+* `access`: the path of access log files
+* `error`: the path of error log files
+* When error, access slot are empty, V2Ray logs are output directly in stdout (Terminal, cmd etc.) to facilitate debug.
 
-**需要注意的一点是，在 json 中，反斜杠 \\ 有特殊意义，因此 Windows 操作系统目录的 \\ 符号在配置中要使用 \\\\ 来表示。**
+::: tip Tips
+In JSON, the backslash `\` has special meaning, so the `\` symbol of the Windows operating system directory is represented by `\\` in the configuration.
+:::
 
 ------
-#### 更新历史
+#### Updates
 
 - 2018-09-03 Update
-- 2018-11-09 跟进 v4.0+ 的配置格式
+- 2018-11-09 Adapt to v4.0+ configuration format.
+- 2019-07-12 New Markdown container from Vuepress, update for some information
