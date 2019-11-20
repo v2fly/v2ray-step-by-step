@@ -1,74 +1,74 @@
-# 代理转发
+# Proxy Forwarding
 
-V2Ray 提供了代理转发功能，利用它可以实现中转（在没有中转服务器操作权限的情况下）。
+V2Ray provides a proxy forwarding feature that allows it behaves a preposed proxy (without server-side configuration).
 
-## 基本代理转发
+## Basic proxy forwarding.
 
-使用代理转发可以实现由一个 Shadowsocks 服务器或者 V2Ray(VMess) 服务器来中转你的网络流量，并且中转服务器只能看到你加密的数据而不知道原始的数据是什么。
+Using proxy forwarding allows you to relay your network traffic from a Shadowsocks server or a V2Ray (VMess) server, and the intermediate transit server can only see your encrypted data without sniffing what the original data is.
 
-以下面的配置说明，它的工作原理是：
-1. 你在 Twitter 发了个帖子 f**k GFW，由 V2Ray 代理
-2. V2Ray 客户端收到浏览器发出的 f**k GFW 的帖子后，首先由对其进行加密(VMess，id: b12614c5-5ca4-4eba-a215-c61d642116ce,目的服务器: 1.1.1.1:8888)
-3. 加密后数据包将被转到 transit 这个 outbound 中，在这里数据包又会加密一次(Shadowsocks, password: password, 服务器: 2.2.2.2:1024)
-4. 两次加密后的数据包被发送到了 Shadowsocks 服务器，该服务器收到后解包后得到仍是加密的数据包（步骤 2 中加密后的数据包），然后将数据包发到 VMess 服务器。即便这个 Shadowsocks 服务器的主人是个偷窥狂魔，他也没办法看到你的原始数据。
-5. VMess 服务器收到 Shadowsocks 服务器发来的数据包，解密得到原始的数据包，然后把你这个帖子发到 Twitter 的网站中。
+In the following configuration, it works like:
+1. You posted a message on Twitter f**k GFW, proxied by V2Ray
+2. After receiving the f**k GFW post from the browser, the V2Ray client first encrypts it (VMess, id: b12614c5-5ca4-4eba-a215-c61d642116ce, destination server: 1.1.1.1:8888)
+3. After the encryption, the packet will be transferred to the outbound of the transit, where the packet will be encrypted again (Shadowsocks, password: password, Server: 2.2.2.2:1024)
+4. The twice encrypted packet is sent to the Shadowsocks server, which receives the unpacked packet and obtains the encrypted packet (the encrypted packet in step 2), and then sends the packet to the VMess server. Even if the owner of this Shadowsocks server is a voyeur, he can't see your raw data.
+5. The VMess server receives the packet from the Shadowsocks server, decrypts the original packet, and sends your post to Twitter's website.
 
-只要第 5 步中的服务器是自己掌控的就不用担心别人看到你的上网的内容。
+As long as the server in step 5 is under your control, you don't have to worry about what others see on your Internet.
 
-客户端：
+Client-side
 
 ```json
 {
-  "outbounds": [
-    {
-      "protocol": "vmess",
-      "settings": { // settings 的根据实际情况修改
-        "vnext": [
-          {
-            "address": "1.1.1.1",
-            "port": 8888,
-            "users": [
-              {
-                "alterId": 64,
-                "id": "b12614c5-5ca4-4eba-a215-c61d642116ce"
-              }
-            ]
-          }
-        ]
-      },
-      "proxySettings": {
-          "tag": "transit"  // 这里的 tag 必须跟作为代理 VPS 的 tag 一致，这里设定的是 "transit"
-        }
-    },
-    {
-      "protocol": "shadowsocks",
-      "settings": {
-        "servers": [
-          {
-            "address": "2.2.2.2",
-            "method": "aes-256-cfb",
-            "ota": false,
-            "password": "password",
-            "port": 1024
-          }
-        ]
-      },
-      "tag": "transit"
-    }
-  ]
+"outbounds": [
+{
+"protocol": "vmess",
+"settings": { // settings are modified according to the actual situation
+"vnext": [
+{
+"address": "1.1.1.1",
+"port": 8888,
+"users": [
+{
+"alterId": 64,
+"id": "b12614c5-5ca4-4eba-a215-c61d642116ce"
+}
+]
+}
+]
+},
+"proxySettings": {
+"tag": "transit" // The tag here must match the tag as the proxy VPS. The "transit" is set here.
+}
+},
+{
+"protocol": "shadowsocks",
+"settings": {
+"servers": [
+{
+"address": "2.2.2.2",
+"method": "aes-256-cfb",
+"ota": false,
+"password": "password",
+"port": 1024
+}
+]
+},
+"tag": "transit"
+}
+]
 }
 ```
 
-## 链式代理转发
+## Chain proxy forwarding
 
-如果你有多个 Shadowsocks 或 VMess 账户，那么你可以这样:
+If you have multiple Shadowsocks or VMess accounts, then you can do this:
 
 ```json
 {
   "outbounds": [
     {
       "protocol": "vmess",
-      "settings": { // settings 的根据实际情况修改
+      "settings": { // Editing this for your network envirionment
         "vnext": [
           {
             "address": "1.1.1.1",
@@ -145,18 +145,18 @@ V2Ray 提供了代理转发功能，利用它可以实现中转（在没有中�
 }
 ```
 
-那么数据包经过的节点依次为：
-PC -> AliHK -> AliSG -> DOSG -> DOUS -> 目标网站
+Then the nodes through which the packet passes are:
+PC -> AliHK -> AliSG -> DOSG -> DOUS -> Destined Website
 
-这样的代理转发形成了一条链条，我称之为链式代理转发。
+Such proxy forwarding forms a chain, which I call chained proxy forwarding.
 
-**注意：如果你打算配置(动态)链式代理转发，应当明确几点：**
-* `性能`。链式代理使用了多个节点，可能会造成延时、带宽等网络性能问题，并且客户端对每一个加解密的次数取决于代理链的长度，理论上也会有一定的影响。
-* `安全`。前文提到，代理转发会一定程度上提高安全性，但安全取决于最弱一环，并不意味着代理链越长就会越安全。如果你需要匿名，请考虑成熟的匿名方案。
-另外，使用了代理转发 streamSettings 会失效，即只能是非 TLS、无 HTTP 伪装的 TCP 传输协议。
+**Note: If you plan to configure (dynamic) chained proxy forwarding, you should be clear about the following: **
+* `Performance`. The chained proxy uses multiple nodes, which may cause network performance problems such as delay and bandwidth. The number of times the client encrypts and decrypts each depends on the length of the proxy chain, and theoretically, it will have a certain impact.
+* `Security`. As mentioned earlier, proxy forwarding will improve security to a certain extent, but security depends on the weakest link. It does not mean that the longer the proxy chain, the more secure it will be. If you need to be anonymous, consider a mature anonymous solution.
+In addition, the use of proxy forwarding streamSettings will be invalid, that is, only non-TLS, no HTTP obfuscation, standard TCP transport protocol. 
 
-#### 更新历史
+#### Updates
 
 - 2018-03-17 Update
 - 2018-07-08 Update
-- 2018-11-17 V4.0+ 配置
+- 2018-11-17 Adapted for V4.0+
