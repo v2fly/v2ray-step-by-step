@@ -7,7 +7,7 @@ V2Ray provides a proxy forwarding feature that allows it behaves a preposed prox
 Using proxy forwarding allows you to relay your network traffic from a Shadowsocks server or a V2Ray (VMess) server, and the intermediate transit server can only see your encrypted data without sniffing what the original data is.
 
 In the following configuration, it works like:
-1. You posted a message on Twitter f**k GFW, proxied by V2Ray
+1. You tweeted on Twitter said f**k GFW, proxied by V2Ray
 2. After receiving the f**k GFW post from the browser, the V2Ray client first encrypts it (VMess, id: b12614c5-5ca4-4eba-a215-c61d642116ce, destination server: 1.1.1.1:8888)
 3. After the encryption, the packet will be transferred to the outbound of the transit, where the packet will be encrypted again (Shadowsocks, password: password, Server: 2.2.2.2:1024)
 4. The twice encrypted packet is sent to the Shadowsocks server, which receives the unpacked packet and obtains the encrypted packet (the encrypted packet in step 2), and then sends the packet to the VMess server. Even if the owner of this Shadowsocks server is a voyeur, he can't see your raw data.
