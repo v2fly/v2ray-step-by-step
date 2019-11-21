@@ -84,6 +84,11 @@ server {
 mydomain.me
 {
   log ./caddy.log
+  
+  rewrite /ray { # WebSocket协商失败时返回404,路径与下方的proxy路径保持一致
+    if {>upgrade} not websocket
+    to status 404
+  }
   proxy /ray localhost:10000 {
     websocket
     header_upstream -Origin
