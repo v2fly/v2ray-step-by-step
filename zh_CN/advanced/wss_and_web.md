@@ -60,7 +60,7 @@ server {
   ssl_ciphers           HIGH:!aNULL:!MD5;
   server_name           mydomain.me;
     location /ray { # 与 V2Ray 配置中的 path 保持一致
-      if ($http_upgrade != "websocket") {
+      if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
           return 404;
       }
       proxy_redirect off;
