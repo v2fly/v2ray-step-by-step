@@ -230,6 +230,7 @@ There are many ways to validate the TLS, but an easy one is from  [Qualys SSL La
 ** NOTE: Qualys SSL Labs's SSL Server Test runs check on port 443, so you have to configure your server's inbound port to 443. **
 
 Click [Qualys SSL Labs's SSL Server Test](https://www.ssllabs.com/ssltest/index.html), then input your domain into Hostname; then click submit, after a while, you will able to see the result.
+
 ![](../resource/images/tls_test1.png)
 
 ![](../resource/images/tls_test2.png)
