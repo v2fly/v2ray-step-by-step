@@ -4,14 +4,13 @@
 
 This repository is a fork of `ToutyRater/v2ray-guide`, thank you to help many people cross the GFW.
 
-As we want to make [the original guide of V2Ray](https://github.com/ToutyRater/v2ray-guide) more well-maintained and up-to-date, as well as multi-lingual, we forked this new repository. You are welcome to contribute your experience, translation and making a correction to this document by opening an issue.
+As we want to make [the original guide of V2Ray](https://github.com/ToutyRater/v2ray-guide) more well-maintained and up-to-date, as well as multi-lingual, we forked this new repository. You are welcome to contribute your experience, translation and making a correction to this document by opening an issue. Also, if you want to help us proofread this translation, please do not hesitate to open an issue.
 
 The documents now licensed under [BY-CC 4.0](`LICENSE.md`).
 
 ## Introduction
 
 V2Ray is a tool under Project V. Project V is a project that includes a set of tools for building specific network environments, and V2Ray is the core one. The Project V manual said `Project V is a set of tools to help you build your own privacy network over the internet. The core of Project V, named V2Ray, is responsible for network protocols and communications. It can work standalone, as well as combine with other tools.` However, in terms of launching time, Project V is prior than V2Ray.
-
 If you still don't understand, then we simply say, V2Ray is a similar proxy software to Shadowsocks. V2Ray can be used to access the internet (over the censorship) to learn advanced science and technology from the free internet.
 
 V2Ray User manual:
@@ -37,7 +36,7 @@ Due to the different historical backgrounds at birth, they have different featur
 
 Merely speaking, Shadowsocks is a single proxy protocol, and V2Ray is more complicated than a single protocol proxy. Sounds a bit bleak to Shadowsocks? of course not! From another point of view, Shadowsocks is easy to deploy, and V2Ray has more complicated configurations while deploying.
 
-#### Since V2Ray is more complicated, why using it?
+#### Since V2Ray is more complicated, why we using it?
 
 The advantages and disadvantages of something always come along. For instance, V2Ray has the following advantages:
 
@@ -45,14 +44,14 @@ The advantages and disadvantages of something always come along. For instance, V
 * **Better performance:** Better network performance, specific data can be seen [V2Ray official blog](https://steemit.com/cn/@v2ray/3cjiux)
 * **More features:** The following are some of the features of V2Ray:
     * mKCP: KCP protocol implementation on V2Ray, you don't need to install another kcptun.
-    * Dynamic port: dynamically change the communication port to combat the speed limit of long-term large triaffic port
+    * Dynamic port: dynamically change the communication port to combat the speed limit of long-term large traffic port
     * Routing features: you can freely set the flow direction of the specified data packet, to block advertisements and enable anti-tracking
     * Outbound proxy, or say chain proxy, uses many links for better privacy
     * Obfuscation: similar to the obfuscation of ShadowsocksR, and the data package for mKCP can also be obfuscated. Obfuscating the traffic packets other protocol traffic, making inspection more difficult
     * WebSocket protocol: Only use WebSocket proxy, or for CDN intermediate proxy (better anti-blocking)
     * Mux: Multiplexing, further improving the concurrent performance of the proxy
 
-#### No sliver bullet
+#### There is no silver bullet
 
 For now, V2Ray has the following disadvantages:
 - Complex configuration
@@ -79,9 +78,9 @@ Since many V2Ray users have experience with Shadowsocks, they can basically use 
 - Client: V2Ray itself is just a kernel. The GUI client of V2Ray is mostly a shell called V2Ray kernel, similar to the relationship between the Linux kernel and the Linux operating system. But many clients of Shadowsocks are re-implemented the protocol by the author. The content of this article does not involve the use of GUI clients at this moment.
 - Policy proxy: Perhaps the first imagination is PAC. Whether Shadowsocks (specifically Shadowsocks-libev) or V2Ray themselves do not support PAC, it controlled by the user client. Whereas Shadowsocks uses ACL, V2Ray uses its routing function, and we do not say which is good or bad. You can choose the better one, depends on you.
 
-- Share Link/QR Code: V2Ray does not have a uniform URL format like Shadowsocks, so the shared link/QR code of each V2Ray graphics client is not necessarily universal. However, we are working on the implementation of the V2Ray endpoint protocol. It will provide a universal link for V2Ray clients.
+- Share Link/QR Code: V2Ray does not have a uniform URL format like Shadowsocks, so the shared link/QR code of each V2Ray graphics client is not necessarily universal. However, we are working on the protocol implementation of the V2Ray endpoint protocol. It will provide a universal link for V2Ray clients.
 - Encryption: V2Ray (specifically VMess protocol) does not like Shadowsocks, which emphasizes the choice of encryption, and VMess encryption is specified by the client, the server is adaptive.
-- Time: Use V2Ray to ensure accurate time, as this is for safe design.
+- Time: When using VMess protocol from V2Ray, you need to ensure time is accurate for both client and server, as this is for safe design.
 - Password: V2Ray (VMesss) only uses UUID, which acts like Shadowsocks' password, but randomness is much better than Shadowsocks' password, but it is not convenient to remember (safety and convenience contradiction).
 - UDP relay: VMess is a TCP-based stream protocol. For UDP packets, VMess will be converted to TCP stream and then relay packets, i.e. UDP over TCP. To enable UDP, you can enable UDP in the client's socks protocol. However, note that this is not very good for gaming acceleration.
 - Gateway proxy: In fact, they are no different. Don't think that you can't use them on the router without plug-ins.
