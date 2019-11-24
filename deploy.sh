@@ -13,7 +13,7 @@ git config user.name V2FlyContrib
 git config user.email SharedAccount+V2FlyContrib@unial.org
 git config commit.gpgsign false
 git add -A
-git commit -m "built at $(LANG=en_US date)"
+git commit -m "build $(date -u '+#%U%g%w-%N')"
 git push -f -v --progress git@github.com:v2fly/v2ray-step-by-step.git master:gh-pages
 cd ../
 rm -rfv dist/
