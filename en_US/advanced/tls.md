@@ -139,7 +139,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 
 ## Configure V2Ray
 
-### Server-side
+### Server-side configuration
 
 ```json
 {
@@ -178,7 +178,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 }
 ```
 
-### Client-side
+### Client-side configuraion
 
 ```json
 {
@@ -223,18 +223,21 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 
 ## Verify
 
-Usually, after doing above steps, V2Ray client already can connected to internet, which means the TLS configuration is working. However, with a reliable way to verify if it is enabled will make it more convinced.
+Usually, after doing the above steps, V2Ray client already can connect to the internet, which means the TLS configuration is working. However, with a reliable way to verify if it is enabled will make it more convinced.
+
+There are many ways to validate the TLS, but an easy one is from  [Qualys SSL Labs's SSL Server Test](https://www.ssllabs.com/ssltest/index.html).
 
 ** NOTE: Qualys SSL Labs's SSL Server Test runs check on port 443, so you have to configure your server's inbound port to 443. **
 
-Open [Qualys SSL Labs's SSL Server Test](https://www.ssllabs.com/ssltest/index.html) and put in your domain in "Hostname" text box, then click submit. Result would prompt in minutes.
-![](/resource/images/tls_test1.png)
+Click [Qualys SSL Labs's SSL Server Test](https://www.ssllabs.com/ssltest/index.html), then input your domain into Hostname; then click submit, after a while, you will able to see the result.
 
-![](/resource/images/tls_test2.png)
+![](../resource/images/tls_test1.png)
+
+![](../resource/images/tls_test2.png)
 This is an overall scoring to your TLS/SSL configuration, Here I got A, which is nice enough and proves our TLS is working fine.
 
-![](/resource/images/tls_test3.png)
-Here it is your certificate information. In this screenshot we can see it is valid through Dec 27, 2016 to Mar 27, 2017, and the encryption method used is 256-bit ECC certificate, which is signed by Let's Encrypt. Most importantly, `Trusted` status is `Yes`, which means the certificate can be trusted.
+![](../resource/images/tls_test3.png)
+Here it is your certificate information. In this screenshot, we can see it is valid through Dec 27, 2016, to Mar 27, 2017, and the encryption method used is 256-bit ECC certificate, which is signed by Let's Encrypt. Most importantly, `Trusted` status is `Yes`, which means the certificate can be trusted.
 
 ## Tip
 

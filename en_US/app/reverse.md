@@ -1,48 +1,48 @@
-# 反向代理
+# Reverse Proxy I
 
-反向代理是一个呼声比较高的功能请求，从 v2.x 版本时就有不少人询问开发者能否加入这个功能，直至 v4.0 终于推出了。反向代理的主要是用来作内网穿透，其实就是利用 VPS 访问不具有公网 IP 的内网服务器。具体的例子是，家里有一台 NAS，因为没有公网 IP，正常情况下在外面（离开了家里的网络）没法直接访问这台 NAS，但是通过反向代理就可以。如果看到这样的举例还不明白有什么用，说明你没有相关的需求，不必再折腾了。
+The reverse proxy is a relatively high-mentioned feature request. Since the v2.x release, many people have asked developers if they can join this feature until v4.0 is finally available. The reverse proxy is mainly used for intranet penetration. It uses VPS to access intranet servers that do not have public IP. The specific example is that there is a NAS in the house. Because when your home broadband does not have a public IP, you can't directly access your NAS outside. But you can access the home NAS with a reverse proxy. If you don't have relative requirements, there is no need to read the following section.
 
-提到反向代理，就不得不提一下如今广为推崇的 FRP，我不欲比较两者在反向代理上孰优孰劣，我只是想提一句，V2Ray 的配置相较来说会难以理解一些，希望做好准备。
+When we talking about the reverse proxy, it must be indicated that FRP is widely used today. But in this tutorial, we will not discuss which one is better. However, the configuration of V2Ray is more difficult to understand. You will need to have a better understanding of V2Ray to configure the reverse proxy.
 
-## 原理
+## Mechanism
 
-为了易于理解，本节约定有 3 种设备，名为A, B, C。其中 A 为不具备公网 IP 的内网服务器，运行了 NAS 或个人网盘等；B 为具有公网 IP 的服务器，如平常我们购买的 VPS；C 为想要访问 NAS 或私有网盘的设备（本节假设你已经搭建好了私有网盘，监听的端口为 80）。这 3 种的每一种设备都可以是一台或多台，我们先以每种设备都是 1 台来说明。为了能够建立反向代理连接，A 和 B 都要运行 V2Ray，C 可以不运行 V2Ray 。在设置好配置文件并运行 V2Ray 之后，反向代理中连接建立的次序为：
+For your easier understanding, assuming there are three types of devices in this section, A, B and C. Type of devices A does not have a public IP to access the internet, and it is running as a NAS or personal cloud. Type of devices B is a server which has a public IP address, like your VPS. Type of devices C is the device you want to use it access the NAS or personal cloud on device A. (Assuming you have a private cloud disk on device A, like NextCloud, and it listens to 80 port). Each of these three types of devices can be one or more. Let us first discuss one device for one type of case. To be able to establish a reverse proxy connection, both A and B must run V2Ray, and C may not run V2Ray. After setting up the configuration file and running V2Ray, the order of traffic delay in which the connections are established in the reverse proxy is:
 
 
-1. A 会主动向 B 发起请求，建立起一个连接；
-1. 用户在 C 上向 B 发起请求，欲访问 A 上的私有网盘；
-1. B 接受 C 的请求，通过 A 向 B 建立的连接转发给 A(即 B 反向连接了 A)；
+1. A will initiate a request to B to establish a connection;
+1. The user C initiates a request to B to access the private cloud disk on A;
+1. B accepts the request of C, and forwards the traffic to A (that is, B reversely connects A);
 
-以上过程效果就相当于 C 向 A 发起请求，达到了访问 A 的私有网盘的目的。A 向 B 发起请求，A 需要一个 outbound ，B 需要一个 inbound（因为 A 的 outbound 是连接到 B 的 inbound，具备 inbound 和 outbound 的协议有 3 种：VMess, Shadowsocks 和 Socks。本节以 VMess为例）；C 向 B 发起请求，B 还需要一个 inbound，C 不运行V2（ B 的 inbound 要接受不是来自V2的流量，只能是任意门 dokodemo-door）；因为是 A 来访问最终的服务器(私有网盘)，所以 A 还需有一个 outbound，即 freedom。也就是说 A 需要两个 outbound（VMess 和 freedom），B 需要两个inbound(VMess 和 dokodemo-door)。然后为了让 A 能够主动连接 B，A 需要配置反向代理(reverse)；同样的，为了能够让 B 反向连接 A，B 也需要配置反向代理(reverse)。最后还要配置好路由。
+The effect of the above process is equivalent to initiate a request from C to A, for accessing A's private network disk. A initiates a request to B, A needs an outbound, and B needs an inbound. (Because A's outbound is inbound to B, there are three protocols with inbound and outbound: VMess, Shadowsocks, and Socks. In this section we take VMess as an example). C initiates a request to B, B also needs an inbound, C does not run V2Ray (B's inbound to accept traffic that is not from V2Ray, can only be dokodemo-door). Because A is the final server of accessing (private network disk), A also needs an outbound, namely freedom. In other words, A requires two outbounds (VMess and freedom), and B requires two inbounds (VMess and dokodemo-door). Then in order for A to actively connect to B, A needs to configure a reverse proxy. Similarly, in order to allow B to connect back to A, B also needs to configure a reverse proxy. Finally, we need to configure the route.
 
-![](/resource/images/block_of_ reverse-doko.bmp)
+![](../resource/images/block_of_reverse-doko.png)
 
-## 配置
+## Configuration Example
 
-以下给出具体配置，请结合原理部分的描述进行理解。
+The specific configuration is given below, please understand the description in the previous principle section.
 
-### A 的配置
+### Configuration of Node A
 
 ```json
 {  
   "reverse":{ 
-    // 这是 A 的反向代理设置，必须有下面的 bridges 对象
+    // This is the reverse proxy setting for A and must have the object of the following bridge
     "bridges":[  
       {  
-        "tag":"bridge", // 关于 A 的反向代理标签，在路由中会用到
-        "domain":"private.cloud.com" // A 和 B 反向代理通信的域名，可以自己取一个，可以不是自己购买的域名，但必须跟下面 B 中的 reverse 配置的域名一致
+        "tag":"bridge", // The reverse proxy tag of A, used in routing
+        "domain":"private.cloud.com" // The domain name of the reverse proxy communication between A and B can be self-assigned. It may not be bought from the domain registry service provider, but it must be consistent with the reverse configured domain name in B below.
       }
     ]
   },
   "outbounds": [
     {  
-      //A连接B的outbound  
-      "tag":"tunnel", // A 连接 B 的 outbound 的标签，在路由中会用到
+      //The outbound of A connecting to B
+      "tag":"tunnel", // The tag of outbound of A connecting to B, will be used in the following routing setting
       "protocol":"vmess",
       "settings":{  
         "vnext":[  
           {  
-            "address":"serveraddr.com", // B 地址，IP 或 实际的域名
+            "address":"serveraddr.com", // Address of B can be an IP or a domian
             "port":16823,
             "users":[  
               {  
@@ -54,7 +54,7 @@
         ]
       }
     },
-    // 另一个 outbound，最终连接私有网盘    
+    // Another outbound connect of the private cloud disk
     {  
       "protocol":"freedom",
       "settings":{  
@@ -65,7 +65,7 @@
   "routing":{   
     "rules":[  
       {  
-        // 配置 A 主动连接 B 的路由规则
+        // Configure the routing rules for A connecting to B
         "type":"field",
         "inboundTag":[  
           "bridge"
@@ -76,7 +76,7 @@
         "outboundTag":"tunnel"
       },
       {  
-        // 反向连接访问私有网盘的规则
+        // The routing rules for reverse connection of private cloud disk
         "type":"field",
         "inboundTag":[  
           "bridge"
@@ -88,34 +88,34 @@
 }
 ```
 
-### B 的配置
+### Configuration of Node B
 
 ```json
 {  
-  "reverse":{  //这是 B 的反向代理设置，必须有下面的 portals 对象
+  "reverse":{  // This is the reverse proxy setting for B and must have the following portals object
     "portals":[  
       {  
         "tag":"portal",
-        "domain":"private.cloud.com"        // 必须和上面 A 设定的域名一样
+        "domain":"private.cloud.com" // must be the same as the domain name set by A above
       }
     ]
   },
   "inbounds": [
     {  
-      // 接受 C 的inbound
-      "tag":"external", // 标签，路由中用到
+      // Accept C's inbound
+      "tag":"external", // tag, used in routing
       "port":80,
-      // 开放 80 端口，用于接收外部的 HTTP 访问 
+      // Open port 80 for receiving external HTTP access 
       "protocol":"dokodemo-door",
         "settings":{  
           "address":"127.0.0.1",
-          "port":80, //假设 NAS 监听的端口为 80
+          "port":80, // Suppose the port that the NAS is listening on is 80.
           "network":"tcp"
         }
     },
-    // 另一个 inbound，接受 A 主动发起的请求  
+    // Another inbound that accepts a request initiated by A
     {  
-      "tag": "tunnel",// 标签，路由中用到
+      "tag": "tunnel",// tag, used in routing
       "port":16823,
       "protocol":"vmess",
       "settings":{  
@@ -130,14 +130,14 @@
   ],
   "routing":{  
     "rules":[  
-      {  //路由规则，接收 C 请求后发给 A
+      {  // Routing rules, sent to A after receiving a C request
         "type":"field",
         "inboundTag":[  
           "external"
         ],
         "outboundTag":"portal"
       },
-      {  //路由规则，让 B 能够识别这是 A 主动发起的反向代理连接
+      {  // Routing rules that let B recognize that this is a proactively initiated reverse proxy connection
         "type":"field",
         "inboundTag":[  
           "tunnel"
@@ -152,13 +152,13 @@
 }
 ```
 
-## 访问
+## Access
 
-配置好 A 和 B 的 V2Ray 配置后，先后运行 A 和 B 的 V2Ray，同时搭建在 A 私有网盘也要运行。然后 C 接入跟 A 不同的网络（比如说到邻居家蹭网），用浏览器访问 B 的 IP 或域名，这时就能内网穿透访问私有网盘了。
+After configuring the V2Ray configuration of A and B, run V2Ray of A and B successively, and also set up the private network disk of A to run. Then C accesses a different network than A (for example, to the neighbour's home network), and uses the browser to access the IP or domain name of B. At this time, the intranet can access the private cloud disk.
 
 
-#### 更新历史
+#### Updates
 
-- 2018-10-31 初版
-- 2019-01-13 V4.0+ 配置格式
+- 2018-10-31 Initial release
+- 2019-01-13 V4.0+ Adaptation
 
