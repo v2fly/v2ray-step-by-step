@@ -68,7 +68,7 @@ DNS服务的配置也是按顺序执行的，这里描述一下执行思路：�
 
 ## DNS over HTTPS
 
-V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的DNS地址前面加上`DOH_`几个字符。
+V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的DNS地址前面加上`DOH_`/`DOHL_`几个字符。一般只在服务端使用`DOHL`模式，而墙内目前似乎没有稳定的DOH提供商，只有1.1.1.1一家可用，而且效果并不稳定。
 
 DOH服务商不像传统DNS那么成熟，目前网上提供DOH的服务商可以参考[curl - DNS over HTTPS](https://github.com/curl/curl/wiki/DNS-over-HTTPS)
 
