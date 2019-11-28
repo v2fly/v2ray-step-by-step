@@ -97,6 +97,7 @@ function i18nSidebar(locale) {
       children: i18nPath(locale, [
         'basics/vmess',
         'basics/shadowsocks',
+        'basics/http',
         'basics/log',
         {
           title: i18n(locale, 'routing_function'),
@@ -135,6 +136,7 @@ function i18nSidebar(locale) {
         'app/transparent_proxy',
         'app/reverse',
         'app/reverse2',
+        'app/parent',
         'app/dns',
         'app/balance',
         'app/docker-deploy-v2ray',
