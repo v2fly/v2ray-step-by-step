@@ -36,7 +36,7 @@
             "port": 3128,//服务器端口
             "user": [
               {
-                "user": "my-username",//将my-username改为你的用户名,如果不需要验证可以将"user"行和"pass"行删除
+                "user": "my-username",//将my-username改为你的用户名.
                 "pass": "my-password" //将my-password改为你的密码
               }
             ]
@@ -84,7 +84,7 @@
             "port": 3128,//服务器端口
             "user": [
               {
-                "user": "my-username",//将my-username改为你的用户名,如果不需要验证可以将"user"行和"pass"行删除
+                "user": "my-username",//将my-username改为你的用户名.
                 "pass": "my-password" //将my-password改为你的密码
               }
             ]
