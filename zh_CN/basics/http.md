@@ -26,11 +26,11 @@
           "servers": [
             {
               "address": "192.168.108.1",//服务器IP
-              "port": 3128,//服务器端口
-              "user": [
+              "port": 1024,//服务器端口
+              "users": [
                 {
-                  "user": "my-username",//将my-username改为你的用户名.
-                  "pass": "my-password" //将my-password改为你的密码
+                  "Username": "my-username",//将my-username改为你的用户名.
+                  "Password": "my-password" //将my-password改为你的密码
                 }
               ] 
             }
