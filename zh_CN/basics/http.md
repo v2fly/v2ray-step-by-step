@@ -78,5 +78,5 @@
 }
 ```
 ## 注意事项
-- HTTP(S)代理并不是为了对抗墙而设计,所以不建议使用HTTP代理翻墙.
-- HTTP(S)代理存在的意义是方便企业或学校的用户联网使用,如果需要在使用HTTP代理联网的前提下翻墙请阅读[前置代理](https://guide.v2fly.org/app/parent.html).
+- HTTP(S) 出站规则存在的意义是方便只能使用http proxy对外访问内部网络中用户联网使用,如果需要在使用HTTP代理联网的前提下翻墙请阅读[前置代理](https://guide.v2fly.org/app/parent.html).
+- HTTP(S) 出站规则可以作为对外访问的配置，但http proxy协议没有对传输加密，不适宜经公网中传输，且因不支持udp传输将会导致core功能受限(Routing过程的的DNS查询不可用).
