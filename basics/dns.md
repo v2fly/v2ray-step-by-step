@@ -2,8 +2,7 @@
 
 V2Ray 内置的 DNS 服务，其解析的IP往往先是用来匹配路由规则，如果配置不当，请求会在DNS请求上耗费一定时间。
 
-
-当路由routing的`"domainStrategy"`的几种模式都跟DNS功能密切相关，所以在此专门说一下。
+路由routing的`"domainStrategy"`的几种模式都跟DNS功能密切相关，所以在此专门说一下。
 
 * `"AsIs"`，当终端请求一个域名时，进行路由里面的domain进行匹配，不管是否能匹配，直接按路由规则走。
 * `"IPIfNonMatch"`, 当终端请求一个域名时，进行路由里面的domain进行匹配，若无法匹配到结果，则对这个域名进行DNS查询，用结果的IP地址再重新进行IP路由匹配。
@@ -63,9 +62,9 @@ DNS服务的配置也是按顺序执行的，这里描述一下执行思路：�
    ]
  }
 }
+```
 
 服务端的DNS一般无需复杂配置。如果配置了，应注意`freedom`的outbound应配置了`"domainStrategy"`为`"UseIP" | "UseIPv4" | "UseIPv6"`几种的时候才会使用内置DNS，默认的`AsIs`是交给操作系统去解析和连接。
-```
 
 ## DNS over HTTPS
 
