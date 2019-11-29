@@ -83,5 +83,5 @@ Mux only needs to be started on the client, the server will automatically recogn
 
 #### Update history
 
--2018-08-30 Modify the layout and description
--2018-11-17 V4.0 + configuration
+- 2018-08-30 Modify the layout and description
+- 2018-11-17 V4.0 + configuration
