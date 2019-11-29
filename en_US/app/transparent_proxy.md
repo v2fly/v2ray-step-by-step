@@ -8,7 +8,7 @@ The transparent proxy is befitting for the following situations:
 * You want all the traffic on your device(s) access the internet via the proxy.
 
 
-## Pros:
+## Pros 
 
 In fact, V2Ray has long been a transparent agent. At the time, I also studied it for a while, and finally, I was tossed out. However, due to the DNS problem, I always feel uncomfortable.
 But, now, it’s not the same. For now, use the V2Ray transparent proxy:
