@@ -43,7 +43,7 @@ Mux can't actually increase the speed of the network, but it is more effective f
 
 Mux only needs to be started on the client, the server will automatically recognize it, so only the configuration of the client is provided. That is, just add `" mux ": {" enabled ": true}` to outbound or outboundDetour:
 
-`` `json
+```json
 {
   "inbounds": [
     {
@@ -79,8 +79,7 @@ Mux only needs to be started on the client, the server will automatically recogn
     }
   ]
 }
-
-`` `
+```
 
 #### Update history
 
