@@ -1,75 +1,75 @@
 # Mux
 
-Mux 意为多路复用(multiplexing)，在目前的科学上网工具中仅 V2Ray 有此功能(2018-03-15注：也有其他软件实现了类似的功能)。它能够将多条 TCP 连接合并成一条，节省资源，提高并发能力。
+Mux means multiplexing. In the current scientific Internet tools, only V2Ray has this function (2018-03-15 Note: there are other software to achieve similar functions). It can combine multiple TCP connections into one, saving resources and improving concurrency.
 
-听众：呃？什么鬼？
+Audience: Uh? What the hell?
 
-好吧，翻译成人话就是：
+Well, translate adult words:
 
-从前，有一个人叫小白，他是骑行爱好者，还是网购狂人、DIY玩家，因此手中有点闲钱总会网购，也喜欢自己买配件组装自行车。有一次他组装自行车，在网上骑行之家买了头盗、手套、码表，在x诺专卖店买了指拨、变速器，在x特专卖买了车架，在xx车行买了刹车、踏板、坐垫，在xxx买了轮组、曲柄……
+In the past, there was a person named Xiaobai. He was a cyclist, a madman and DIY player, so he had a little spare money to buy online, and he also liked to buy accessories to assemble bicycles. Once he assembled a bicycle, bought burglars, gloves, and a stopwatch at an online cycling home. He bought steering gear and transmissions at the X-Nuo specialty store, bought a frame at the X-special store, and bought brakes at the XX dealership. Pedals, cushions, wheel sets, cranks in xxx ...
 
-    四天后……
-    9 点小白手机响了，接通，小白：喂，你好。对方：你好，申x快递，来取一下包裹。小白兴兴冲地取快递了。    
-    20 分钟后，小白：喂，你好。对方：你好，韵x，过来取快递。小白又去了。    
-    又过 15 分钟，小白：喂，你好。对方：你好，天x，来取快递。小白又去了。    
-    又过半个小时，小白：什么快递？对方：圆x，快点来。小白心里：我X。    
-    10 分钟后……
+    Four days later ...
+    At 9 o'clock, Xiaobai's mobile phone rang. Connected, Xiaobai: Hello, hello. Other party: Hello, Shen x Express, come and pick up the package. Xiaobai rushed to pick up the courier.
+    After 20 minutes, Xiaobai: Hello, hello. Other party: Hello, rhyme x, come here for express delivery. Xiaobai went again.
+    Another 15 minutes, Xiaobai: Hello, hello. Other party: Hello, day x, come and get the express. Xiaobai went again.
+    After another half an hour, Xiaobai: What is express delivery? Opponent: Circle x, hurry up. Xiaobai's heart: I'm X.
+    10 minutes later……
 
 
-如果是你是小白，你累不累？
-电脑也差不多，但要干的活要小白多得多：
+If you are Xiaobai, are you tired?
+The computer is also similar, but the work to be done is much less vain:
 
-    浏览器：我要看 V2Ray 配置指南。
-    电脑：好，我发起一条 TCP 连接。
-    Telegram：我要进 V2Ray 的 Telegram 群向大佬学习。
-    电脑：好，发起了连接。
-    浏览器：我要看 V2Ray 的手册。
-    电脑：好。
-    浏览器：我要 Google 搜索 V2Ray 的教程。
-    电脑：好。
-    浏览器：我要……
+    Browser: I want to see the V2Ray configuration guide.
+    Computer: OK, I initiate a TCP connection.
+    Telegram: I want to learn from the big guys in the Telegram group of V2Ray.
+    Computer: OK, a connection was initiated.
+    Browser: I want to see the manual for V2Ray.
+    Computer: OK.
+    Browser: I want a Google search for V2Ray tutorials.
+    Computer: OK.
+    Browser: I want to ...
 
-如果正常的上网连接可以使用上面小白的例子类比的话，那么，V2Ray 的 Mux 就是：
+If the normal Internet connection can use the analogy of the white example above, then Mux of V2Ray is:
 
-小黑也与小白一样自行组装自行车，也是网购配件，但他无论什么东西都从xx车行这店里买。
+Xiao He also assembles bicycles and buys accessories online, just like Xiao Bai, but he buys everything from the xx dealership.
     
-    4 天后，小黑接起电话：你好。
-    对方：你好，顺x，来取一下快递。
-    小黑顺路买了瓶饮料：大哥，天气这么热，喝点水解解渴。嘿嘿，这箱子太沉，辛苦一下帮帮我搬到屋里吧。
+    After 4 days, Xiao Hei answered the phone: Hello.
+    Other party: Hello, Shun x, come and pick up the courier.
+    Xiao Hei bought a bottle of beverages by the way: Brother, the weather is so hot, drink some hydrolysis to quench thirst. Hey, this box is too heavy, please help me move it to the house.
 
-Mux 实质上不能提高网速，但对并发连接比较有效，如浏览图片较多的网页，看直播等。从使用效果来说，V2Ray 的 Mux 应该类似于 Shadowsocks 的 TFO(TCP Fast Open)，因为两者的目的都是减小握手时间，只是实现方式不一样。只是 TFO 要设置系统内核才能打开，而 Mux 是纯粹在软件层面上实现，从配置难易度上 V2Ray 较好一些。（2018-09-19 注：刚更新这段话没多久，V2Ray 就加入了对 TFO 的支持，感觉要学不动了～）
+Mux can't actually increase the speed of the network, but it is more effective for concurrent connections, such as browsing web pages with many pictures and watching live broadcasts. From the perspective of use effect, Mux of V2Ray should be similar to TFO (TCP Fast Open) of Shadowsocks, because the purpose of both is to reduce handshake time, but the implementation is different. TFO can only be opened by setting the system kernel, and Mux is implemented purely at the software level. V2Ray is better in terms of configuration ease. (2018-09-19 Note: It didn't take long to update this paragraph, V2Ray added support for TFO, I feel like I can't learn anymore ~)
 
-## 配置
+## Configuration
 
-Mux 只需在客户端开启，服务器会自动识别，所以只给客户端的配置。也就是只要在 outbound 或 outboundDetour 加入 `"mux": {"enabled": true}` 即可：
+Mux only needs to be started on the client, the server will automatically recognize it, so only the configuration of the client is provided. That is, just add `" mux ": {" enabled ": true}` to outbound or outboundDetour:
 
-```json
+`` `json
 {
   "inbounds": [
     {
-      "port": 1080, // 监听端口
-      "protocol": "socks", // 入口协议为 SOCKS 5
+      "port": 1080, // listening port
+      "protocol": "socks", // the entry protocol is SOCKS 5
       "sniffing": {
         "enabled": true,
         "destOverride": ["http", "tls"]
       },
       "settings": {
-        "auth": "noauth"  // 不认证
+        "auth": "noauth" // not authenticated
       }
     }
   ],
   "outbounds": [
     {
-      "protocol": "vmess", // 出口协议
+      "protocol": "vmess", // export protocol
       "settings": {
         "vnext": [
           {
-            "address": "serveraddr.com", // 服务器地址，请修改为你自己的服务器 ip 或域名
-            "port": 16823,  // 服务器端口
+            "address": "serveraddr.com", // server address, please change to your own server ip or domain name
+            "port": 16823, // server port
             "users": [
               {
-                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",  // 用户 ID，必须与服务器端配置相同
-                "alterId": 64 // 此处的值也应当与服务器相同
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811", // The user ID must be the same as the server configuration
+                "alterId": 64 // The value here should also be the same as the server
               }
             ]
           }
@@ -80,9 +80,9 @@ Mux 只需在客户端开启，服务器会自动识别，所以只给客户端�
   ]
 }
 
-```
+`` `
 
-#### 更新历史
+#### Update history
 
-- 2018-08-30 修改排版、描述
-- 2018-11-17 V4.0+ 配置
+-2018-08-30 Modify the layout and description
+-2018-11-17 V4.0 + configuration
