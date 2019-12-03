@@ -44,18 +44,18 @@ The document has moved
 
 4. In the configuration file of the gateway, add the inbound configuration of the dokodemo-door protocol, enable sniffing, and add also SO_MARK to all outbound streamSettings. The configuration should be as follows (the `...` represents configuration in a standard client):
 ```json
-{
+ {
   "routing": {...},
   "inbounds": [
     {
       ...
     },
     {
-      "port": 12345, //开放的端口号
+      "port": 12345, // The open port
       "protocol": "dokodemo-door",
       "settings": {
         "network": "tcp,udp",
-        "followRedirect": true // 这里要为 true 才能接受来自 iptables 的流量
+        "followRedirect": true // Need to be set as true to accept traffic from iptables
       },
       "sniffing": {
         "enabled": true,
@@ -69,7 +69,7 @@ The document has moved
       "streamSettings": {
         ...
         "sockopt": {
-          "mark": 255  //这里是 SO_MARK，用于 iptables 识别，每个 outbound 都要配置；255可以改成其他数值，但要与下面的 iptables 规则对应；如果有多个 outbound，最好奖所有 outbound 的 SO_MARK 都设置成一样的数值
+          "mark": 255  // Here is SO_MARK，used for iptables to recognise. Each outbound needs to configure; you can use other value other than 255 but it needs to be consistant as in iptables rules; if there are multiple outbounds, it is recommended that you set all SO_MARK value the same for all outbounds.
         }
       }
     }
