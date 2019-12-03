@@ -1,38 +1,38 @@
 # Transparent Proxy
 
-Here, V2Ray is used as a transparent proxy which allows you accessing blocked websites for all of the devices in the LAN, hence some people called it a router proxy. However, we would like to correct that, as it is better to call as gateway proxy rather than a router proxy. Of course, only using a home router as a gateway proxy is also possible because most of the home routers behave as a gateway. Once configured the gateway proxy, all the devices in LAN will have access to censored websites. Also, gateway proxy will act as a globally proxy, without having to install V2Ray on each device. If the configuration is updated, you only need to modify the setting at the gateway. Some people say it just feels like no wall. However, if you are interested in transparent proxy, you should evaluate that is it suitable for your network environment, rather than blindly follow the trend.
+Here, V2Ray is used as a transparent proxy which allows you to access blocked websites for all the devices in a LAN, as some people called a router proxy. However, we would rather call it a gateway proxy than a router proxy. Certainly, using only a home router as a gateway proxy is possible since most home routers can behave as a gateway. Once it is configured as the gateway proxy, all devices in the LAN can have access to censored websites. Gateway proxy can also act as a global proxy, saving you from having to install V2Ray on each device. When the configuration is updated, you only need to modify the setting at the gateway. Some people say it feels like there is no blocking wall at all. Nonetheless, we advise one evaluate its network environment first before blindly deploying transparent proxy V2Ray.
 
 The transparent proxy is befitting for the following situations:
 * You have many LAN devices in your local network, such as offices, laboratories, and large families.
-* Your device(s) can't/inconveniently set up the proxy, such as Chromecast, TV box, etc.
-* You want all the traffic on your device(s) access the internet via the proxy.
+* Your device(s) can't conveniently set up a proxy on their own, such as Chromecast, TV box, etc.
+* You want all the traffic on your device(s) to access the internet via a proxy.
 
 
 ## Pros 
 
-In fact, V2Ray has long been a transparent agent. At the time, I also studied it for a while, and finally, I was tossed out. However, due to the DNS problem, I always feel uncomfortable.
-But, now, it’s not the same. For now, use the V2Ray transparent proxy:
-1. Solved the problem of DNS pollution to domains from firewall;
-2. In the case when DNS pollution solved, the Chinese domains can still be resolved to the Chinese CDN;
+In fact, V2Ray has been supported as a transparent proxy for some time. However, due to some DNS problem, it was not very convenient at that time. It's, however, a different story now. Because V2Ray as a transparent proxy can:
+1. Solve DNS pollution to blocked domains by the Great Firewall;
+2. Deal not only DNS pollution mentioned above but also in the meantime resolve Chinese domains using Chinese CDN;
 3. Eliminate the 1 and 2 issues without the need for external software or self-built DNS, as long as the system supports V2Ray and iptables;
 4. Take advantage of V2Ray's powerful and flexible routing feature without maintain a routing table;
 
 ## Preparation
-* A person who has the ability to solve problems based on themselves situations;
-* A VPS that has been installed V2Ray, in this section we assume that the servers' IP is `110.231.43.65`;
-* A device with iptables, root permission, and Linux system, assuming the address is `192.168.1.22`, V2Ray runs as a client. This device can be a router, a development board, a personal computer, a virtual machine, and an Android device, and generally, refer to a gateway. We do not recommend using the MT7620 system to deploy transparent proxy, due to the limited performance, and many firmware does not have access to FPU. If you don't want to pay for a new device for transparent proxy, you can create a virtual machine on your PC (e.g. VirtualBox, Hyper-V, and KVM). Note that on the hypervisor, you should set virtual machines' network mode as the bridge.
+* Someone who's capable to solve problems in their own situations;
+* A VPS that has installed V2Ray, the IP of which we assume to be `110.231.43.65`;
+* A device with iptables, root permission, and Linux system, the IP of which we assume to be `192.168.1.22`, with V2Ray running as a client. This device can be a router, a development board, a personal computer, a virtual machine, or an Android device, referred to a gateway here. We do not recommend using the MT7620 system to deploy as a transparent proxy, due to its limited performance, and the fact that many of their firmware does not have access to FPU. If you are not willing to purchase a new device specifically for transparent proxy, you can, however, create a virtual machine on your PC (e.g. VirtualBox, Hyper-V, and KVM). Note that on the hypervisor, you should set virtual machines' network in bridge mode.
 
 ## Procedures
 
 The setup steps are as follows, assuming you are logged in with root.
 
-1. The gateway device enables IP forwarding. Add a line `net.ipv4.ip_forward=1` to the /etc/sysctl.conf file and execute the following commands:
+1. Enable IP forwarding on the gateway device: Add new line `net.ipv4.ip_forward=1` to the /etc/sysctl.conf file and execute :
 ```
 sysctl -p
 ```
-2. The gateway device sets a static IP, which is the same network segment as the LAN port of the router. The default gateway is the IP address of the router. Enter the management background of the router. To the DHCP setting, the default gateway address is the IP address of the gateway device. In this example, it is 192.168.1.22, or The computer phone and other devices set the default gateway separately, and then the computer/mobile phone reconnects to the router to test whether it can be connected to the Internet (it can't be over the wall at this time). If you can't go online, you can learn one and get it. Otherwise, how can you do the same? Can't get on the net. The gateway device sets the static IP to prevent the IP from changing after the restart, which causes other devices to fail to connect to the network. The router sets the DHCP default gateway address so that the device accessing the router sends the data packet to the gateway device, and then The gateway device forwards.
+2. The gateway device sets to a static IP, which is in the same network segment as the LAN port of the router. The default gateway should be the IP address of the router. Enter the router management page and go to the DHCP setting, set the default gateway address at the IP address of the gateway device, as 192.168.1.22 in this example. Or you can set your computer, phone and other devices their default gateway individually (to 192.168.1.22), and reconnect your devices to the router to see if they can connect to the Internet. (It's normal that the device can not yet bypass the GFW at this time). If the devices have no access to the internet at all, you'll have to solve this issue first before going any further. Otherwise, you'll only waste your time following the next steps. The gateway device is set to a static IP so that to its IP does not change after a reboot. The default gateway on the router is set to the gateway IP address so that the router routes all data sent from the LAN devices connected to it to the gateway device, who then forwards the traffic using V2Ray.
 
-3. Install the latest version of V2Ray on the server and gateway (if you don't refer to the previous tutorial, since GFW will worsen the traffic of GitHub Releases, the gateway can run the script almost impossible to install, it is recommended to download the V2Ray compression package first, then use the installation script to pass - The -local parameter is installed) and the configuration file is configured. Be sure to set up the V2Ray to work properly. At the gateway, execute `curl -x socks5://127.0.0.1:1080 google.com` to test whether the configured V2Ray can be over the wall (in the command `socks5` refers to the inbound protocol as socks, `1080` means the inbound port is 1080) . If there is an output similar to the following, you can overturn the wall. If it does not appear, you can't turn it over. You have to check carefully which step is wrong or missing.
+3. Install the latest version of V2Ray on the server  (your VPS) and the gateway. (If you don't how then you need to follow the previous tutorials. Note that GFW likes to intercept the GitHub releases traffic, and it can cause failure to install V2Ray using the installation script. It is hence advised to download the V2Ray package manually, and then use the installation script with the "-local" parameter.) Configure your config file accordingly. When you are sure that the V2Ray is working properly, at the gateway, execute `curl -x socks5://127.0.0.1:1080 google.com` to test whether your setup can bypass GFW. (Here socks5 refers to the inbound protocol and `1080` is the inbound port ) . If the output is something like the following, you are good. Otherwise, there's something wrong with your setup and you need to recheck what you have missed.
+<!--``-->
 ```
 <HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
 <TITLE>301 Moved</TITLE></HEAD><BODY>
@@ -42,7 +42,7 @@ The document has moved
 </BODY></HTML>
 ```
 
-4. In the configuration of the gateway, add the inbound configuration of the dokodemo-door protocol and enable sniffing; also add SO_MARK to all outbound streamSettings. The configuration is as follows (the `...` in the configuration represents the usual configuration of the original client):
+4. In the configuration file of the gateway, add the inbound configuration of the dokodemo-door protocol, enable sniffing, and add also SO_MARK to all outbound streamSettings. The configuration should be as follows (the `...` represents configuration in a standard client):
 ```json
 {
   "routing": {...},
@@ -51,11 +51,11 @@ The document has moved
       ...
     },
     {
-      "port": 12345, // The open port
+      "port": 12345, //开放的端口号
       "protocol": "dokodemo-door",
       "settings": {
         "network": "tcp,udp",
-        "followRedirect": true // Need to be set as true to accept traffic from iptables
+        "followRedirect": true // 这里要为 true 才能接受来自 iptables 的流量
       },
       "sniffing": {
         "enabled": true,
@@ -69,7 +69,7 @@ The document has moved
       "streamSettings": {
         ...
         "sockopt": {
-          "mark": 255  // Here is SO_MARK，used to iptables recognise. Each outbound is needed to configure; 255 can be another valur but need to keep consistant as iptables rules; if there is multiple outbound, it is recomanded that set all SO_MARK value as same for all outbounds.
+          "mark": 255  //这里是 SO_MARK，用于 iptables 识别，每个 outbound 都要配置；255可以改成其他数值，但要与下面的 iptables 规则对应；如果有多个 outbound，最好奖所有 outbound 的 SO_MARK 都设置成一样的数值
         }
       }
     }
@@ -78,18 +78,18 @@ The document has moved
 }
 ```
 
-5. Set the TCP transparent proxy by iptables rules, the commands as below (after `#` are comments):
+5. Set iptable rules for TCP for the transparent proxy device: (after `#` are comments):
 
-```
-Iptables -t nat -N V2RAY # Create a new chain called V2RAY
-Iptables -t nat -A V2RAY -d 192.168.0.0/16 -j RETURN # Direct connection 192.168.0.0/16
-Iptables -t nat -A V2RAY -p tcp -j RETURN -m mark --mark 0xff # Directly connect SO_MARK to 0xff traffic (0xff is a hexadecimal number, numerically equivalent to the above configured 255), the purpose of this rule is Avoid proxy loopback problems with local (gateway) traffic
-Iptables -t nat -A V2RAY -p tcp -j REDIRECT --to-ports 12345 # The rest of the traffic is forwarded to port 12345 (ie V2Ray)
-Iptables -t nat -A PREROUTING -p tcp -j V2RAY # Transparent proxy for other LAN devices
-Iptables -t nat -A OUTPUT -p tcp -j V2RAY # Transparent proxy for this machine
+```bash
+iptables -t nat -N V2RAY # Create a new chain called V2RAY
+iptables -t nat -A V2RAY -d 192.168.0.0/16 -j RETURN # Direct connection 192.168.0.0/16
+iptables -t nat -A V2RAY -p tcp -j RETURN -m mark --mark 0xff # Directly connect SO_MARK to 0xff traffic (0xff is a hexadecimal number, numerically equivalent to 255), the purpose of this rule is to avoid proxy loopback with local (gateway) traffic
+iptables -t nat -A V2RAY -p tcp -j REDIRECT --to-ports 12345 # The rest of the traffic is forwarded to port 12345 (ie V2Ray)
+iptables -t nat -A PREROUTING -p tcp -j V2RAY # Transparent proxy for other LAN devices
+iptables -t nat -A OUTPUT -p tcp -j V2RAY # Transparent proxy for this machine
 ```
 
-Then set the iptables rule of the UDP traffic transparent proxy, the commands are at below:
+Then set the iptables rule of UDP traffic for the transparent proxy device:
 ```
 ip rule add fwmark 1 table 100
 ip route add local 0.0.0.0/0 dev lo table 100
@@ -99,31 +99,31 @@ iptables -t mangle -A V2RAY_MASK -p udp -j TPROXY --on-port 12345 --tproxy-mark 
 iptables -t mangle -A PREROUTING -p udp -j V2RAY_MASK
 ```
 
-6. Try to access the walled website directly using your computer/phone. It should be accessible (if you can't, you may have to ask to guide).
+6. Try visiting a blocked website directly using your computer/phone that are connected under the same LAN with your configured transparent proxy device. You should not be blocked by now.
 
-7. Write the script to automatically load the above iptables, or use third-party software (such as iptables-persistent), otherwise, iptables will be invalid after the gateway restarts (that is, the transparent proxy will be invalid).
+7. You might need a script or anything (such as iptables-persistent) that can automatically load the above iptable rules after the transparent proxy device reboots. Otherwise, the iptables will be lost after it reboots.
 
 
 ## Notes
 
-* In the above settings, assuming that a foreign website, such as Google, is accessed, the gateway still uses the system DNS for the query, but the returned result is polluted, and the sniffing provided by V2Ray can extract the domain name information from the traffic. VPS parsing. That is to say, every time you plan to visit the website of the wall, the DNS provider knows that GFW may know whether the data will be fed to AI or not, given the urinary nature of domestic companies.
-* Sniffing currently only extracts domain names from TLS and HTTP traffic. If there are non-two types of internet traffic, use sniffing to resolve DNS pollution.
-* Because I am not familiar with iptables, I always feel that there is a problem with the setting of the transparent proxy for UDP traffic. Please know why my friend should give feedback. If you simply look at the Internet and watch videos, you can only proxy TCP traffic, no UDP transparent proxy.
-* Due to the limit of VMESS protocol, online gaming acceleration based on V2Ray transparent proxy doesn't have a good performance.
-* Only TCP/UDP package will be proxied by V2Ray, but it can't work with ICMP packets, therefore, the transparent proxy would not support ping/mtr based on ICMP. However, tcping or hping3 works due to they use TCP rather than ICMP.
-* According to other transparent proxy tutorials on the internet, they set iptables rules for private addresses like RETURN 127.0.0.0/8, but we suggest that placed them in the V2Ray routing rules for performance consideration.
+* WIth the above setup, when you visit a normally blocked site, the gateway will still use the system DNS for the query, except that the returned result is polluted. But the sniffing provided by V2Ray can learn the domain name (of the polluted website) from the traffic and send it for your VPS to resolve, returning the correct result. This is to say that every time you visit a blocked website by the GFW, despite the fact that you can bypass the censorship with V2Ray, your system DNS provider (who pollutes your DNS) knows that you have tried to visit the blocked website. Hence you need to be aware of the possibility that they could actively collect such data.
+* V2Ray sniffing currently only extracts domain names from TLS and HTTP traffic. If there is traffic that is neither type of the two, be cautious of using sniffing to solve DNS pollution.
+* There might be some problems with the transparent proxy rule for UDP traffic. It will be thankful if you would like to give us any feedback regarding those rules. If your online activities involve simply web surfing or watching videos, TCP rules only might be sufficient without the need of configuring UDP rules.
+* Due to the limit of VMESS protocol, V2Ray transparent proxy would not offer satisfactory online gaming performance.
+* Only TCP/UDP traffic can be proxied via V2Ray, so it does not work with ICMP packets. Therefore, the transparent proxy does not support ping/mtr which is based on ICMP. However, tcping or hping3 works as they use TCP instead of ICMP.
+* There are some transparent proxy tutorials on the internet that set iptables rules for private addresses like RETURN 127.0.0.0/8, but we suggest they should be placed in the V2Ray routing rules for performance reason.
 
 -------
 
 #### Updates
 
 * 2017-12-05 Initial Version.
-* 2017-12-24 Fix the problem of unable to visit Chinese sites.
+* 2017-12-24 Fix a problem of visiting non-blocked sites.
 * 2017-12-27 re-format.
 * 2017-12-29 Removed unnecessary iptables rules.
 * 2018-01-16 Optimized set up steps.
 * 2018-01-21 Add UDP transparent proxy setting
 * 2018-04-05 Update
 * 2018-08-30 Fix setting up procedures.
-* 2018-09-14 Better solution of local requests.
+* 2018-09-14 improved local requests.
 
