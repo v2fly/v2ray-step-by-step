@@ -25,7 +25,7 @@
 
 以下是 V2Ray 透明代理的配置示例，配置文件之后有说明。
 
-```javascript
+```json
 {
   "inbounds": [
     {
