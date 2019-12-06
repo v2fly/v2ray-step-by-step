@@ -76,7 +76,7 @@ DNS服务是可以用来分流的，大致思路是，”哪些域名要去哪�
 {
  "dns": {
    "servers": [
-     "DOHL_1.1.1.1",
+     "https+local://1.1.1.1/dns-query",
      "localhost"
    ]
  }
@@ -89,13 +89,13 @@ DNS服务是可以用来分流的，大致思路是，”哪些域名要去哪�
 
 ## DNS over HTTPS
 
-V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的DNS地址前面加上`DOH_`或`DOHL_`几个字符。一般只在服务端使用`DOHL`模式，而墙内目前似乎没有稳定的DOH提供商，只有`1.1.1.1`一家可用，而且效果并不稳定。
+V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的DNS地址写成DOH服务地址。一般只在服务端使用`https+local`模式，而墙内目前似乎没有稳定的DOH提供商，只有`1.1.1.1`一家可用，而且效果并不稳定。
 
 ```json
 {
  "dns": {
    "servers": [
-     "DOH_1.1.1.1",
+     "https+local://1.1.1.1/dns-query",
      "localhost"
    ]
  }
@@ -104,10 +104,10 @@ V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配�
 
 DOH服务商不像传统DNS那么成熟，目前网上提供DOH的服务商可以参考[curl - DNS over HTTPS](https://github.com/curl/curl/wiki/DNS-over-HTTPS)
 
-列表中的服务地址都是写成`https://cloudflare-dns.com/dns-query`的样子，在V2Ray 配置中应该只取其域名，写成`"DOH_cloudflare-dns.com"`，或者`"DOH_1.1.1.1"`。注意，多数服务商的DOH的tls证书是没有对IP地址签发认证的，必须写实际的域名，cf的1.1.1.1是个特殊例外。
+注意，多数服务商的DOH的tls证书是没有对IP地址签发认证的，必须写实际的域名，cf的1.1.1.1是个特殊例外，可写成`https://1.1.1.1/dns-query`。
 
 DOH把DNS请求融入到常见的https流量当中，完全使用DOH可以避免出入口ISP知道你访问的域名。
-但需要注意，只有在客户端、服务端都使用DOH协议(客户端使用DOH模式，服务端使用DOHL模式)时候，VPS出口上才不会出现传统的UDP DNS请求。
+但需要注意，只有在客户端、服务端都使用DOH协议(客户端使用https模式，服务端使用https+local模式)时候，VPS出口上才不会出现传统的UDP DNS请求。
 
 DOH的解析时间比传统的UDP要高不少，把V2Ray的log level设置为debug可以看到具体的域名解析耗时值。
 
