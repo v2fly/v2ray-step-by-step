@@ -98,6 +98,7 @@ function i18nSidebar(locale) {
         'basics/vmess',
         'basics/shadowsocks',
         'basics/http',
+        'basics/dns',
         'basics/log',
         {
           title: i18n(locale, 'routing_function'),
@@ -138,7 +139,6 @@ function i18nSidebar(locale) {
         'app/reverse',
         'app/reverse2',
         'app/parent',
-        'app/dns',
         'app/balance',
         'app/docker-deploy-v2ray',
         'app/benchmark',
