@@ -16,7 +16,7 @@ jobs:
         git archive --format tar --output /tmp/transifex.tar HEAD
         git checkout -b dev remotes/origin/dev
         tar xf /tmp/transifex.tar
-        mv -v zh_CN/* ./
+        cp -rv zh_CN/* .
         
     - name: Use Node.js 
       uses: actions/setup-node@v1
@@ -31,7 +31,6 @@ jobs:
         PUBUSER: ${{ secrets.PUBLISH_USER }}
         PUBTOKEN: ${{ secrets.PUBLISH_TOKEN }}
       run: |
-
         vuepress build .
         cd .vuepress/dist
         echo "guide.v2fly.org" > CNAME
@@ -42,8 +41,4 @@ jobs:
         git add -A
         git commit -m "build $(date -u '+#%U%g%w-%N')"
         git remote set-url origin https://${PUBUSER}:@${PUBTOKEN}@github.com/v2fly/v2ray-step-by-step.git
-        git push -f -v --progress HEAD master:gh-pages
-
-        
-        
-        
+        git push -f -v --progress origin master:gh-pages
