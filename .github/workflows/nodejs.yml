@@ -21,7 +21,8 @@ jobs:
         PUBUSER: ${{ secrets.PUBLISH_USER }}
         PUBTOKEN: ${{ secrets.PUBLISH_TOKEN }}
       run: |
-        git fetch --all
+        git fetch origin transifex --progress
+        git fetch origin dev --progress
         git archive --format tar --output /tmp/transifex.tar transifex
         git checkout -b dev remotes/origin/dev
         tar xf /tmp/transifex.tar
