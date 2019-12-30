@@ -26,13 +26,16 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install -g vuepress
+        
+    - name: Vuepress build
+      run: |
+        vuepress build .
 
-    - name: Build with Vuepress and publish
+    - name: Publish gh-pages
       env:
         PUBUSER: ${{ secrets.PUBLISH_USER }}
         PUBTOKEN: ${{ secrets.PUBLISH_TOKEN }}
       run: |
-        vuepress build .
         cd .vuepress/dist
         echo "guide.v2fly.org" > CNAME
         git init .
