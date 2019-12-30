@@ -17,6 +17,7 @@ jobs:
         git checkout -b dev remotes/origin/dev
         tar xf /tmp/transifex.tar
         cp -rv zh_CN/* .
+        rm -rf zh_CN
         
     - name: Use Node.js 
       uses: actions/setup-node@v1
