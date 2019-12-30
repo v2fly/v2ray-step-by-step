@@ -16,10 +16,10 @@ jobs:
       run: |
         npm install -g vuepress
 
-    - name: fetch transifex
+    - name: build and publish
       env:
-        PUBUSER: ${{PUBLISH_USER}}
-        PUBTOKEN: ${{PUBLISH_TOKEN}}
+        PUBUSER: ${{ secrets.PUBLISH_USER }}
+        PUBTOKEN: ${{ secrets.PUBLISH_TOKEN }}
       run: |
         git archive --format tar --output /tmp/transifex.tar transifex
         git checkout -b dev remotes/origin/dev
