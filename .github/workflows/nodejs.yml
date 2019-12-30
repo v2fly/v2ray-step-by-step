@@ -5,10 +5,6 @@ on:
     branches: 
       - transifex
   push:
-    branches: 
-      - master
-      - transifex
-      - dev
 
 jobs:
   build:
