@@ -1,6 +1,14 @@
 name: Publish Vuepress
 
-on: [push]
+on: 
+  pull_request:
+    branches: 
+      - transifex
+  push:
+    branches: 
+      - master
+      - transifex
+      - dev
 
 jobs:
   build:
