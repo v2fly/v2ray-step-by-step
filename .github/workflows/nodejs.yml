@@ -1,0 +1,42 @@
+name: Publish Vuepress
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: npm install, build, and test
+      run: |
+        npm install -g vuepress
+
+    - name: fetch transifex
+      env:
+        PUBUSER: ${{PUBLISH_USER}}
+        PUBTOKEN: ${{PUBLISH_TOKEN}}
+      run: |
+        git archive --format tar --output /tmp/transifex.tar transifex
+        git checkout -b dev remotes/origin/dev
+        tar xf /tmp/transifex.tar
+        mv -v zh_CN/* ./
+        vuepress build .
+        cd .vuepress/dist
+        echo "guide.v2fly.org" > CNAME
+        git init .
+        git config user.name V2FlyContrib
+        git config user.email SharedAccount+V2FlyContrib@unial.org
+        git config commit.gpgsign false
+        git add -A
+        git commit -m "build $(date -u '+#%U%g%w-%N')"
+        git remote set-url origin https://${PUBUSER}:@${PUBTOKEN}@github.com/v2fly/v2ray-step-by-step.git
+        git push -f -v --progress HEAD master:gh-pages
+
+        
+        
+        
