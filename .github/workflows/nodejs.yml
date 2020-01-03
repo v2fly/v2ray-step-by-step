@@ -35,8 +35,7 @@ jobs:
         
     - name: Publish gh-pages
       env:
-        PUBUSER: ${{ secrets.PUBLISH_USER }}
-        PUBTOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         cd .vuepress/dist
         echo "guide.v2fly.org" > CNAME
@@ -46,5 +45,5 @@ jobs:
         git config commit.gpgsign false
         git add -A
         git commit -m "build $(date -u '+#%U%g%w-%N')"
-        git remote add origin https://${PUBUSER}:${PUBTOKEN}@github.com/v2fly/v2ray-step-by-step.git
+        git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/v2fly/v2ray-step-by-step.git
         git push -f -v --progress origin master:gh-pages
