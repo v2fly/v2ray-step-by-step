@@ -327,44 +327,13 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 
 在路由器上设定 DHCP，将网关地址指向网关设备，在本文的举例中即为树莓派的IP 192.168.1.22； DNS 随意，因为已经配置了劫持 53 端口的 UDP，当然填常规的 DNS 也更是没有问题的。
 
-### 使用 53 端口无法启动的解决方法
-
-Debian 系列的 Linux 发行版(支持 systemd 的) 会默认使用一个名为 `systemd-resolved` 的系统服务接管本机的 DNS 查询，它默认是启动的且监听 53 端口。
-若需要使用 V2Ray 接管本机的 DNS 需要以下步骤：
-
-1. 停止并禁用 `systemd-resolved` 服务
-
-```
-systemctl stop systemd-resolved
-systemctl disable systemd-resolved
-```
-2. 编辑其配置文件
-
-```
-vi /etc/systemd/resolved.conf
-```
-取消 `DNS` 和 `LLMNR` 的注释并将 DNS 更改为 `127.0.0.1`
-
-```
-[Resolve]
-DNS=127.0.0.1
-#FallbackDNS=
-#Domains=
-LLMNR=no
-#MulticastDNS=no
-#DNSSEC=no
-#Cache=yes
-#DNSStubListener=yes
-```
-
-保存后并重启服务器，生效。
-
 ## 备注
 
 1. TPROXY 与 REDIRECT 是针对 TCP 而言的两种透明代理模式，两者的差异主要在于 TPROXY 可以透明代理 IPV6，而 REDIRECT 不行，本文主要是将透明代理模式改为 TPROXY 并且使用了 V2Ray 的 DNS。但我没有 IPV6 环境，无法进行测试，所以本文只适用于 IPV4。
 2. 据我了解，到目前（2019.10）为止，在我所知的具备透明代理功能的翻墙工具中，TCP 透明代理方式可以使用的 TPROXY 的只有 V2Ray。所以你要找其他资料参考的话，要注意透明代理方式，因为基本上都是 REDIRECT 模式的（包括 V2Ray 官网给的示例）。
-3. 我用 [NatTypeTester](https://github.com/HMBSbige/NatTypeTester) 测试过 NAT 类型，结果是 FullCone，但也看到有反馈说玩游戏依然是 PortRestrictedCone。我也不清楚是怎么回事，这点需要玩游戏的朋友来确认了。不过目前测试发现代理 QUIC 的效果还不不错的。
-4. 本文的说明内容还不够完善，后续还要针对配置进行详细说明，大约改 3~5 个版本，然后再提交到新教程上。
+3. 在透明代理中，不要用 V2Ray 开放 53 端口做 DNS 服务器。如果这么做了，DNS 会出问题，这应该是个 BUG。等我整理好之后再反馈到 V2Ray 项目。
+4. 我用 [NatTypeTester](https://github.com/HMBSbige/NatTypeTester) 测试过 NAT 类型，结果是 FullCone，但也看到有反馈说玩游戏依然是 PortRestrictedCone。我也不清楚是怎么回事，这点需要玩游戏的朋友来确认了。不过目前测试发现代理 QUIC 的效果还不不错的。
+5. 本文的说明内容还不够完善，后续还要针对配置进行详细说明，大约改 3~5 个版本，然后再提交到新教程上。
 
 ## 参考资料
 
