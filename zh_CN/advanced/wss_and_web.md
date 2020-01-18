@@ -53,11 +53,20 @@
 ```
 server {
   listen 443 ssl;
-  ssl on;
+  listen [::]:443 ssl;
+  
   ssl_certificate       /etc/v2ray/v2ray.crt;
   ssl_certificate_key   /etc/v2ray/v2ray.key;
-  ssl_protocols         TLSv1 TLSv1.1 TLSv1.2;
-  ssl_ciphers           HIGH:!aNULL:!MD5;
+  ssl_session_timeout 1d;
+  ssl_session_cache shared:MozSSL:10m;
+  ssl_session_tickets off;
+  
+  ssl_protocols         TLSv1.2 TLSv1.3;
+  ssl_ciphers           ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+  ssl_prefer_server_ciphers off;
+  
+  add_header Strict-Transport-Security "max-age=63072000" always;
+  
   server_name           mydomain.me;
     location /ray { # 与 V2Ray 配置中的 path 保持一致
       if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
@@ -84,11 +93,14 @@ server {
 mydomain.me
 {
   log ./caddy.log
+  protocols tls1.2 tls1.3
+  ciphers ECDHE-ECDSA-AES128-GCM-SHA256 ECDHE-RSA-AES128-GCM-SHA256 ECDHE-ECDSA-AES256-GCM-SHA384 ECDHE-RSA-AES256-GCM-SHA384 ECDHE-ECDSA-WITH-CHACHA20-POLY1305 ECDHE-RSA-WITH-CHACHA20-POLY1305
   proxy /ray localhost:10000 {
     websocket
     header_upstream -Origin
   }
 }
+header / Strict-Transport-Security "max-age=63072000"
 ```
 
 #### Apache 配置
@@ -100,8 +112,13 @@ mydomain.me
   SSLCertificateFile /etc/v2ray/v2ray.crt
   SSLCertificateKeyFile /etc/v2ray/v2ray.key
   
-  SSLProtocol -All +TLSv1 +TLSv1.1 +TLSv1.2
-  SSLCipherSuite HIGH:!aNULL
+  SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1
+  SSLCipherSuite          ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+  SSLHonorCipherOrder     off
+  SSLSessionTickets       off
+  
+  SSLUseStapling On
+  SSLStaplingCache "shmcb:logs/ssl_stapling(32768)"
   
   <Location "/ray/">
     ProxyPass ws://127.0.0.1:10000/ray/ upgrade=WebSocket
@@ -168,6 +185,7 @@ mydomain.me
   setsebool -P httpd_can_network_connect 1
   ```
 - 请保持服务器和客户端的 wsSettings 严格一致，对于 V2Ray，`/ray` 和 `/ray/` 是不一样的
+- 较低版本的系统/浏览器可能无法完成TLS握手. 如 Chrome 49 / XP SP3, Safari 8 / iOS 8.4, Safari 8 / OS X 10.10 及更低的版本. 如果你的设备比较旧, 则可以通过在配置中添加较旧的 TLS 协议以完成握手.
 
 ### 其他的话
 
@@ -175,15 +193,3 @@ mydomain.me
 2. 主动探测一个 path 产生 Bad request 不能证明是 V2Ray；
 3. 不安全的因素在于人，自己的问题就不要甩锅，哪怕我把示例中的 path 改成一个 UUID，依然有不少人原封不动地 COPY；
 4. 使用 Header 分流并不比 path 安全， 不要迷信。
-
-------
-
-#### 更新历史
-
-- 2017-12-05 加一些提示
-- 2018-01-03 Update
-- 2018-08-19 Update
-- 2018-08-30 Add configuration for Apache2
-- 2018-11-17 V4.0+ 配置
-- 2019-7-5   TLS 1.3 notice
-
