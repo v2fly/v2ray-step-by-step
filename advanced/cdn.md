@@ -5,4 +5,4 @@
 
 ## 配置
 
-参照WebSocket + TLS + Web部分。
+参照WebSocket + TLS + Web部分。不过需要注意，这里的 SSL 证书建议使用来自 CDN 服务商提供的、适用于原始服务器的证书，而不是使用证书申请脚本或者 Caddy 申请的证书。
