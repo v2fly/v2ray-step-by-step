@@ -180,7 +180,7 @@ mydomain.me
   setsebool -P httpd_can_network_connect 1
   ```
 - 请保持服务器和客户端的 wsSettings 严格一致，对于 V2Ray，`/ray` 和 `/ray/` 是不一样的
-- 较低版本的系统/浏览器可能无法完成TLS握手. 如 Chrome 49 / XP SP3, Safari 8 / iOS 8.4, Safari 8 / OS X 10.10 及更低的版本. 如果你的设备比较旧, 则可以通过在配置中添加较旧的 TLS 协议以完成握手.
+- 较低版本的系统/浏览器可能无法完成握手. 如 Chrome 49 / XP SP3, Safari 8 / iOS 8.4, Safari 8 / OS X 10.10 及更低的版本. 如果你的设备比较旧, 则可以通过在配置中添加较旧的 TLS 协议以完成握手.
 
 ### 其他的话
 
