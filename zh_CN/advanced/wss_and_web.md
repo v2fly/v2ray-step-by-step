@@ -65,8 +65,6 @@ server {
   ssl_ciphers           ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
   ssl_prefer_server_ciphers off;
   
-  add_header Strict-Transport-Security "max-age=63072000" always;
-  
   server_name           mydomain.me;
     location /ray { # 与 V2Ray 配置中的 path 保持一致
       if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
@@ -100,7 +98,6 @@ mydomain.me
     header_upstream -Origin
   }
 }
-header / Strict-Transport-Security "max-age=63072000"
 ```
 
 #### Apache 配置
@@ -108,7 +105,8 @@ header / Strict-Transport-Security "max-age=63072000"
 同样地，配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。
 ```
 <VirtualHost *:443>
-  ServerName mydomain.me
+  SSLEngine on
+  
   SSLCertificateFile /etc/v2ray/v2ray.crt
   SSLCertificateKeyFile /etc/v2ray/v2ray.key
   
@@ -116,9 +114,6 @@ header / Strict-Transport-Security "max-age=63072000"
   SSLCipherSuite          ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
   SSLHonorCipherOrder     off
   SSLSessionTickets       off
-  
-  SSLUseStapling On
-  SSLStaplingCache "shmcb:logs/ssl_stapling(32768)"
   
   <Location "/ray/">
     ProxyPass ws://127.0.0.1:10000/ray/ upgrade=WebSocket
