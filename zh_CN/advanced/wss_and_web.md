@@ -123,7 +123,15 @@ mydomain.me
   </Location>
 </VirtualHost>
 ```
-
+注意apache服务器一定要应用以下模组，然后再重启apache服务器，以便让apache将指定访问由v2ray接管。
+```
+sudo a2enmod ssl
+sudo a2enmod proxy
+sudo a2enmod proxy_wstunnel
+sudo a2enmod proxy_http
+sudo a2enmod rewrite
+sudo a2enmod headers
+```
 ### 客户端配置
 
 ```json
