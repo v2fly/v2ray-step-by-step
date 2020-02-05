@@ -20,3 +20,5 @@
 1. Firewall => Settings => Security Level，设置为 Essentially Off（默认是 Medium，个人实测改为 Low 仍被拦截）。
 2. 无需修改 Security Level，而是 Firewall => Tools，将 China（或被 Block 的 IP/ASN）作为 Whitelist。
 3. [Issues](https://github.com/v2ray/v2ray-core/issues/1742) 里有提到，可以 Firewall => Firewall Rules，添加 Country => China 或 IP Address =>（被 Block 的 IP）或 URL Path => （wsSettings 里 的那个 path），为 Allow 即可，但个人实测，Activity log 里会显示，先是被 Firewall Rules 所 Allow，随后又被 Security Level 所 Block。
+
+PS：针对解决方案 3，建议各位在出现被拦截的问题之前就进行此操作，本文所提的个人实测是在已经出现被拦截的情况下所进行的哦。
