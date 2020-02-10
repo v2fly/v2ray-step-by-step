@@ -6,7 +6,7 @@
 
 目前，[原始指南](https://github.com/ToutyRater/v2ray-guide) 交由 V2Fly 社区继续维护，欢迎任何形式贡献，分享你的经验和配置或者是勘误／翻译等等。
 
-本指南以 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) 为标准，以 zh-tw（台湾正体）呈现，部分字体有别于 zh-hant（大陆《简化字总表》和《通用规范汉字表》附件《规范字与繁体字、异体字对照表》中对应的繁体），zh-hk（香港用字），zh-mo（澳门用字）等，并基于 [BY-CC 4.0](https://creativecommons.org/licenses/by/4.0/) 授权条款。
+本指南以 [中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines) 为标准，并基于 [BY-CC 4.0](https://creativecommons.org/licenses/by/4.0/) 授权条款。
 
 ## 简介
 
