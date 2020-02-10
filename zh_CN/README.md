@@ -1,4 +1,4 @@
-# Project V 规范式配置指南
+# Project V 配置指南
 
 ## 声明
 
