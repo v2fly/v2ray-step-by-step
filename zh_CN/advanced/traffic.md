@@ -101,8 +101,8 @@ V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统�
 查看流量信息是 `v2ctl` 的其中一个功能。使用 `v2ctl api -h` 可见查询例子。 配置内设置的 api dokodemo-door 端口，即为 `--server` 参数的端口。
 
 ```bash
-v2ctl api --server=127.0.0.1:10050 StatsService.QueryStats 'pattern: "" reset: false'
-v2ctl api --server=127.0.0.1:10050 StatsService.GetStats 'name: "inbound>>>statin>>>traffic>>>downlink" reset: false'
+v2ctl api --server=127.0.0.1:10085 StatsService.QueryStats 'pattern: "" reset: false'
+v2ctl api --server=127.0.0.1:10085 StatsService.GetStats 'name: "inbound>>>statin>>>traffic>>>downlink" reset: false'
 ```
 
 注意如果在 Windows 的 CMD 内运行，里面的引号要特别处理：
