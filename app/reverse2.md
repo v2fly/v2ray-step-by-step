@@ -31,7 +31,7 @@ A 的配置与上一节无变化。
     "bridges":[  
       {  
         "tag":"bridge", // 关于 A 的反向代理标签，在路由中会用到
-        "domain":"private.cloud.com" // A 和 B 反向代理通信的域名，可以自己取一个，可以不是自己购买的域名，但必须跟下面 B 中的 reverse 配置的域名一致
+        "domain":"pc1.localhost" // 一个域名，用于标识反向代理的流量，不必真实存在，但必须跟下面 B 中的 reverse 配置的域名一致
       }
     ]
   },
@@ -72,7 +72,7 @@ A 的配置与上一节无变化。
           "bridge"
         ],
         "domain":[  
-          "full:private.cloud.com"
+          "full:pc1.localhost"
         ],
         "outboundTag":"tunnel"
       },
@@ -99,7 +99,7 @@ B 的配置只有 inbound 部分发生了变化。
     "portals":[  
       {  
         "tag":"portal",
-        "domain":"private.cloud.com"        // 必须和上面 A 设定的域名一样
+        "domain":"pc1.localhost"        // 必须和上面 A 设定的域名一样
       }
     ]
   },
@@ -148,7 +148,7 @@ B 的配置只有 inbound 部分发生了变化。
           "tunnel"
         ],
         "domain":[  
-          "full:private.cloud.com"
+          "full:private.cloud.com" // 将指定域名的请求发给 A，如果希望将全部流量发给 A，这里可以不设置域名规则。
         ],
         "outboundTag":"portal"
       }
