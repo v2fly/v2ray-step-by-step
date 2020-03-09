@@ -33,7 +33,7 @@ MTProto可通过secret字段区分三代的区别：
 
 ------
 
-V2Ray 从 3.29 开始增加了一组新的传入传出协议：MTProto Proxy。这个协议是 Telegram 开发的，仅用于 Telegram 流量的代理。
+V2Ray 从 3.29 开始增加了一组新的[传入传出协议：MTProto Proxy](https://www.v2fly.org/chapter_02/protocols/mtproto.html)。这个协议是 Telegram 开发的，仅用于 Telegram 流量的代理。
 
 上述的链接中已经附了一个简单的配置方式，这里介绍一个较复杂的用法。
 
