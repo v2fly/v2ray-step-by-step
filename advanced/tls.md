@@ -55,10 +55,10 @@ no crontab for user
 ```
 安装成功后执行 `source ~/.bashrc` 以确保脚本所设置的命令别名生效。
 
-如果安装报错，那么可能是因为系统缺少 acme.sh 所需要的依赖项，acme.sh 的依赖项主要是 netcat(nc)，我们通过以下命令来安装这些依赖项，然后重新安装一遍 acme.sh:
+如果安装报错，那么可能是因为系统缺少 [acme.sh 所需要的依赖项](https://github.com/Neilpang/acme.sh/wiki/Install-preparations)，acme.sh 的依赖项主要是 socat，我们通过以下命令来安装这些依赖项，然后重新安装一遍 acme.sh:
 
 ```
-$ sudo apt-get -y install netcat
+$ sudo apt-get install openssl cron socat curl
 ```
 
 
@@ -133,7 +133,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key
 ```
 
-**注意：无论什么情况，密钥(即上面的v2ray.key)都不能泄漏，如果你不幸泄漏了密钥，可以使用 acme.sh 将原证书吊销，再生成新的证书，吊销方法请自行参考 acme.sh 的手册**
+**注意：无论什么情况，密钥(即上面的v2ray.key)都不能泄漏，如果你不幸泄漏了密钥，可以使用 acme.sh 将原证书吊销，再生成新的证书，吊销方法请自行参考 [acme.sh 的手册](https://github.com/Neilpang/acme.sh/wiki/Options-and-Params)**
 
 ## 配置 V2Ray
 
@@ -239,12 +239,3 @@ Hostname 中输入你的域名，点提交，过一会结果就出来了。
 ## 温馨提醒
 
 **V2Ray 的 TLS 不是伪装或混淆，这是完整、真正的 TLS。因此才需要域名和证书。后文提到的 WS(WebSocket) 也不是伪装。**
-
-
------
-#### 更新历史
-
-- 2017-08-06 加点提醒
-- 2017-12-31 修正文字错误
-- 2018-04-05 Update
-- 2018-11-17 V4.0+ 配置

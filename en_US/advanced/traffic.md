@@ -101,8 +101,8 @@ Note: `email`/`tag` stats data are generated is from the v2ray process you query
 one of the functions in `v2ctl` program is to connect to API.  Run `v2ctl api -h` will show help text and example about them. The configured port of api tagged dokodemo, used here as `--server` argument.
 
 ```bash
-v2ctl api --server=127.0.0.1:10050 StatsService.QueryStats 'pattern: "" reset: false'
-v2ctl api --server=127.0.0.1:10050 StatsService.GetStats 'name: "inbound>>>statin>>>traffic>>>downlink" reset: false'
+v2ctl api --server=127.0.0.1:10085 StatsService.QueryStats 'pattern: "" reset: false'
+v2ctl api --server=127.0.0.1:10085 StatsService.GetStats 'name: "inbound>>>statin>>>traffic>>>downlink" reset: false'
 ```
 
 Note: if you are running v2ctl.exe in windows cmd, the quotes need to be repeated to be passed as program arguments.
