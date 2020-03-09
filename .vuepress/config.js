@@ -143,6 +143,7 @@ function i18nSidebar(locale) {
         'app/docker-deploy-v2ray',
         'app/benchmark',
         'app/optimization',
+        'app/mtproto',
       ])
     },
     {
@@ -223,7 +224,7 @@ module.exports = {
     docsBranch: 'transifex',
     editLinks: true
   },
-  extendPageData ($page) {
+  extendPageData($page) {
     $page.frontmatter.editLink = ('/' === $page._computed.$localePath)
   }
 }
