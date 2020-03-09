@@ -1,11 +1,10 @@
 # MTProto 代理
 
-V2ray内支持一个让[telegram](https://telegram.org/)使用的代理MTProto。 Telegram官方开发的MTProto代理只能由Telegram程序使用，他不是一个传统意义的代理协议。
-
+V2ray内实现了一个让[telegram](https://telegram.org/)使用的代理MTProto。 MTProto是Telegram官方开发的代理协议，只能由Telegram程序使用。
 
 ## 现状和建议
 
-到目前为止（2020年3月），MTProto协议已经迭代了三代，而V2ray内置的支持MTProto只有第一代，会受到防火墙的精准探测和封锁，因此这里并不推荐使用V2ray提供MTProto服务，而推荐使用专业的MTProto程序，并配置使用最新的第三代FakeTLS模式：
+到目前为止（2020年3月），因为防火墙的探测封锁，MTProto协议已经迭代了三代；而V2ray内置的支持MTProto只有第一代，直接部署会受到防火墙的精准探测和封锁，因此这里**并不推荐使用V2ray提供MTProto服务**，而推荐使用专业的MTProto程序，并配置使用最新的第三代FakeTLS模式：
 
 * [9seconds / mtg](https://github.com/9seconds/mtg) (GO语言实现)
 * [seriyps / mtproto_proxy](https://github.com/seriyps/mtproto_proxy) (Erlang实现)
@@ -13,7 +12,7 @@ V2ray内支持一个让[telegram](https://telegram.org/)使用的代理MTProto�
 * [TelegramMessenger / MTProxy](https://github.com/TelegramMessenger/MTProxy) (Telegram官方)
 
 
-::: warning 提醒
+::: info 小贴士
 MTProto可通过secret字段区分三代的区别：
 
 * 第一代secret为32位16进制字符；
@@ -25,7 +24,7 @@ MTProto可通过secret字段区分三代的区别：
 ## V2Ray的MTProto墙内转发
 
 ::: warning 提醒
-目前在境内假设转发代理服务或许有法律风险，建议仅个人使用。
+目前在境内架设转发代理服务或许有法律风险，建议仅个人使用。
 :::
 
 如果一定要使用V2ray提供的MTProto代理，可以通过在家庭网关配合境外服务器转发实现，以下摘录V2ray作者博客：（原文连接：[如何使用 V2Ray 中新增的 MTProto 代理](https://steemit.com/cn/@v2ray/v2ray-mtproto)）
