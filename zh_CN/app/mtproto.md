@@ -12,7 +12,7 @@ V2ray内实现了一个让[telegram](https://telegram.org/)使用的代理MTProt
 * [TelegramMessenger / MTProxy](https://github.com/TelegramMessenger/MTProxy) (Telegram官方)
 
 
-::: info 小贴士
+::: tip 提示
 MTProto可通过secret字段区分三代的区别：
 
 * 第一代secret为32位16进制字符；
