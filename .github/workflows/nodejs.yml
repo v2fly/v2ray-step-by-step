@@ -21,6 +21,12 @@ jobs:
         git checkout -b dev remotes/origin/dev
         tar xf /tmp/transifex.tar
         npm install -g lint-md-cli
+        echo '{' > .lintmdrc
+        echo '    "rules": {' >> .lintmdrc
+        echo '        "no-empty-code-lang": 0,' >> .lintmdrc
+        echo '        "no-long-code": 0' >> .lintmdrc
+        echo '    }' >> .lintmdrc
+        echo '}' >> .lintmdrc
         for MARKDOWN in $(find zh_CN/ -name "*.md"); do lint-md $MARKDOWN --fix; done
         cp -rv zh_CN/* .
         rm -rf zh_CN
