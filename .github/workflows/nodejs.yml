@@ -27,7 +27,7 @@ jobs:
         echo '        "no-long-code": 0' >> .lintmdrc
         echo '    }' >> .lintmdrc
         echo '}' >> .lintmdrc
-        for MARKDOWN in $(find zh_CN/ -name "*.md"); do lint-md $MARKDOWN --fix; done
+        for MARKDOWN in $(find zh_CN/ -name "*.md"); do lint-md $MARKDOWN; done
         cp -rv zh_CN/* .
         rm -rf zh_CN
 
