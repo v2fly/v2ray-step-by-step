@@ -2,7 +2,7 @@
 
 从 v1.19 起引入了 TLS，TLS 中文译名是传输层安全，如果你没听说过，请 Google 了解一下。以下给出些我认为介绍较好的文章链接：
 
- [SSL/TLS协议运行机制的概述](http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html)
+ [SSL/TLS 协议运行机制的概述](http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html)
 
  [传输层安全协议](https://zh.wikipedia.org/wiki/%E5%82%B3%E8%BC%B8%E5%B1%A4%E5%AE%89%E5%85%A8%E5%8D%94%E8%AD%B0)
 
@@ -30,7 +30,7 @@ TLS 是证书认证机制，所以使用 TLS 需要证书，证书也有免费�
 ### 安装 acme.sh
 
 执行以下命令，acme.sh 会安装到 ~/.acme.sh 目录下。
-```
+```plain
 $ curl  https://get.acme.sh | sh
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                Dload  Upload   Total   Spent    Left  Speed
@@ -57,7 +57,7 @@ no crontab for user
 
 如果安装报错，那么可能是因为系统缺少 [acme.sh 所需要的依赖项](https://github.com/Neilpang/acme.sh/wiki/Install-preparations)，acme.sh 的依赖项主要是 socat，我们通过以下命令来安装这些依赖项，然后重新安装一遍 acme.sh:
 
-```
+```plain
 $ sudo apt-get install openssl cron socat curl
 ```
 
@@ -69,7 +69,7 @@ $ sudo apt-get install openssl cron socat curl
 执行以下命令生成证书：
 
 以下的命令会临时监听 80 端口，请确保执行该命令前 80 端口没有使用
-```
+```plain
 $ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone -k ec-256
 [Fri Dec 30 08:59:12 HKT 2016] Standalone mode.
 [Fri Dec 30 08:59:12 HKT 2016] Single domain='mydomain.me'
@@ -107,12 +107,12 @@ gPUI45eltrjcv8FCSTOUcT7PWCa3
 由于 Let's Encrypt 的证书有效期只有 3 个月，因此需要 90 天至少要更新一次证书，acme.sh 脚本会每 60 天自动更新证书。也可以手动更新。
 
 手动更新 ECC 证书，执行：
-```
+```plain
 $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force --ecc
 ```
 
 如果是 RSA 证书则执行：
-```
+```plain
 $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force
 ```
 
@@ -123,17 +123,17 @@ $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force
 #### ECC 证书
 
 将证书和密钥安装到 /etc/v2ray 中：
-```
+```plain
 $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
 ```
 
 #### RSA 证书
 
-```
+```plain
 $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key
 ```
 
-**注意：无论什么情况，密钥(即上面的v2ray.key)都不能泄漏，如果你不幸泄漏了密钥，可以使用 acme.sh 将原证书吊销，再生成新的证书，吊销方法请自行参考 [acme.sh 的手册](https://github.com/Neilpang/acme.sh/wiki/Options-and-Params)**
+**注意：无论什么情况，密钥(即上面的 v2ray.key)都不能泄漏，如果你不幸泄漏了密钥，可以使用 acme.sh 将原证书吊销，再生成新的证书，吊销方法请自行参考 [acme.sh 的手册](https://github.com/Neilpang/acme.sh/wiki/Options-and-Params)**
 
 ## 配置 V2Ray
 

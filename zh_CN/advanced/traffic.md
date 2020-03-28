@@ -113,8 +113,8 @@ v2ctl.exe api --server="127.0.0.1:10085" StatsService.GetStats "name: """"inboun
 
 可调用的 api 有两个：
 
-* `QueryStats`用来查询匹配的记录，可以使用参数`pattern`和`reset`；pattern留空则是匹配所有记录；reset使匹配的单元数值置零。
-* `GetStats`用来其中一个的记录，接受`name`和`reset`，name可参考QueryStats的输出结果构建，reset使该单元数值置零。
+* `QueryStats`用来查询匹配的记录，可以使用参数`pattern`和`reset`；pattern 留空则是匹配所有记录；reset 使匹配的单元数值置零。
+* `GetStats`用来其中一个的记录，接受`name`和`reset`，name 可参考 QueryStats 的输出结果构建，reset 使该单元数值置零。
 
 输出例子：
 

@@ -27,13 +27,13 @@
 设置步骤如下，假设使用 root。
 
 1. 网关设备开启 IP 转发。在 /etc/sysctl.conf 文件添加一行 `net.ipv4.ip_forward=1` ，执行下列命令生效：
-```
+```plain
 sysctl -p
 ```
-2. 网关设备设置静态 IP，与路由器 LAN 口同一个网段，默认网关为路由器的IP；进入路由器的管理后台，到 DHCP 设定将默认网关地址为网关设备的 IP，本例为 192.168.1.22，或者电脑手机等设备单独设置默认网关，然后电脑/手机重新连接到路由器测试是不是可以正常上网(这时还不能翻墙)，如果不能上网先去学习一个把这个搞定，否则接下来再怎么也同样上不了网。网关设备设定静态 IP 是为了避免重启后 IP 会发生变化导致其他设备无法联网；路由器设定 DHCP 默认网关地址是为了让接入到这个路由器的设备将上网的数据包发到网关设备，然后由网关设备转发。
+2. 网关设备设置静态 IP，与路由器 LAN 口同一个网段，默认网关为路由器的 IP；进入路由器的管理后台，到 DHCP 设定将默认网关地址为网关设备的 IP，本例为 192.168.1.22，或者电脑手机等设备单独设置默认网关，然后电脑/手机重新连接到路由器测试是不是可以正常上网(这时还不能翻墙)，如果不能上网先去学习一个把这个搞定，否则接下来再怎么也同样上不了网。网关设备设定静态 IP 是为了避免重启后 IP 会发生变化导致其他设备无法联网；路由器设定 DHCP 默认网关地址是为了让接入到这个路由器的设备将上网的数据包发到网关设备，然后由网关设备转发。
 
-3. 在服务器和网关安装最新版本的 V2Ray（如果不会就参照前面的教程，由于 GFW 会恶化 GitHub Releases 的流量，网关直接运行脚本几乎无法安装，建议先下载V2Ray 的压缩包，然后用安装脚本通过 --local 参数进行安装），并配置好配置文件。一定要确定搭建的 V2Ray 能够正常使用。在网关执行 `curl -x socks5://127.0.0.1:1080 google.com` 测试配置的 V2Ray 是否可以翻墙(命令中 `socks5` 指 inbound 协议为 socks，`1080` 指该 inbound 端口是 1080)。如果出现类似下面的输出则可以翻墙，如果没有出现就说明翻不了，你得仔细检查以下哪步操作不对或漏了。
-```
+3. 在服务器和网关安装最新版本的 V2Ray（如果不会就参照前面的教程，由于 GFW 会恶化 GitHub Releases 的流量，网关直接运行脚本几乎无法安装，建议先下载 V2Ray 的压缩包，然后用安装脚本通过 --local 参数进行安装），并配置好配置文件。一定要确定搭建的 V2Ray 能够正常使用。在网关执行 `curl -x socks5://127.0.0.1:1080 google.com` 测试配置的 V2Ray 是否可以翻墙(命令中 `socks5` 指 inbound 协议为 socks，`1080` 指该 inbound 端口是 1080)。如果出现类似下面的输出则可以翻墙，如果没有出现就说明翻不了，你得仔细检查以下哪步操作不对或漏了。
+```plain
 <HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
 <TITLE>301 Moved</TITLE></HEAD><BODY>
 <H1>301 Moved</H1>
@@ -80,7 +80,7 @@ The document has moved
 
 5. 设定 TCP 透明代理的 iptables 规则，命令如下(`#`代表注释)：
 
-```
+```plain
 iptables -t nat -N V2RAY # 新建一个名为 V2RAY 的链
 iptables -t nat -A V2RAY -d 192.168.0.0/16 -j RETURN # 直连 192.168.0.0/16 
 iptables -t nat -A V2RAY -p tcp -j RETURN -m mark --mark 0xff # 直连 SO_MARK 为 0xff 的流量(0xff 是 16 进制数，数值上等同与上面配置的 255)，此规则目的是避免代理本机(网关)流量出现回环问题
@@ -90,7 +90,7 @@ iptables -t nat -A OUTPUT -p tcp -j V2RAY # 对本机进行透明代理
 ```
 
    然后设定 UDP 流量透明代理的 iptables 规则，命令如下
-```
+```plain
 ip rule add fwmark 1 table 100
 ip route add local 0.0.0.0/0 dev lo table 100
 iptables -t mangle -N V2RAY_MASK

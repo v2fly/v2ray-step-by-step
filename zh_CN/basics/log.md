@@ -83,7 +83,7 @@
 ```
 
 依次看 log 的选项：
-* loglevel：日志级别，分别有5个，本例中设定的是 warning
+* loglevel：日志级别，分别有 5 个，本例中设定的是 warning
   - debug：最详细的日志信息，专用于软件调试
   - info：比较详细的日志信息，可以看到 V2Ray 详细的连接信息
   - warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用 warning

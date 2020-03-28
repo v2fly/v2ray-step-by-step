@@ -1,7 +1,7 @@
 # 前置代理
-前置代理可以在需要http代理才能联网的场景下用到,本质上前置代理是[代理转发](https://guide.v2fly.org/advanced/outboundproxy.html)的一种,只需要修改客户端配置即可.
+前置代理可以在需要 http 代理才能联网的场景下用到,本质上前置代理是[代理转发](https://guide.v2fly.org/advanced/outboundproxy.html)的一种,只需要修改客户端配置即可.
 ## 基本配置 (V2ray 4.21.0+)
-使用前置代理可以实现先通过HTTP代理联网,然后再使用V2Ray(VMESS)的效果.并且HTTP代理服务器只能看见你加密的流量,并不能看到你在访问什么.
+使用前置代理可以实现先通过 HTTP 代理联网,然后再使用 V2Ray(VMESS)的效果.并且 HTTP 代理服务器只能看见你加密的流量,并不能看到你在访问什么.
 ### 客户端
 ```json
 {
@@ -49,8 +49,8 @@
 }
 
 ```
-## HTTPS的前置代理配置 (V2ray 4.21.1+)
-如果需要HTTPS代理为出口的话需要这样写
+## HTTPS 的前置代理配置 (V2ray 4.21.1+)
+如果需要 HTTPS 代理为出口的话需要这样写
 ```json
 {
   "outbounds": [
@@ -103,4 +103,4 @@
   ]
 }
 ```
-**注意:使用HTTP为前置代理时,因为HTTP协议的特性无法代理UDP包,所以[底层传输协议](https://www.v2fly.org/chapter_02/05_transport.html)不要选择KCP,QUIC之类以UDP传输的协议**
+**注意:使用 HTTP 为前置代理时,因为 HTTP 协议的特性无法代理 UDP 包,所以[底层传输协议](https://www.v2fly.org/chapter_02/05_transport.html)不要选择 KCP,QUIC 之类以 UDP 传输的协议**

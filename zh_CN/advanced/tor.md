@@ -2,7 +2,7 @@
 
 首先是科普时间，欢迎各位直接查阅维基百科 [Tor](https://zh.wikipedia.org/wiki/Tor)。
 
-> Tor 是实现匿名通信的自由软件。其名源于“The Onion Router”（洋葱路由器）的英语缩写。用户可透过 Tor 接达由全球志愿者免费提供，包含7000+ 个中继的覆盖网络，从而达至隐藏用户真实地址、避免网络监控及流量分析的目的。Tor 用户的互联网活动（包括浏览在线网站、帖子以及即时消息等通信形式）相对较难追踪。Tor 的设计原意在于保障用户的个人隐私，以及不受监控地进行秘密通信的自由和能力。 
+> Tor 是实现匿名通信的自由软件。其名源于“The Onion Router”（洋葱路由器）的英语缩写。用户可透过 Tor 接达由全球志愿者免费提供，包含 7000+ 个中继的覆盖网络，从而达至隐藏用户真实地址、避免网络监控及流量分析的目的。Tor 用户的互联网活动（包括浏览在线网站、帖子以及即时消息等通信形式）相对较难追踪。Tor 的设计原意在于保障用户的个人隐私，以及不受监控地进行秘密通信的自由和能力。 
 
 本篇其实是想告诉大家，V2Ray 可以和很多软件互相配合哦，这也包括通过 V2Ray 直接流入 Tor 网络。
 
@@ -10,33 +10,33 @@
 
 ### Arch Linux
 
-```
+```plain
 # pacman -S tor
 ```
 
 ### Debian
 
-```
+```plain
 # apt install tor
 ```
 
 ### CentOS
 
-```
+```plain
 # yum install tor
 ```
 
 ## 修改 Tor 配置
 
 于 `/etc/tor/torrc` 添加：
-```
+```plain
 ExcludeNodes {cn},{hk},{mo},{kp},{ir},{sy},{pk},{cu},{vn}
 StrictNodes 1
 ```
 
 ## 启动 Tor 服务
 
-```
+```plain
 # systemctl enable tor --now
 ```
 

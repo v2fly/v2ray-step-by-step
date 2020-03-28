@@ -50,7 +50,7 @@
 
 配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。
 
-```
+```plain
 server {
   listen 443 ssl;
   listen [::]:443 ssl;
@@ -87,7 +87,7 @@ server {
 
 因为 Caddy 会自动申请证书并自动更新，所以使用 Caddy 不用指定证书、密钥。  
 
-```
+```plain
 mydomain.me
 {
   log ./caddy.log
@@ -103,7 +103,7 @@ mydomain.me
 #### Apache 配置
 
 同样地，配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。
-```
+```plain
 <VirtualHost *:443>
   SSLEngine on
   
@@ -173,10 +173,10 @@ mydomain.me
 ```
 ### 注意事项
 
-- V2Ray 自4.18.1后支持TLS1.3，如果开启并强制 TLS1.3 请注意v2ray客户端版本.
-- 较低版本的nginx的location需要写为 /ray/ 才能正常工作
+- V2Ray 自 4.18.1 后支持 TLS1.3，如果开启并强制 TLS1.3 请注意 v2ray 客户端版本.
+- 较低版本的 nginx 的 location 需要写为 /ray/ 才能正常工作
 - 如果在设置完成之后不能成功使用，可能是由于 SElinux 机制(如果你是 CentOS 7 的用户请特别留意 SElinux 这一机制)阻止了 Nginx 转发向内网的数据。如果是这样的话，在 V2Ray 的日志里不会有访问信息，在 Nginx 的日志里会出现大量的 "Permission Denied" 字段，要解决这一问题需要在终端下键入以下命令：
-  ```
+  ```plain
   setsebool -P httpd_can_network_connect 1
   ```
 - 请保持服务器和客户端的 wsSettings 严格一致，对于 V2Ray，`/ray` 和 `/ray/` 是不一样的

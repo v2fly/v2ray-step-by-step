@@ -1,6 +1,6 @@
 # HTTP
-本节举例HTTP(S)代理的配置.<br>
-在早期的V2Ray中不支持HTTP(S)作为出站协议的,但大家对HTTP(S)出站支持的呼声比较高,于是在最近的版本(V4.21.1)中推出了HTTP(S)出站的支持.<br>
+本节举例 HTTP(S)代理的配置.<br>
+在早期的 V2Ray 中不支持 HTTP(S)作为出站协议的,但大家对 HTTP(S)出站支持的呼声比较高,于是在最近的版本(V4.21.1)中推出了 HTTP(S)出站的支持.<br>
 配置与 VMess 大同小异，客户端服务器端都要有入口和出口，只不过是协议(protocol)和相关设置(settings)不同，不作过多说明，直接给配置.
 ## 配置
 ### 客户端配置
@@ -78,5 +78,5 @@
 }
 ```
 ## 注意事项
-- HTTP(S) 出站规则存在的意义是方便只能使用http proxy对外访问内部网络中用户联网使用,如果需要在使用HTTP代理联网的前提下翻墙请阅读[前置代理](https://guide.v2fly.org/app/parent.html).
-- HTTP(S) 出站规则可以作为对外访问的配置，但http proxy协议没有对传输加密，不适宜经公网中传输，且因不支持udp传输将会导致core功能受限(Routing过程的的DNS查询不可用).
+- HTTP(S) 出站规则存在的意义是方便只能使用 http proxy 对外访问内部网络中用户联网使用,如果需要在使用 HTTP 代理联网的前提下翻墙请阅读[前置代理](https://guide.v2fly.org/app/parent.html).
+- HTTP(S) 出站规则可以作为对外访问的配置，但 http proxy 协议没有对传输加密，不适宜经公网中传输，且因不支持 udp 传输将会导致 core 功能受限(Routing 过程的的 DNS 查询不可用).
