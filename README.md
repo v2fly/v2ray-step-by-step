@@ -18,7 +18,7 @@
 
 This repository is a fork of `ToutyRater/v2ray-guide`, due to we want to maintain this document but cannot contact with the author. If you are the author, you are welcome to contact us by either telegram group or email.
 
-Thanks `ToutyRater` maintain the [original version](https://github.com/ToutyRater/v2ray-guide) of this documentation. The document is licensed under [BY-CC 4.0](https://creativecommons.org/licenses/by/4.0/), details see in [LICENSE.md](LICENSE.md).
+Thanks `ToutyRater` maintain the [original version](https://github.com/ToutyRater/v2ray-guide) of this documentation. The document is licensed under [BY-CC 4.0](https://creativecommons.org/licenses/by/4.0/), details see in [LICENSE](LICENSE).
 
 ## Contribution
 
