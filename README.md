@@ -4,9 +4,9 @@
 
 ## 声明
 
-本指南的原始版本来自 [ToutyRater](https://github.com/ToutyRater) 的 [v2ray-guide](https://github.com/ToutyRater/v2ray-guide)。
+指南的原始版本来自 [ToutyRater](https://github.com/ToutyRater) 的 [v2ray-guide](https://github.com/ToutyRater/v2ray-guide) 项目。
 
-为方便多语言翻译和维护，V2Fly Fork 了该项目，项目基于 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授权。
+为方便多语言翻译和维护，V2Fly 对原始版本进行 Fork，该项目基于 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授权。
 
 ## 贡献方式
 
