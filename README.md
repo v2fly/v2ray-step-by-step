@@ -12,7 +12,7 @@
 
 以「[中文文案排版指北](https://github.com/sparanoid/chinese-copywriting-guidelines)」为标准，提高协作质量。
 
-所有的中文内容位于对本仓库的 `transifex` 分支中的 `zh_CN/` 目录下，可修改对应文件并进行提交，如需另增页面，可通过 Issues 进行讨论。
+所有的简体中文内容位于项目 `transifex` 分支中的 `zh_CN/` 目录下，可修改对应文件并进行提交，如需另增页面，可通过 [Issues](https://github.com/v2fly/v2ray-step-by-step/issues) 进行讨论。
 
 多语言翻译使用翻译协作平台 [Transifex](https://www.transifex.com), 具体项目链接如下：
 
