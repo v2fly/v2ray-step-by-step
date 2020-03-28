@@ -14,7 +14,11 @@
 
 所有的简体中文内容位于项目 `transifex` 分支中的 `zh_CN/` 目录下，可修改对应文件并进行提交，如需另增页面，可通过 [Issues](https://github.com/v2fly/v2ray-step-by-step/issues) 进行讨论。
 
-多语言翻译使用翻译协作平台 [Transifex](https://www.transifex.com), 具体项目链接如下：
+多语言翻译计划已暂时搁置。
+
+---
+
+多语言翻译使用翻译协作平台 [Transifex](https://www.transifex.com)，具体项目链接如下：
 
 * [中文至英文](https://www.transifex.com/v2fly/v2fly-step-by-step_zh_cn_to_en_us)
 * [英文至多国语言](https://www.transifex.com/v2fly/v2fly-step-by-step)
