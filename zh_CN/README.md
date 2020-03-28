@@ -6,7 +6,7 @@
 
 现在 [原始指南](https://github.com/ToutyRater/v2ray-guide) 将交由 v2fly 社区继续维护，欢迎任何形式贡献，分享你的经验和配置或者是勘误/翻译等等。
 
-目前指南使用 [BY-CC 4.0](`LICENSE.md`) 授权协议
+目前指南使用 [CC BY 4.0](`LICENSE.md`) 授权协议
 
 ## 简介
 
