@@ -168,7 +168,7 @@ backend vmess
 
 ![延迟对比](../resource/images/vmessping_tls_wss.jpg)
 
-* 测试工具为 [vmessping ](https://github.com/v2fly/vmessping)，可见 Vmess + TCP + TLS（左）延迟低于 Vmess + WSS（右）
+* 测试工具为 [vmessping](https://github.com/v2fly/vmessping)，可见 Vmess + TCP + TLS（左）延迟低于 Vmess + WSS（右）
 
 * 打开网站域名可以看到正常的网站。
 
