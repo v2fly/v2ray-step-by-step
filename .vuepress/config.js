@@ -128,7 +128,7 @@ function i18nSidebar(locale) {
         'advanced/h2',
         'advanced/cdn',
         'advanced/traffic',
-        'advanced/tor'
+        'advanced/tor',
         'advanced/not_recommend',
       ])
     },
