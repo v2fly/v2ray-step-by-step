@@ -22,7 +22,7 @@ HaProxy 监听 443 端口，处理 TLS 之后，将 HTTP 流量交由 Web 服务
 
 * 为了较好的支持 TLS1.3，HaProxy 版本应大于 1.8.15，OpenSSl 版本应大于 1.1.1，如果您使用的发行版仓库自带的版本较低，您可能需要自行编译安装。
 
-2. 安装 Caddy，参考[这个教程](https://github.com/caddyserver/caddy/blob/master/dist/init/linux-systemd/README.md)
+2. 安装 Caddy，参考[这个教程](https://github.com/caddyserver/caddy/blob/v1/dist/init/linux-systemd/README.md)
 
 3. 安装 V2Ray，可以使用官方脚本[官方脚本](https://www.v2ray.com/chapter_00/install.html#linuxscript)
 
