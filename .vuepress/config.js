@@ -122,11 +122,13 @@ function i18nSidebar(locale) {
         'advanced/outboundproxy',
         'advanced/httpfake',
         'advanced/tls',
+        'advanced/tcp_tls_web',
         'advanced/websocket',
         'advanced/wss_and_web',
         'advanced/h2',
         'advanced/cdn',
         'advanced/traffic',
+        'advanced/tor'
         'advanced/not_recommend',
       ])
     },
