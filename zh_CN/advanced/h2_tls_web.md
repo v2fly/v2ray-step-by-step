@@ -4,7 +4,7 @@
 V2RayClient --|-> Caddy -> V2RayServer -> Internet
 ```
 
-流量经 Caddy 通过本地回环（lo）转发给V2Ray，如直接使用浏览器访问 *V2Ray Path* 将会返回 502 Bad Gateway，访问其他路径与通过HTTP/2访问一般的网站一般无二。每一个请求都是真实的 HTTP/2 `PUT`,正所谓真实是最完美的伪装。
+流量经 Caddy 通过本地回环（lo）转发给V2Ray，如直接使用浏览器访问 *V2Ray Path* 将会返回 502 Bad Gateway，直接打开域名或访问其他路径与通过HTTP/2访问普通网站一般无二。每一个请求都是真实的 HTTP/2 `PUT`,正所谓真实是最完美的伪装。
 
 ::: tip CDN
 <!--如果有人试过可以套CF，请将括号内容删除。否则修改这一行-->
@@ -77,7 +77,7 @@ https://<Host> {
 
 ### V2Ray
 
-下列配置不包含 [log](basics/log.html) 部分。
+下列配置不包含 [log](/basics/log) 部分。
 
 ::: details V2Ray config.json
 ```json
