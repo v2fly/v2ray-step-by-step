@@ -123,6 +123,7 @@ function i18nSidebar(locale) {
         'advanced/httpfake',
         'advanced/tls',
         'advanced/tcp_tls_web',
+        'advanced/tcp_tls_shunt_proxy',
         'advanced/websocket',
         'advanced/wss_and_web',
         'advanced/h2',
