@@ -62,9 +62,8 @@ $ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --webroot --keylength ec-256
 
 ```plain
 acme.sh --install-cert -d mydomain.com --ecc \
-        --key-file       /path/to/keyfile/in/nginx/key.pem \
-        --fullchain-file /path/to/fullchain/in/nginx/cert.pem \
-        --ca-file        /path/to/cafile/in/nginx/ca.pem \
+        --key-file       /etc/v2ray/v2ray.key \
+        --fullchain-file /etc/v2ray/v2ray.crt \
         --reloadcmd     "service nginx force-reload"
 ```
 
