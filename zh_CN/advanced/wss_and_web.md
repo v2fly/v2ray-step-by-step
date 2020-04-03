@@ -50,7 +50,7 @@
 
 Nginx 配置和 Apache 配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。因为 Caddy 会自动申请证书并自动更新，所以使用 Caddy 不用指定证书、密钥。 
 
-注意: 如果你有的 VPS 上有架设网页，请使用 webroot 模式生成证书而不是 TLS 小节中提到的standalone 模式。以下仅就两种模式的些微不同举例，相同部分参照 TLS 小节。本例中使用的是 ECC 证书，若要生成 RSA 证书，删去 `--keylength ec-256` 或 `--ecc` 参数即可。详细请参考 [cmesh-official/acme.sh](https://github.com/acmesh-official/acme.sh/wiki)。
+注意: 如果你有的 VPS 上有架设网页，请使用 webroot 模式生成证书而不是 TLS 小节中提到的 standalone 模式。以下仅就两种模式的些微不同举例，相同部分参照 TLS 小节。本例中使用的是 ECC 证书，若要生成 RSA 证书，删去 `--keylength ec-256` 或 `--ecc` 参数即可。详细请参考 [acmesh-official/acme.sh](https://github.com/acmesh-official/acme.sh/wiki)。
 
 证书生成
 
