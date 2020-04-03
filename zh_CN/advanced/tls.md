@@ -23,7 +23,7 @@ TLS 是证书认证机制，所以使用 TLS 需要证书，证书也有免费�
 
 证书有两种，一种是 ECC 证书（内置公钥是 ECDSA 公钥），一种是 RSA 证书（内置 RSA 公钥）。简单来说，同等长度 ECC 比 RSA 更安全,也就是说在具有同样安全性的情况下，ECC 的密钥长度比 RSA 短得多（加密解密会更快）。但问题是 ECC 的兼容性会差一些，Android 4.x 以下和 Windows XP 不支持。只要您的设备不是非常老的老古董，建议使用 ECC 证书。
 
-以下将给出这两类证书的生成方法，请大家根据自身的情况自行选择其中一种证书类型。
+以下只给出 ECC 证书的部分。
 
 证书生成只需在服务器上操作。
 
@@ -106,33 +106,19 @@ gPUI45eltrjcv8FCSTOUcT7PWCa3
 
 由于 Let's Encrypt 的证书有效期只有 3 个月，因此需要 90 天至少要更新一次证书，acme.sh 脚本会每 60 天自动更新证书。也可以手动更新。
 
-手动更新 ECC 证书，执行：
+手动更新证书，执行：
+
 ```plain
 $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force --ecc
-```
-
-如果是 RSA 证书则执行：
-```plain
-$ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force
 ```
 
 **由于本例中将证书生成到 `/etc/v2ray/` 文件夹，更新证书之后还得把新证书生成到 /etc/v2ray。**
 
 ### 安装证书和密钥
 
-#### ECC 证书
-
 将证书和密钥安装到 /etc/v2ray 中：
 ```plain
 $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --ecc \
-                          --fullchain-file /etc/v2ray/v2ray.crt \
-                          --key-file /etc/v2ray/v2ray.key
-```
-
-#### RSA 证书
-
-```plain
-$ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me \
                           --fullchain-file /etc/v2ray/v2ray.crt \
                           --key-file /etc/v2ray/v2ray.key
 ```
