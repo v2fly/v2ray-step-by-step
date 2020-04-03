@@ -4,11 +4,11 @@
 V2RayClient --|-> Caddy -> V2RayServer -> Internet
 ```
 
-流量经 Caddy 通过本地回环（lo）转发给V2Ray，如直接使用浏览器访问 *V2Ray Path* 将会返回 502 Bad Gateway，直接打开域名或访问其他路径与通过HTTP/2访问普通网站一般无二。每一个请求都是真实的 HTTP/2 `PUT`,正所谓真实是最完美的伪装。
+流量经 Caddy 通过本地回环（lo）转发给 V2Ray ，如直接使用浏览器访问 *V2Ray Path* 将会返回 502 Bad Gateway，直接打开域名或访问其他路径与通过 HTTP/2 访问普通网站一般无二。每一个请求都是真实的 HTTP/2 `PUT`,正所谓真实是最完美的伪装。
 
 ::: tip CDN
 <!--如果有人试过可以套CF，请将括号内容删除。否则修改这一行-->
-H2流量理论上跟ws一样可以被 Cloudflare 转发，记得在 dashboard 里打开HTTP/2开关。<sup>*（注意：笔者没有进行实际测试）*</sup>
+H2 流量理论上跟 ws 一样可以被 Cloudflare 转发，记得在 dashboard 里打开 HTTP/2 开关。<sup>*（注意：笔者没有进行实际测试）*</sup>
 :::
 
 ## 缺陷
@@ -23,7 +23,7 @@ H2流量理论上跟ws一样可以被 Cloudflare 转发，记得在 dashboard �
 *先配置 Web 服务器，待 Web 服务器正常工作后部署 V2Ray。*
 :::
 
-本文之示例配置尚未使用 `h2c`，故 V2Ray 和 Caddy 均需要配置SSL证书。
+本文之示例配置尚未使用 `h2c`，故 V2Ray 和 Caddy 均需要配置 SSL 证书。
 
 需要自行修改的内容已使用 *\<CustomTag\>* 标注，部署时请注意修改。
 
@@ -31,17 +31,17 @@ TAG | 说明
 :-|:-
 \<Host\> | 服务器的域名
 \<Port\> | V2Ray 在本地回环（lo）中监听的端口。
-\<UUID\> | VMess 用户的主ID。必须是一个合法的UUID。
-\<H2 Path\> | 以“/”开头的HTTP路径，客户端与服务端必须一致。
+\<UUID\> | VMess 用户的主 ID。必须是一个合法的 UUID 。
+\<H2 Path\> | 以“/”开头的 HTTP 路径，客户端与服务端必须一致。
 \<Path to cert\><br>\<Path to key\> | 指向证书/密钥的绝对路径
 \<Path to webroot\> | 指向 Web 页面根目录的绝对路径
 
 ### 前期准备
 
 - 注册域名并正确配置域名解析
-- 准备好SSL证书 *（如果需要使用 Caddy 管理SSL证书，请自行修改 Caddyfile）*
+- 准备好 SSL 证书 *（如果需要使用 Caddy 管理 SSL 证书，请自行修改 Caddyfile）*
 - 完成 V2Ray 和 Web 服务器（例如 Caddy）的安装
-- 准备一些人畜无害的HTML页面用来挡刀
+- 准备一些人畜无害的 HTML 页面用来挡刀
 
 ### Web 服务器
 
@@ -51,7 +51,7 @@ TAG | 说明
 NGINX 不能向后端转发 HTTP2 流量。<sup id="a1">[1](#f1)</sup>
 :::
 
-下面的配置假定你已经拥有现成的SSL证书，如果需要使用 Caddy 管理SSL证书，请自行修改 `tls` 部分。
+下面的配置假定你已经拥有现成的 SSL 证书，如果需要使用 Caddy 管理 SSL 证书，请自行修改 `tls` 部分。
 
 ::: details Caddyfile
 ```caddyfile
