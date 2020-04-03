@@ -46,9 +46,29 @@
 }
 ```
 
-#### Nginx 配置
+#### 证书配置
 
-配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。
+Nginx 配置和 Apache 配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。因为 Caddy 会自动申请证书并自动更新，所以使用 Caddy 不用指定证书、密钥。 
+
+注意: 如果你有的 VPS 上有架设网页，请使用 webroot 模式生成证书而不是 TLS 小节中提到的standalone 模式。以下仅就两种模式的些微不同举例，相同部分参照 TLS 小节。本例中使用的是 ECC 证书，若要生成 RSA 证书，删去 `--keylength ec-256` 或 `--ecc` 参数即可。详细请参考 [cmesh-official/acme.sh](https://github.com/acmesh-official/acme.sh/wiki)。
+
+证书生成
+
+```plain
+$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --webroot --keylength ec-256
+```
+
+安装证书和密钥
+
+```plain
+acme.sh --install-cert -d mydomain.com --ecc \
+        --key-file       /path/to/keyfile/in/nginx/key.pem \
+        --fullchain-file /path/to/fullchain/in/nginx/cert.pem \
+        --ca-file        /path/to/cafile/in/nginx/ca.pem \
+        --reloadcmd     "service nginx force-reload"
+```
+
+#### Nginx 配置
 
 ```plain
 server {
@@ -66,26 +86,24 @@ server {
   ssl_prefer_server_ciphers off;
   
   server_name           mydomain.me;
-    location /ray { # 与 V2Ray 配置中的 path 保持一致
-      if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
-          return 404;
-      }
-      proxy_redirect off;
-      proxy_pass http://127.0.0.1:10000; # 假设WebSocket监听在环回地址的10000端口上
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection "upgrade";
-      proxy_set_header Host $host;
-      # Show real IP in v2ray access.log
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  location /ray { # 与 V2Ray 配置中的 path 保持一致
+    if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
+        return 404;
     }
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:10000; # 假设WebSocket监听在环回地址的10000端口上
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    # Show real IP in v2ray access.log
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
 }
 ```
 
-#### Caddy 配置
-
-因为 Caddy 会自动申请证书并自动更新，所以使用 Caddy 不用指定证书、密钥。  
+#### Caddy 配置 
 
 ```plain
 mydomain.me
@@ -102,7 +120,6 @@ mydomain.me
 
 #### Apache 配置
 
-同样地，配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。
 ```plain
 <VirtualHost *:443>
   SSLEngine on
