@@ -16,13 +16,13 @@ HaProxy 监听 443 端口，处理 TLS 之后，将 HTTP 流量交由 Web 服务
 
 ## 实现
 
-本次方案使用 HaProxy，Caddy（Web 服务器的使用不是本教程的重点，本教程以 Caddy 为例，可以用 Nginx、httpd 等替代），V2Ray，服务器系统为 Debian 10。  
+本次方案使用 HaProxy，Caddy/Nginx（Web 服务器的使用不是本教程的重点，可以用 httpd 等替代），V2Ray，服务器系统为 Debian 10。  
 
 1. 安装 HaProxy `apt install haproxy`
 
 * 为了较好的支持 TLS1.3，HaProxy 版本应大于 1.8.15，OpenSSl 版本应大于 1.1.1，如果您使用的发行版仓库自带的版本较低，您可能需要自行编译安装。
 
-2. 安装 Caddy，参考[这个教程](https://github.com/caddyserver/caddy/blob/v1/dist/init/linux-systemd/README.md)
+2. 安装 Web 服务器，Caddy 参考[这个教程](https://github.com/caddyserver/caddy/blob/v1/dist/init/linux-systemd/README.md)，Nginx 使用命令 `apt install nginx`安装。
 
 3. 安装 V2Ray，可以使用官方脚本[官方脚本](https://www.v2ray.com/chapter_00/install.html#linuxscript)
 
@@ -55,15 +55,27 @@ HaProxy 监听 443 端口，处理 TLS 之后，将 HTTP 流量交由 Web 服务
 }
 ```
 
-5. 修改 Caddy 配置文件，部署 HTTP 服务于 8080 端口。
+5. 修改 Web 服务器配置文件，部署 HTTP 服务于 8080 端口。
 
+Caddy 直接替换
 ```cfg
 http://example.com:8080 {
-    root /var/www/html # /var/www/html 是静态网站目录
+    root /var/www/html
 }
 ```
 
-* 实际服务请根据需要部署，也可以用 nginx 之类的替代
+Nginx 在 http{} 里面添加
+```conf
+server {
+  listen 8080;
+  server_name example.com;
+  root /var/www/html;
+}
+```
+
+* 注：/var/www/html 是静态网站目录
+
+* 实际服务请根据需要部署，也可以用 httpd 之类的替代
 
 * 似乎很多 Trojan 教程直接监听 80 端口，其实很多 HTTPS 网站 80 端口通常是重定向到 HTTPS
 
@@ -166,9 +178,9 @@ backend vmess
 
 ## 效果
 
-![延迟对比](../resource/images/vmessping_tls_wss.jpg)
+![延迟对比](https://i.loli.net/2020/02/18/tQyKPD45fmAFl9x.jpg)
 
-* 测试工具为 [vmessping](https://github.com/v2fly/vmessping)，可见 Vmess + TCP + TLS（左）延迟低于 Vmess + WSS（右）
+* 测试工具为 [vmessping ](https://github.com/v2fly/vmessping)，可见 Vmess + TCP + TLS（左）延迟低于 Vmess + WSS（右）
 
 * 打开网站域名可以看到正常的网站。
 
