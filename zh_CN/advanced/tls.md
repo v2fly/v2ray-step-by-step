@@ -23,7 +23,7 @@ TLS 是证书认证机制，所以使用 TLS 需要证书，证书也有免费�
 
 证书有两种，一种是 ECC 证书（内置公钥是 ECDSA 公钥），一种是 RSA 证书（内置 RSA 公钥）。简单来说，同等长度 ECC 比 RSA 更安全,也就是说在具有同样安全性的情况下，ECC 的密钥长度比 RSA 短得多（加密解密会更快）。但问题是 ECC 的兼容性会差一些，Android 4.x 以下和 Windows XP 不支持。只要您的设备不是非常老的老古董，建议使用 ECC 证书。
 
-以下将给出这两类证书的生成方法，请大家根据自身的情况自行选择其中一种证书类型。
+以下只给出 ECC 证书的部分。
 
 证书生成只需在服务器上操作。
 
@@ -70,7 +70,7 @@ $ sudo apt-get install openssl cron socat curl
 
 以下的命令会临时监听 80 端口，请确保执行该命令前 80 端口没有使用
 ```plain
-$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone -k ec-256
+$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone --keylength ec-256
 [Fri Dec 30 08:59:12 HKT 2016] Standalone mode.
 [Fri Dec 30 08:59:12 HKT 2016] Single domain='mydomain.me'
 [Fri Dec 30 08:59:12 HKT 2016] Getting domain auth token for each domain
@@ -100,37 +100,27 @@ gPUI45eltrjcv8FCSTOUcT7PWCa3
 [Fri Dec 30 08:59:16 HKT 2016] The intermediate CA cert is in  /root/.acme.sh/mydomain.me_ecc/ca.cer
 [Fri Dec 30 08:59:16 HKT 2016] And the full chain certs is there:  /root/.acme.sh/mydomain.me_ecc/fullchain.cer
 ```
-`-k` 表示密钥长度，后面的值可以是 `ec-256` 、`ec-384`、`2048`、`3072`、`4096`、`8192`，带有 `ec` 表示生成的是 ECC 证书，没有则是 RSA 证书。在安全性上 256 位的 ECC 证书等同于 3072 位的 RSA 证书。
+`--keylength` 表示密钥长度，后面的值可以是 `ec-256` 、`ec-384`、`2048`、`3072`、`4096`、`8192`，带有 `ec` 表示生成的是 ECC 证书，没有则是 RSA 证书。在安全性上 256 位的 ECC 证书等同于 3072 位的 RSA 证书。
 
 #### 证书更新
 
 由于 Let's Encrypt 的证书有效期只有 3 个月，因此需要 90 天至少要更新一次证书，acme.sh 脚本会每 60 天自动更新证书。也可以手动更新。
 
-手动更新 ECC 证书，执行：
+手动更新证书，执行：
+
 ```plain
 $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force --ecc
-```
-
-如果是 RSA 证书则执行：
-```plain
-$ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force
 ```
 
 **由于本例中将证书生成到 `/etc/v2ray/` 文件夹，更新证书之后还得把新证书生成到 /etc/v2ray。**
 
 ### 安装证书和密钥
 
-#### ECC 证书
-
 将证书和密钥安装到 /etc/v2ray 中：
 ```plain
-$ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
-```
-
-#### RSA 证书
-
-```plain
-$ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key
+$ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --ecc \
+                          --fullchain-file /etc/v2ray/v2ray.crt \
+                          --key-file /etc/v2ray/v2ray.key
 ```
 
 **注意：无论什么情况，密钥(即上面的 v2ray.key)都不能泄漏，如果你不幸泄漏了密钥，可以使用 acme.sh 将原证书吊销，再生成新的证书，吊销方法请自行参考 [acme.sh 的手册](https://github.com/Neilpang/acme.sh/wiki/Options-and-Params)**
