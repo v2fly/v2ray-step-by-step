@@ -16,7 +16,7 @@ vhosts:
     # 将 example.com 改为你的域名
   - name: example.com
     tlsoffloading: true
-    managedcert: false
+    managedcert: true
     http:
       handler: fileServer
       # /var/www/html 是静态网站目录
