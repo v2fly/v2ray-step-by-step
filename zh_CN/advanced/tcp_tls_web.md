@@ -180,7 +180,7 @@ backend vmess
 
 ![延迟对比](https://i.loli.net/2020/02/18/tQyKPD45fmAFl9x.jpg)
 
-* 测试工具为 [vmessping ](https://github.com/v2fly/vmessping)，可见 Vmess + TCP + TLS（左）延迟低于 Vmess + WSS（右）
+* 测试工具为 [vmessping](https://github.com/v2fly/vmessping)，可见 Vmess + TCP + TLS（左）延迟低于 Vmess + WSS（右）
 
 * 打开网站域名可以看到正常的网站。
 
