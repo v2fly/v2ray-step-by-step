@@ -1,5 +1,7 @@
 # TCP + TLS + Web
 
+新手建议使用 [TLS 分流器](https://guide.v2fly.org/advanced/tcp_tls_shunt_proxy.html) 方案
+
 ## 背景
 
 * 目前 Vmess + WebSocket + TLS （以下简称 wss）方式，因其特征如同 HTTPS 流量，可以隐藏 V2Ray 路径，主动侦测会得到正常 HTTP 网站响应，具有良好的伪装能力，目前被广泛用于反审查。  
