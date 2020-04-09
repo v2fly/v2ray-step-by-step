@@ -166,7 +166,9 @@ vhosts:
 }
 ```
 
-3. 修改 V2Ray 的 systemd 配置文件(位于 `/etc/systemd/system/v2ray.service`)
+3. 确保按 [此建议](https://github.com/v2ray/v2ray-core/issues/1011) 配置了 `v2ray` 用户。
+
+4. 修改 V2Ray 的 systemd 配置文件(位于 `/etc/systemd/system/v2ray.service`)
 
 ```text
 [Unit]
@@ -204,7 +206,7 @@ RestartPreventExitStatus=23
 WantedBy=multi-user.target
 ```
 
-4. 重启服务
+5. 重启服务
   
 ```shell
 systemctl daemon-reload
