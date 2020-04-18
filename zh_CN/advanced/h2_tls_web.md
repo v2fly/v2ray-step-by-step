@@ -64,7 +64,7 @@ https://<Host> {
     errors stderr
     root <Path to webroot>
     tls <Path to cert> <Path to key>
-    proxy /libcache https://localhost:<Port> {
+    proxy <H2 Path> https://localhost:<Port> {
         insecure_skip_verify
         header_upstream Host {host}
         header_upstream X-Real-IP {remote}
