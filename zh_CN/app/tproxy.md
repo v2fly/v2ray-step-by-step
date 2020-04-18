@@ -205,7 +205,7 @@
 * routing 也要设置 123 端口的 UDP 流量直连，不然的话要是时间误差超出允许范围(90s)，要使用 NTP 校准时间就要先连上代理，但是连代理又要确保时间准确，结果就是既连不上代理，也无法自动校准时间；
 * freedom 的出站设置 domainStrategy 为 UseIP，以避免直连时因为使用本机的 DNS 出现一些奇怪问题；
 * 注意要在所有的 outbound 加一个 255 的 mark,这个 mark 与下文 iptables 命令中 `iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff` 配合，以直连 V2Ray 发出的流量（blackhole 可以不配置 mark）。
-
+* Linux系统下为了正常使用透明代理，需使用到CAP_NET_ADMIN权限，见[此链接](http://man7.org/linux/man-pages/man7/capabilities.7.html) ，故需要修改V2Ray 的 systemd 配置文件(位于 /etc/systemd/system/v2ray.service)，在CapabilityBoundingSet 一行添加CAP_NET_ADMIN，保存后执行`sudo systemctl daemon-reload && sudo systemctl restart v2ray`
 
 ### 配置透明代理规则
 
