@@ -70,7 +70,7 @@ $ sudo apt-get install openssl cron socat curl
 
 以下的命令会临时监听 80 端口，请确保执行该命令前 80 端口没有使用
 ```plain
-$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone --keylength ec-256
+$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone --keylength ec-256 --force
 [Fri Dec 30 08:59:12 HKT 2016] Standalone mode.
 [Fri Dec 30 08:59:12 HKT 2016] Single domain='mydomain.me'
 [Fri Dec 30 08:59:12 HKT 2016] Getting domain auth token for each domain
