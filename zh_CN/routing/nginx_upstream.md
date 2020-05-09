@@ -1,4 +1,4 @@
-# Nginx接管负载
+# Nginx 接管负载
 
 这种是基于 Nginx 的 upstream 实现的负载分流, 在高性能的 VPS 的加持之下能够有效提高 Websock 的并发请求.
 
@@ -18,16 +18,16 @@ $ sudo cp /etc/v2ray/config_slave_01.json /etc/v2ray/config_slave_02.json
 ```json
 {
     "log": {
-        //文件区分为xxx_slave_01,另外配置下一个v2ray命令xxx_slave_02,依此类推分开查看日志.
+        //文件区分为 xxx_slave_01, 另外配置下一个 v2ray 命令 xxx_slave_02, 依此类推分开查看日志.
         "access": "/var/log/v2ray/access_slave_01.log",
         "error": "/var/log/v2ray/error_slave_01.log",
         "loglevel": "warning"
     },
     "inbounds": [
     {
-        //slave_01监听端口为10000,slave_02监听端口为10001,不能同时占用同一个端口号,以此类推.
+        //slave_01监听端口为10000, slave_02监听端口为10001, 不能同时占用同一个端口号, 以此类推.
         "port": 10000,
-        "listen":"127.0.0.1",//只监听 127.0.0.1，避免除本机外的机器探测到开放了 10000 端口
+        "listen":"127.0.0.1", //只监听 127.0.0.1, 避免除本机外的机器探测到开放了 10000 端口.
         "protocol": "vmess",
         "settings": {
         "clients": [
@@ -56,13 +56,13 @@ $ sudo cp /etc/v2ray/config_slave_01.json /etc/v2ray/config_slave_02.json
 
 ## 修改系统服务
 
-配置文件后,就要把最开始 Systemctl 服务脚本修改成两个服务:
+配置文件后, 就要把最开始 Systemctl 服务脚本修改成两个服务:
 ```plain
 $ sudo mv /etc/systemd/system/v2ray.service /etc/systemd/system/v2ray-slave-01.service
 $ sudo cp /etc/systemd/system/v2ray-slave-01.service /etc/systemd/system/v2ray-slave-02.service
 ```
 
-打开系统服务文件,找到以下类似配置行并修改:
+打开系统服务文件, 找到以下类似配置行并修改:
 ```plain
 # 修改默认加载的配置文件
 ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config_slave_01.json
@@ -81,7 +81,7 @@ $ sudo systemctl enable v2ray-slave-02.service
 $ sudo systemctl enable v2ray-slave-02.service
 ```
 
-## 修改Nginx配置
+## 修改 Nginx 配置
 
 打开 Nginx 配置监听文件修改:
 ```plain
@@ -128,4 +128,4 @@ server {
 }
 ```
 
-设置完成直接重启Nginx即可,这样在大并发请求的时候 Nginx 会按照权重转发数据到不同的 v2ray 进程.
+设置完成直接重启 Nginx 即可, 这样在大并发请求的时候 Nginx 会按照权重转发数据到不同的 v2ray 进程.
