@@ -87,9 +87,77 @@ DNS 服务是可以用来分流的，大致思路是，”哪些域名要去哪�
 
 新版本 4.22.0+后加入的 DOH 功能，部署在服务器端时候可以简单使用。
 
+
+## 对外开放 v2ray 的 DNS 服务
+
+Kitsunebi 的作者在[《漫谈各种黑科技式 DNS 技术在代理环境中的应用》](https://medium.com/@TachyonDevel/%E6%BC%AB%E8%B0%88%E5%90%84%E7%A7%8D%E9%BB%91%E7%A7%91%E6%8A%80%E5%BC%8F-dns-%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-62c50e58cbd0)中介绍了通过`Dokodemo`入站协议和`DNS`出站协议开放 v2ray DNS 的方法，可以充分发挥 v2ray 内置 DNS 的强大能力，例如让系统其它不经代理的联网程序获得 DNS 级别广告过滤的能力，以及在透明代理中接管系统 DNS 等。
+
+该方法的核心思想是使用`Dokodemo`入站协议接收 DNS 请求流量，转发至`DNS`出站协议。而`DNS`出站协议会拦截`Type A`和`Type AAAA`的 DNS 查询并交由 v2ray 内置 DNS 处理，从而返回查询结果；除此之外的查询流量，会根据`Dokodemo`的配置发送至目标 DNS 服务器。
+
+### 客户端基本配置
+
+```json
+{
+    "inbounds": [
+        {
+            "tag": "dns-in",
+            "port": 53,
+            "protocol": "dokodemo-door",
+            "settings": {
+                "address": "8.8.8.8",
+                "port": 53,
+                "network": "tcp,udp",
+                "userLevel": 1
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "dns",
+            "tag": "dns-out"
+        }
+    ],
+    "routing": {
+        "rules": [
+            {
+                "type": "field",
+                "inboundTag": [
+                    "dns-in"
+                ],
+                "outboundTag": "dns-out"
+            }
+        ]
+    }
+}
+```
+
+然而，这样配置存在一定问题。对于非`Type A`和`Type AAAA`的 DNS 查询，v2ray 将会直连转发至`dns-in`中所设置的目标 DNS 服务器。而当这个域名被污染时，返回的自然是被污染的结果；如果希望 v2ray 内置 DNS 承担 `DNSCrypt-Proxy` 的作用，这样无疑会导致DNS查询内容的泄露。
+
+解决方法有两种：
+1. 在`dns-out`中，添加`proxySettings`的配置，使得非`Type A`和`Type AAAA`的 DNS 查询经由`remote-proxy-out`转发至远端解析。此时，目标为`8.8.8.8:53`的非`Type A`和`Type AAAA`的 DNS 查询流量通过代理转发至远端，并通过远端 v2ray 的`freedom`出站，发往`8.8.8.8:53`从而返回未经污染的结果。
+
+```
+{
+    "outbounds": [
+        {
+            "protocol": "dns",
+            "tag": "dns-out",
+            "proxySettings": {
+                "tag": "remote-proxy-out"
+            }
+        }
+    ]
+}
+```
+
+2. 在`dns-in`中设置其它可靠的 DNS 服务器。例如，仅利用 v2ray 内置 DNS 实现 DNS 分流，而解析则使用`dnscrypt-proxy`实现。
+
+如果非`Type A`和`Type AAAA`的 DNS 查询需求较少，可以无视上述改进。
+
+
 ## DNS over HTTPS
 
-V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的 DNS 地址写成 DOH 服务地址。一般只在服务端使用`https+local`模式，而墙内目前似乎没有稳定的 DOH 提供商，只有`1.1.1.1`一家可用，而且效果并不稳定。
+V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的 DNS 地址写成 DOH 服务地址。~~~一般只在服务端使用`https+local`模式，而墙内目前似乎没有稳定的 DOH 提供商，只有`1.1.1.1`一家可用，而且效果并不稳定~~~在中国大陆可以使用阿里云 DNS 提供的 DoH 服务解析境内域名：`https://dns.alidns.com/dns-query`或`https://223.5.5.5/dns-query`。
 
 ```json
 {
@@ -104,7 +172,7 @@ V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配�
 
 DOH 服务商不像传统 DNS 那么成熟，目前网上提供 DOH 的服务商可以参考[curl - DNS over HTTPS](https://github.com/curl/curl/wiki/DNS-over-HTTPS)
 
-注意，多数服务商的 DOH 的 tls 证书是没有对 IP 地址签发认证的，必须写实际的域名，cf 的 1.1.1.1 是个特殊例外，可写成`https://1.1.1.1/dns-query`。
+注意，多数服务商的 DOH 的 tls 证书是没有对 IP 地址签发认证的，必须写实际的域名，但也有一些 DoH 提供商可以直接使用 IP 作为主机名访问，例如 CloudFlare 的`1.1.1.1`和阿里云公共 DNS 的`223.5.5.5`。
 
 DOH 把 DNS 请求融入到常见的 https 流量当中，完全使用 DOH 可以避免出入口 ISP 知道你访问的域名。
 但需要注意，只有在客户端、服务端都使用 DOH 协议(客户端使用 https 模式，服务端使用 https+local 模式)时候，VPS 出口上才不会出现传统的 UDP DNS 请求。
@@ -184,7 +252,7 @@ DOH 的解析时间比传统的 UDP 要高不少，把 V2Ray 的 log level 设�
 
 ### 问：文档推荐在服务器侧使用 DOHL，在墙内客户端侧使用 DOHL 模式可以吗
 
-答：可以使用一些还未被墙或未干扰的服务商，比如`https+local://1.1.1.1/dns-query`，`https+local://rubyfish.cn/dns-query`。但是如果这些服务被墙被禁，就只能走 DOH 模式，或者自建 DOH 服务。
+答：可以使用一些境内可用的服务商，比如`https+local://1.1.1.1/dns-query`，`https+local://dns.rubyfish.cn/dns-query`，`https+local://dns.alidns.com/dns-query`。但是如果这些服务在境内不可用，就只能走 DOH 模式，或者自建 DOH 服务。
 
 自建 DOH 也不算复杂，V2ray 也能使用非标准端口和自定义的路径，甚至“隐藏”在一个个人网站后（类似 tls+ws+web）模式。这些玩法有待大家去挖掘。
 
