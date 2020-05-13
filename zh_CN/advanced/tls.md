@@ -70,7 +70,7 @@ $ sudo apt-get install openssl cron socat curl
 
 以下的命令会临时监听 80 端口，请确保执行该命令前 80 端口没有使用
 ```plain
-$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone --keylength ec-256 --force
+$ ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone --keylength ec-256 --force
 [Fri Dec 30 08:59:12 HKT 2016] Standalone mode.
 [Fri Dec 30 08:59:12 HKT 2016] Single domain='mydomain.me'
 [Fri Dec 30 08:59:12 HKT 2016] Getting domain auth token for each domain
@@ -109,7 +109,7 @@ gPUI45eltrjcv8FCSTOUcT7PWCa3
 手动更新证书，执行：
 
 ```plain
-$ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force --ecc
+$ ~/.acme.sh/acme.sh --renew -d mydomain.com --force --ecc
 ```
 
 **由于本例中将证书生成到 `/etc/v2ray/` 文件夹，更新证书之后还得把新证书生成到 /etc/v2ray。**
