@@ -55,7 +55,7 @@ Nginx 配置和 Apache 配置中使用的是域名和证书使用 TLS 小节的�
 证书生成
 
 ```plain
-$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --webroot --keylength ec-256
+$ ~/.acme.sh/acme.sh --issue -d mydomain.me --webroot --keylength ec-256
 ```
 
 安装证书和密钥
@@ -104,7 +104,30 @@ server {
 
 #### Caddy 配置 
 
+在配置之前请先检查当前安装的Caddy的版本，两者的配置格式并不完全兼容。推荐安装Caddy v2。
+
 ```plain
+# Caddy v2 (recommand)
+mydomain.me {
+    log {
+        output file /etc/caddy/caddy.log
+    }
+    tls {
+        protocols tls1.2 tls1.3
+        ciphers TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+        curves x25519
+    }
+    @v2ray_websocket {
+        path /ray
+        header Connection Upgrade
+        header Upgrade websocket
+    }
+    reverse_proxy @v2ray_websocket localhost:10000
+}
+```
+
+```plain
+# Caddy v1 (deprecate)
 mydomain.me
 {
   log ./caddy.log
