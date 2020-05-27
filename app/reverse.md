@@ -6,14 +6,14 @@
 
 ## 原理
 
-为了易于理解，本节约定有 3 种设备，名为A, B, C。其中 A 为不具备公网 IP 的内网服务器，运行了 NAS 或个人网盘等；B 为具有公网 IP 的服务器，如平常我们购买的 VPS；C 为想要访问 NAS 或私有网盘的设备（本节假设你已经搭建好了私有网盘，监听的端口为 80）。这 3 种的每一种设备都可以是一台或多台，我们先以每种设备都是 1 台来说明。为了能够建立反向代理连接，A 和 B 都要运行 V2Ray，C 可以不运行 V2Ray 。在设置好配置文件并运行 V2Ray 之后，反向代理中连接建立的次序为：
+为了易于理解，本节约定有 3 种设备，名为 A, B, C。其中 A 为不具备公网 IP 的内网服务器，运行了 NAS 或个人网盘等；B 为具有公网 IP 的服务器，如平常我们购买的 VPS；C 为想要访问 NAS 或私有网盘的设备（本节假设你已经搭建好了私有网盘，监听的端口为 80）。这 3 种的每一种设备都可以是一台或多台，我们先以每种设备都是 1 台来说明。为了能够建立反向代理连接，A 和 B 都要运行 V2Ray，C 可以不运行 V2Ray 。在设置好配置文件并运行 V2Ray 之后，反向代理中连接建立的次序为：
 
 
 1. A 会主动向 B 发起请求，建立起一个连接；
 1. 用户在 C 上向 B 发起请求，欲访问 A 上的私有网盘；
 1. B 接受 C 的请求，通过 A 向 B 建立的连接转发给 A(即 B 反向连接了 A)；
 
-以上过程效果就相当于 C 向 A 发起请求，达到了访问 A 的私有网盘的目的。A 向 B 发起请求，A 需要一个 outbound ，B 需要一个 inbound（因为 A 的 outbound 是连接到 B 的 inbound，具备 inbound 和 outbound 的协议有 3 种：VMess, Shadowsocks 和 Socks。本节以 VMess为例）；C 向 B 发起请求，B 还需要一个 inbound，C 不运行V2（ B 的 inbound 要接受不是来自V2的流量，只能是任意门 dokodemo-door）；因为是 A 来访问最终的服务器(私有网盘)，所以 A 还需有一个 outbound，即 freedom。也就是说 A 需要两个 outbound（VMess 和 freedom），B 需要两个inbound(VMess 和 dokodemo-door)。然后为了让 A 能够主动连接 B，A 需要配置反向代理(reverse)；同样的，为了能够让 B 反向连接 A，B 也需要配置反向代理(reverse)。最后还要配置好路由。
+以上过程效果就相当于 C 向 A 发起请求，达到了访问 A 的私有网盘的目的。A 向 B 发起请求，A 需要一个 outbound ，B 需要一个 inbound（因为 A 的 outbound 是连接到 B 的 inbound，具备 inbound 和 outbound 的协议有 3 种：VMess, Shadowsocks 和 Socks。本节以 VMess 为例）；C 向 B 发起请求，B 还需要一个 inbound，C 不运行 V2（ B 的 inbound 要接受不是来自 V2 的流量，只能是任意门 dokodemo-door）；因为是 A 来访问最终的服务器(私有网盘)，所以 A 还需有一个 outbound，即 freedom。也就是说 A 需要两个 outbound（VMess 和 freedom），B 需要两个 inbound(VMess 和 dokodemo-door)。然后为了让 A 能够主动连接 B，A 需要配置反向代理(reverse)；同样的，为了能够让 B 反向连接 A，B 也需要配置反向代理(reverse)。最后还要配置好路由。
 
 ![](../resource/images/block_of_reverse-doko.png)
 

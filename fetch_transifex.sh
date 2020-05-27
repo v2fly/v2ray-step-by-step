@@ -17,11 +17,11 @@ git fetch origin transifex --progress
 echo -e "\nStart checking out files..."
 git checkout origin/transifex -- zh_CN
 git checkout origin/transifex -- en_US
-git checkout origin/transifex -- fa
-git checkout origin/transifex -- ko_KR
-git checkout origin/transifex -- ru_RU
-git checkout origin/transifex -- vi_VN
-git checkout origin/transifex -- fr_FR
+#git checkout origin/transifex -- fa
+#git checkout origin/transifex -- ko_KR
+#git checkout origin/transifex -- ru_RU
+#git checkout origin/transifex -- vi_VN
+#git checkout origin/transifex -- fr_FR
 
 
 mv -v zh_CN/* ./

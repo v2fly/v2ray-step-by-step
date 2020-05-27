@@ -77,11 +77,11 @@
 ```
 
 如果修改成这个配置重启客户端之后，你会发现这个时候浏览器设不设置代理其实是一样的，像 Google 这类被墙的网站没法访问了，taobao 这种国内网站还是跟平常一样能上。如果是前面的介绍 VMess，数据包的流向是:
-```
+```plain
 {浏览器} <--(socks)--> {V2Ray 客户端 inbound <-> V2Ray 客户端 outbound} <--(VMess)-->  {V2Ray 服务器 inbound <-> V2Ray 服务器 outbound} <--(Freedom)--> {目标网站}
 ```
 但因为现在 V2Ray 客户端的 outbound 设成了 freedom，freedom 就是直连，所以呢修改后数据包流向变成了这样：
-```
+```plain
 {浏览器} <--(socks)--> {V2Ray 客户端 inbound <-> V2Ray 客户端 outbound} <--(Freedom)--> {目标网站}
 ```
 V2Ray 客户端从 inbound 接收到数据之后没有经过 VPS 中转，而是直接由 freedom 发出去了，所以效果跟直接访问一个网站是一样的。

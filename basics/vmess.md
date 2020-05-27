@@ -21,7 +21,7 @@ V2Ray 使用 inbound(传入) 和 outbound(传出) 的结构，这样的结构非
 ![](../resource/images/formatdemo.gif)
 
 对于 Linux 有一个软件叫 jq，可以执行这样的指令检查配置文件的语法是否正确：
-```
+```plain
 $ jq . config.json
 ```
 这里的 config.json 是当前目录下的 config.json。特别注意命令中的点 . 不能省去。
@@ -34,7 +34,7 @@ $ jq . config.json
 （从 v2.11 起新增了一个注释功能，配置文件允许 `//` 和 `/**/` 注释。但是 JSON 的标准格式的没有注释的，也就是说如果你给配置文件加了注释，再使用上文我说的格式化功能会报错说你的 JSON 语法（格式）不对。）
 
 不过，最好还是使用 V2Ray 提供的配置检查功能（test 选项），因为可以检查 JSON 语法错误外的问题，比如说突然间手抖把 vmess 写成了 vmss，一下子就检查出来了。
-```
+```plain
 $ /usr/bin/v2ray/v2ray -test -config /etc/v2ray/config.json
 failed to parse json config: Ext|Tools|Conf|Serial: failed to parse json config > Ext|Tools|Conf: failed to load inbound detour config. > Ext|Tools|Conf: unknown config id: vmss
 Main: failed to read config file: /etc/v2ray/config.json > Main|Json: failed to execute v2ctl to convert config file. > exit status 255
@@ -42,7 +42,7 @@ Main: failed to read config file: /etc/v2ray/config.json > Main|Json: failed to 
 
 如果是配置文件没问题，则是这样的：
 
-```
+```plain
 $ /usr/bin/v2ray/v2ray -test -config /etc/v2ray/config.json
 V2Ray v3.15 (die Commanderin) 20180329
 An unified platform for anti-censorship.
@@ -54,7 +54,7 @@ Configuration OK.
 以下给出了 VMess 的配置文件，包含客户端和服务器端，将你的配置替换成下面给出的配置，然后将服务器地址修改成你的就可以正常使用。修改完配置之后要重启 V2Ray 才能使用新配置生效。
 
 ::: danger 注意
-VMess 协议的认证基于时间，一定要保证服务器和客户端的系统时间相差要在90秒以内。
+VMess 协议的认证基于时间，一定要保证服务器和客户端的系统时间相差要在 90 秒以内。
 :::
 
 ### 客户端配置
@@ -139,7 +139,7 @@ VMess 协议的认证基于时间，一定要保证服务器和客户端的系�
 
 ### 客户端
 
-客户端配置中的 inbounds，port 为 1080，即 V2Ray 监听了一个端口 1080，协议是 socks。之前我们已经把浏览器的代理设置好了（SOCKS Host: 127.0.0.1，Port: 1080），假如访问了 google.com，浏览器就会发出一个数据包打包成 socks 协议发送到本机（127.0.0.1指的本机，localhost）的 1080 端口，这个时候数据包就会被 V2Ray 接收到。
+客户端配置中的 inbounds，port 为 1080，即 V2Ray 监听了一个端口 1080，协议是 socks。之前我们已经把浏览器的代理设置好了（SOCKS Host: 127.0.0.1，Port: 1080），假如访问了 google.com，浏览器就会发出一个数据包打包成 socks 协议发送到本机（127.0.0.1 指的本机，localhost）的 1080 端口，这个时候数据包就会被 V2Ray 接收到。
 
 再看 outbounds，protocol 是 vmess，说明 V2Ray 接收到数据包之后要将数据包打包成 [VMess](https://www.v2ray.com/developer/protocols/vmess.html) 协议并且使用预设的 id 加密（这个例子 id 是 b831381d-6324-4d53-ad4f-8cda48b30811），然后发往服务器地址为 serveraddr.com 的 16823 端口。服务器地址 address 可以是域名也可以是 IP，只要正确就可以了。
 
@@ -157,7 +157,7 @@ VMess 协议的认证基于时间，一定要保证服务器和客户端的系�
 接着看服务器，服务器配置的 id 是 b831381d-6324-4d53-ad4f-8cda48b30811，所以 V2Ray 服务器接收到客户端发来的数据包时就会尝试用 b831381d-6324-4d53-ad4f-8cda48b30811 解密，如果解密成功再看一下时间对不对，对的话就把数据包发到 outbound 去，outbound.protocol 是 freedom（freedom 的中文意思是自由，在这里姑且将它理解成直连吧），数据包就直接发到 google.com 了。
 
 实际上数据包的流向就是：
-```
+```plain
 {浏览器} <--(socks)--> {V2Ray 客户端 inbound <-> V2Ray 客户端 outbound} <--(VMess)-->  {V2Ray 服务器 inbound <-> V2Ray 服务器 outbound} <--(Freedom)--> {目标网站}
 ```
 
@@ -197,7 +197,7 @@ VMess 协议的认证基于时间，一定要保证服务器和客户端的系�
 
 修正方法：修改配置文件使客户端的 inboud 的 protocol 和浏览器代理设置的协议保持一致。
 
-#### 服务器执行 `systemctl status v2ray` 输出提示 `Main: failed to read config file...`
+#### 服务器执行 `systemctl status v2ray` 输出提示 Main: failed to read config file
 
 可能原因：服务器的配置文件不正确。
 
@@ -210,13 +210,13 @@ VMess 协议的认证基于时间，一定要保证服务器和客户端的系�
 修正方法：请校准系统时间或将 id 以及 alterId 修改一致。
 
 
-#### 以上几点都排除之后，请仔细检查：
+#### 以上几点都排除之后，请仔细检查
 
 1). 浏览器的代理设置中的端口号与客户端的 inbound 的 port 是否一致；
 
-2). 客户端中的 outbound 设置的 address 与 vps 的ip是否一致；
+2). 客户端中的 outbound 设置的 address 与 vps 的 ip 是否一致；
 
-3). 客户端中的 outbound 设置的address 与服务器的 inbound 的 port 是否一致；
+3). 客户端中的 outbound 设置的 address 与服务器的 inbound 的 port 是否一致；
 
 4). VPS 是否开启了防火墙将连接拦截了；
 
@@ -224,7 +224,7 @@ VMess 协议的认证基于时间，一定要保证服务器和客户端的系�
 
 对于 1) 到 3)，可以通过检查配置确定是否有问题。对于 4) 和 5)，你需要与 VPS 提供商和单位网管联系沟通。
 
-#### 如果你仔细检查了以上几点并将问题排除了，结果还是无法通过 V2Ray 上网，那么你可以考虑：
+#### 如果你仔细检查了以上几点并将问题排除了，结果还是无法通过 V2Ray 上网，那么你可以考虑
 
  1). 仔细看前方的教程，逐步按照教程来不要错在漏，重新部署 V2Ray。部署过程中时刻注意[部署之前](/prep/start.md)提到的注意点；
 

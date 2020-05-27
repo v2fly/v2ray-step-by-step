@@ -9,7 +9,7 @@
 (**注：经过多个版本的迭代优化，V2Ray 的内存占用已经大幅度减少，默认的缓存大小最大也只有 512 KBytes，通过环境变量修改缓存参数已经不适用**)
 
 VPS 中编辑 /etc/systemd/system/v2ray.service 文件，将 `ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json` 修改成 `ExecStart=/usr/bin/env v2ray.ray.buffer.size=1 /usr/bin/v2ray/v2ray -config /etc/v2ray/config.json`，保存；然后执行下面的命令生效。
-```
+```plain
 $ sudo systemctl daemon-reload && sudo systemctl restart v2ray.service
 ```
 上面的 v2ray.ray.buffer.size 就是缓存的变量，设为 1 也没多大影响（主观感觉，没实际测试对比过），内存不太够用的朋友可以试一下。

@@ -46,11 +46,30 @@
 }
 ```
 
+#### 证书配置
+
+Nginx 配置和 Apache 配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。因为 Caddy 会自动申请证书并自动更新，所以使用 Caddy 不用指定证书、密钥。 
+
+注意: 如果你有的 VPS 上有架设网页，请使用 webroot 模式生成证书而不是 TLS 小节中提到的 standalone 模式。以下仅就两种模式的些微不同举例，相同部分参照 TLS 小节。本例中使用的是 ECC 证书，若要生成 RSA 证书，删去 `--keylength ec-256` 或 `--ecc` 参数即可。详细请参考 [acmesh-official/acme.sh](https://github.com/acmesh-official/acme.sh/wiki)。
+
+证书生成
+
+```plain
+$ sudo ~/.acme.sh/acme.sh --issue -d mydomain.me --webroot --keylength ec-256
+```
+
+安装证书和密钥
+
+```plain
+acme.sh --install-cert -d mydomain.com --ecc \
+        --key-file       /etc/v2ray/v2ray.key \
+        --fullchain-file /etc/v2ray/v2ray.crt \
+        --reloadcmd     "service nginx force-reload"
+```
+
 #### Nginx 配置
 
-配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。
-
-```
+```plain
 server {
   listen 443 ssl;
   listen [::]:443 ssl;
@@ -66,28 +85,26 @@ server {
   ssl_prefer_server_ciphers off;
   
   server_name           mydomain.me;
-    location /ray { # 与 V2Ray 配置中的 path 保持一致
-      if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
-          return 404;
-      }
-      proxy_redirect off;
-      proxy_pass http://127.0.0.1:10000; # 假设WebSocket监听在环回地址的10000端口上
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection "upgrade";
-      proxy_set_header Host $host;
-      # Show real IP in v2ray access.log
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  location /ray { # 与 V2Ray 配置中的 path 保持一致
+    if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
+        return 404;
     }
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:10000; # 假设WebSocket监听在环回地址的10000端口上
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    # Show real IP in v2ray access.log
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
 }
 ```
 
-#### Caddy 配置
+#### Caddy 配置 
 
-因为 Caddy 会自动申请证书并自动更新，所以使用 Caddy 不用指定证书、密钥。  
-
-```
+```plain
 mydomain.me
 {
   log ./caddy.log
@@ -102,8 +119,7 @@ mydomain.me
 
 #### Apache 配置
 
-同样地，配置中使用的是域名和证书使用 TLS 小节的举例，请替换成自己的。
-```
+```plain
 <VirtualHost *:443>
   SSLEngine on
   
@@ -173,10 +189,10 @@ mydomain.me
 ```
 ### 注意事项
 
-- V2Ray 自4.18.1后支持TLS1.3，如果开启并强制 TLS1.3 请注意v2ray客户端版本.
-- 较低版本的nginx的location需要写为 /ray/ 才能正常工作
+- V2Ray 自 4.18.1 后支持 TLS1.3，如果开启并强制 TLS1.3 请注意 v2ray 客户端版本.
+- 较低版本的 nginx 的 location 需要写为 /ray/ 才能正常工作
 - 如果在设置完成之后不能成功使用，可能是由于 SElinux 机制(如果你是 CentOS 7 的用户请特别留意 SElinux 这一机制)阻止了 Nginx 转发向内网的数据。如果是这样的话，在 V2Ray 的日志里不会有访问信息，在 Nginx 的日志里会出现大量的 "Permission Denied" 字段，要解决这一问题需要在终端下键入以下命令：
-  ```
+  ```plain
   setsebool -P httpd_can_network_connect 1
   ```
 - 请保持服务器和客户端的 wsSettings 严格一致，对于 V2Ray，`/ray` 和 `/ray/` 是不一样的
