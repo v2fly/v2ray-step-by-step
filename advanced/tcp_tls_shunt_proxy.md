@@ -170,6 +170,10 @@ vhosts:
 
 4. 修改 V2Ray 的 systemd 配置文件(位于 `/etc/systemd/system/v2ray.service`)
 
+::: warning
+部分系统中可能需要修改 rm, mkdir, sleep, chmod 所在的目录。
+:::
+
 ```text
 [Unit]
 Description=V2Ray - A unified platform for anti-censorship
