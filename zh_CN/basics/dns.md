@@ -131,7 +131,7 @@ Kitsunebi 的作者在[《漫谈各种黑科技式 DNS 技术在代理环境中�
 }
 ```
 
-然而，这样配置存在一定问题。对于非`Type A`和`Type AAAA`的 DNS 查询，v2ray 将会直连转发至`dns-in`中所设置的目标 DNS 服务器。而当这个域名被污染时，返回的自然是被污染的结果；如果希望 v2ray 内置 DNS 承担 `DNSCrypt-Proxy` 的作用，这样无疑会导致DNS查询内容的泄露。
+然而，这样配置存在一定问题。对于非`Type A`和`Type AAAA`的 DNS 查询，v2ray 将会直连转发至`dns-in`中所设置的目标 DNS 服务器。而当这个域名被污染时，返回的自然是被污染的结果；如果希望 v2ray 内置 DNS 承担 `DNSCrypt-Proxy` 的作用，这样无疑会导致 DNS 查询内容的泄露。
 
 解决方法有两种：
 1. 在`dns-out`中，添加`proxySettings`的配置，使得非`Type A`和`Type AAAA`的 DNS 查询经由`remote-proxy-out`转发至远端解析。此时，目标为`8.8.8.8:53`的非`Type A`和`Type AAAA`的 DNS 查询流量通过代理转发至远端，并通过远端 v2ray 的`freedom`出站，发往`8.8.8.8:53`从而返回未经污染的结果。
