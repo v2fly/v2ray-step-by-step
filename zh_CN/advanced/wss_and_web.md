@@ -104,10 +104,12 @@ server {
 
 #### Caddy 配置 
 
-在配置之前请先检查当前安装的Caddy的版本，两者的配置格式并不完全兼容。推荐安装Caddy v2。
+::: tip
+  在配置之前请先检查当前安装的 Caddy 的版本，两者的配置格式并不完全兼容。推荐使用 Caddy v2。
+:::
 
 ```plain
-# Caddy v2 (recommand)
+# Caddy v2 (recommended)
 mydomain.me {
     log {
         output file /etc/caddy/caddy.log
@@ -127,7 +129,7 @@ mydomain.me {
 ```
 
 ```plain
-# Caddy v1 (deprecate)
+# Caddy v1 (deprecated)
 mydomain.me
 {
   log ./caddy.log
