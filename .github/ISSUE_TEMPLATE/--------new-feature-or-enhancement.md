@@ -1,7 +1,7 @@
 ---
 name: 增加新内容 / new feature or enhancement
 about: Suggest an idea for this project
-title: ''
+title: "[feature]"
 labels: enhancement
 assignees: ''
 
