@@ -149,6 +149,7 @@ function i18nSidebar(locale) {
         'app/benchmark',
         'app/optimization',
         'app/mtproto',
+        'app/tinc_proxy'
       ])
     },
     {
