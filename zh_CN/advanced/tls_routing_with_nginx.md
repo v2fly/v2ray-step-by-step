@@ -1,12 +1,16 @@
 # 基于 Nginx 的简单 TLS 分流
-本节提供了基于协议数据的统一的代理分流方案，其使用 Nginx 作为前端对基于 TLS 承载的数据进行分流，简化了现有的 TCP+TLS+Web 方案并同时支持分流到 Trojan或 V2Ray 的 HTTP2。
+本节提供了基于协议数据的统一的代理分流方案，其使用 Nginx 作为前端对基于 TLS 承载的数据进行分流，简化了现有的 TCP+TLS+Web 方案并同时支持分流到 Trojan 或 V2Ray 的 HTTP2。
+
 ## 目的
-看到有人根据 Trojan 原理基于 V2Ray 做了个类似功能的定制即 TCP + TLS + Web，就是在 TLS 层上传输 VMess 或者其他比如 http web 流量。
+看到有人根据 Trojan 原理基于 V2Ray 做了个类似功能的定制即 TCP + TLS + Web，就是在 TLS 层上传输 VMess 或者其他比如 http Web 流量。
 本人好奇，遂群里有如下互动：
 
-> Q: TCP + TLS + Web 为啥需要 web 前需要 HAProxy 啊，nginx 也有这种功能啊 非要前面 HAProxy，后面再弄个 nginx/httpd。 对于个人使用没必要吧。 当然你搭建商业的除外
+> Q: TCP + TLS + Web 为啥需要 Web 前需要 HAProxy 啊，nginx 也有这种功能啊 非要前面 HAProxy，后面再弄个 nginx/httpd。 对于个人使用没必要吧。 当然你搭建商业的除外
+> 
 > A: 不要再问这种问题了，你觉得可以就自己搭，搭成了可以写给教程 pr
+> 
 > Q: nginx 的 stream 块不行吗
+> 
 > A: 不要再问这种问题了，你觉得可以就自己搭，搭成了可以写给教程 pr
 
 所以目的很简单，就是去掉那个 HAProxy，只用 Nginx 来分流，这样更适用于个人 vps 的搭建。
@@ -181,6 +185,9 @@ rtt min/avg/max = 616/1194/3263 ms
 
 ## 参考
 [Trojan Design discussion #14](https://github.com/Trojan-gfw/Trojan/issues/14)
+
 [The Trojan Protocol](https://Trojan-gfw.github.io/Trojan/protocol)
+
 [VMess + TCP + TLS 方式的 HTTP 分流和网站伪装](https://gist.github.com/liberal-boy/f3db4e413a96fa80719db1414f011325)
+
 [VMess Fail-Redirect 简单实现](https://gist.github.com/liberal-boy/04f875b86a5e54cb4e1752d24077f2be)
