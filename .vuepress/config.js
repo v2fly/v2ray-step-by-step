@@ -128,6 +128,7 @@ function i18nSidebar(locale) {
         'advanced/wss_and_web',
         'advanced/h2',
         'advanced/h2_tls_web',
+        'advanced/tls_routing_with_nginx',
         'advanced/cdn',
         'advanced/traffic',
         'advanced/tor',
