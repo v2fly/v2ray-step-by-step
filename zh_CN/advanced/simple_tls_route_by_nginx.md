@@ -1,4 +1,4 @@
-# 基于 Nginx 的简单 TLS 分流方案
+# 基于 Nginx 的简单 TLS 分流
 本节提供了基于协议数据的统一的代理分流方案，其使用 Nginx 作为前端对基于 TLS 承载的数据进行分流，简化了现有的 TCP+TLS+Web 方案并同时支持分流到 Trojan或 V2Ray 的 HTTP2。
 ## 目的
 看到有人根据 Trojan 原理基于 V2Ray 做了个类似功能的定制即 TCP + TLS + Web，就是在 TLS 层上传输 VMess 或者其他比如 http web 流量。
