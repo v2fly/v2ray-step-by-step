@@ -120,6 +120,7 @@ mydomain.me {
         curves x25519
     }
     @v2ray_websocket {
+        path /ray
         header Connection *Upgrade*
         header Upgrade websocket
     }
