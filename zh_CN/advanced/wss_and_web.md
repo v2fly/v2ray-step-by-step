@@ -121,7 +121,7 @@ mydomain.me {
     }
     @v2ray_websocket {
         path /ray
-        header Connection Upgrade
+        header Connection *Upgrade*
         header Upgrade websocket
     }
     reverse_proxy @v2ray_websocket localhost:10000
