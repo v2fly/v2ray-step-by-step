@@ -100,6 +100,8 @@ V2Ray 自 4.7 版本起支持 QUIC。QUIC 全称 Quick UDP Internet Connection�
 
 ### 说明
 
+以下是 streamSettings 里一些需要说明的参数：
+
 * `network`: 网络的选择，写为 quic 以启用 QUIC
 * `quicSettings`: 包含一些关于 quic 设置的参数，有
   * `security`: 数据包的加密方式
