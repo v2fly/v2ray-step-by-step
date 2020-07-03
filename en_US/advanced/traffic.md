@@ -1,22 +1,27 @@
 # Traffic Statistics
 
-V2ray includes a traffic stats service, but it's not enabled by default. Traffic are statisticed into two major class: `inbound` and `user`.
+V2ray includes a traffic stats service, but it's not enabled by default. Traffic can be measured at three places: `inbound`, `user` and `outbound`(4.25.2+).
 
-* `inbound` means each inbound service, they are identified by the `tag` attribute.
-* `user` is the `email` attrbute in vmess client settings, stats usage for each client. Note: clients in socks/shadowsocks/http are not counted.
+* `inbound` collects all traffic went through a certain inbound. It is identified by the `tag` attribute.
+* `user` with the `email` attrbute in vmess client settings, their own usage can be measured separately. Note: clients in socks/shadowsocks/http are not supported.
+* Since version 4.25.2+, `outbound` is added for all traffic went through a certain outbound. It is identified by the `tag` attribute.
 
 ## Configuration of Stats
 
-To enable traffic statistic, following items must present in configuraton
+To enable traffic statistic, following items must be present in configuration
 
 1. `"stats":{}` must set
-2. `"api"` includes `StatsService`
-3. `"policy"`  switches attributes starting with stats must set to true
-4. clients settings must include email attribute
-5. a `dokodemo-door` protocol inbound, tag set to api for grpc connection, used for connection of the API 
-6. routing rules include an inboundTag:api -> outboundTag:api rule
+2. `"policy"` attributes must set to true. Inbound and outbound settings are under `"system"`. User settings are under `"levels"`
+3. Corresponding inbounds and outbounds must have tag
+4. `"clients"` settings must include email attribute
 
-Note: `email`/`tag` stats data are generated is from the v2ray process you querys, client/server side won't exchange their data.  The email in client side has nothing to do with the one on server-side, even they use the same uuid. If you query on client process, the data is only abount the client process.
+To enable querying statistic with api, following items must present in configuration
+
+1. `"api"` includes `StatsService`
+2. a `dokodemo-door` protocol inbound, tag set to api for grpc connection, used for connection of the API
+3. routing rules include an inboundTag:api -> outboundTag:api rule
+
+Note: `email`/`tag` stats data is generated from the v2ray process you query, client/server won't exchange their data. The email in client side has nothing to do with the one on server-side, even if they use the same uuid. If you query on client process, the data is only about the client process.
 
 ## Configuration Example
 
@@ -38,7 +43,9 @@ Note: `email`/`tag` stats data are generated is from the v2ray process you query
         },
         "system": {
             "statsInboundUplink": true,
-            "statsInboundDownlink": true
+            "statsInboundDownlink": true,
+            "statsOutboundUplink": true,
+            "statsOutboundDownlink": true
         }
     },
     "inbounds": [
@@ -75,6 +82,7 @@ Note: `email`/`tag` stats data are generated is from the v2ray process you query
     ],
     "outbounds": [
         {
+            "tag": "direct",
             "protocol": "freedom",
             "settings": {}
         }
@@ -266,3 +274,4 @@ Setting `reset` argument to script reset values to zero on each call. Use togeth
 
 - 2019-08-07 Updated the stats script to process the output in Scientific notation
 - 2019-08-09 Optimized traffic statistics and added the SUM->TOTAL column
+- 2020-07-04 Added traffic statistics for outbounds
