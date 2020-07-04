@@ -1,20 +1,25 @@
 # 流量统计
 
-V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统计分两类：`inbound`和`user`。
+V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统计分三类：`inbound`，`user`和`outbound`（4.25.2+）。
 
 * `inbound` 即配置内各个 inbound 的入站的统计，需要根据 `tag` 来记录入站流量。
 * `user` 即 vmess 协议用户里面的统计，用户的 `email` 既是统计和区分的依据。socks, shadowsocks, http 等其他协议内的用户不支持被统计。
+* 从 4.25.2+ 起新增 `outbound` ，即配置内各个 outbound 的出站的统计，需要根据 `tag` 来记录出站流量。
 
 ## 配置统计功能
 
 要实现流量统计功能，配置内需要确保存在以下配置：
 
 1. `"stats":{}` 对象的存在
-2. `"api"` 配置对象里面有 `StatsService`
-3. `"policy"` 中的统计开关为 true，除了各个用户的统计，还有全局统计
-4. clients 里面要有 email
-5. 专用的 `dokodemo-door` 协议的入口，tag 为 api
-6. routing 里面有 inboundTag:api -> outboundTag:api 的规则
+2. `"policy"` 中的统计开关为 true。全局统计的开关在 `"system"` 下，用户统计的开关在 `"levels"` 下
+3. 全局统计在相应的入站出站要有 tag
+4. 用户统计在 `"clients"` 里面要有 email
+
+要使用 api 查询流量，配置内需要确保存在以下配置：
+
+1. `"api"` 配置对象里面有 `StatsService`
+2. 专用的 `dokodemo-door` 协议的入口，tag 为 api
+3. routing 里面有 inboundTag:api -> outboundTag:api 的规则
 
 注意： 统计的 `email`/`tag` 是当前的 V2Ray 进程实例的数据，比如在服务器上统计，客户端写的 email 对服务器没有意义；如果在客户端统计，输出的就是客户端本身的数据。
 
@@ -38,7 +43,9 @@ V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统�
         },
         "system": {
             "statsInboundUplink": true,
-            "statsInboundDownlink": true
+            "statsInboundDownlink": true,
+            "statsOutboundUplink": true,
+            "statsOutboundDownlink": true
         }
     },
     "inbounds": [
@@ -75,6 +82,7 @@ V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统�
     ],
     "outbounds": [
         {
+            "tag": "direct",
             "protocol": "freedom",
             "settings": {}
         }
@@ -265,3 +273,4 @@ SUM->TOTAL:        2.5GB
 
 - 2019-08-07 统计脚本识别科学计数法的输出情况
 - 2019-08-09 优化流量脚本，增加了 SUM->TOTAL 的累加项
+- 2020-07-04 增加了 outbound 的流量统计
