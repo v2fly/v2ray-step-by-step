@@ -1,10 +1,10 @@
 # Traffic Statistics
 
-V2ray includes a traffic stats service, but it's not enabled by default. Traffic can be measured at three places: `inbound`, `user` and `outbound`(4.25.2+).
+V2ray includes a traffic stats service, but it's not enabled by default. Traffic can be measured at three places: `inbound`, `user` and `outbound`(4.26.0+).
 
 * `inbound` collects all traffic went through a certain inbound. It is identified by the `tag` attribute.
 * `user` with the `email` attrbute in vmess client settings, their own usage can be measured separately. Note: clients in socks/shadowsocks/http are not supported.
-* Since version 4.25.2+, `outbound` is added for all traffic went through a certain outbound. It is identified by the `tag` attribute.
+* Since version 4.26.0+, `outbound` is added for all traffic went through a certain outbound. It is identified by the `tag` attribute.
 
 ## Configuration of Stats
 
