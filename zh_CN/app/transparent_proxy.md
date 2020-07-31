@@ -103,6 +103,9 @@ iptables -t mangle -A PREROUTING -p udp -j V2RAY_MASK
 
 7. 写开机自动加载上述的 iptables 的脚本，或者使用第三方软件(如 iptables-persistent)，否则网关重启后 iptables 会失效(即透明代理会失效)。
 
+## 参考实现
+[V2ray.FunPi](https://github.com/twotreesus/V2ray.FunPi) 这里有一个基于本文章的参考实现，一个基于 Web 的 V2ray 控制面板，已改造为将树莓派作为旁路由使用，只需要设置好网关，支持直连\智能分流\全局代理 三种模式，并能自动管理订阅
+
 
 ## 注意事项
 
