@@ -327,6 +327,9 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 
 在路由器上设定 DHCP，将网关地址指向网关设备，在本文的举例中即为树莓派的 IP 192.168.1.22； DNS 随意，因为已经配置了劫持 53 端口的 UDP，当然填常规的 DNS 也更是没有问题的。
 
+## 参考实现
+[V2ray.FunPi](https://github.com/twotreesus/V2ray.FunPi) 这里有一个基于本文章的参考实现，一个基于 Web 的 V2ray 控制面板，已改造为将树莓派作为旁路由使用，只需要设置好网关，支持直连\智能分流\全局代理 三种模式，并能自动管理订阅
+
 ## 备注
 
 1. TPROXY 与 REDIRECT 是针对 TCP 而言的两种透明代理模式，两者的差异主要在于 TPROXY 可以透明代理 IPV6，而 REDIRECT 不行，本文主要是将透明代理模式改为 TPROXY 并且使用了 V2Ray 的 DNS。但我没有 IPV6 环境，无法进行测试，所以本文只适用于 IPV4。
