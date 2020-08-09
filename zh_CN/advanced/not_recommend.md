@@ -13,3 +13,31 @@
 * 单纯使用 WebSocket
 
 理论上，使用 WebSocket 会比 TCP 性能差一些，单纯所以如果不是搭配 CDN、nginx 或者在 PaaS 上使用，那还是使用 TCP 吧。
+
+## 关于 v4.23.4 之前版本的数个漏洞
+
+您可以升级到 v4.23.4 及之后的版本来获取最大程度的保护。我们支持和鼓励寻找并提出 V2Ray 各个方面漏洞的人。我们希望 V2Ray 的用户不要指责或者攻击为我们提供安全审计的人士。
+
+### 可以使用
+
+如果你已经升级到 V2Ray v4.23.4，并且 `没有开启` TLS 的 AllowInsecure 选项，以下配置组合不会泄露识别信息：
+
+* VMess over Websocket with TLS
+* VMess over TLS
+* VMess over HTTP/2 （使用 TLS 的 HTTP/2，并非 h2c）
+* Shadowsocks(AEAD) over Websocket with TLS
+
+### 谨慎使用
+
+以下配置组合可能会在攻击者位于网络路径上时可能会使攻击者获得的协议数据的一些统计学属性，但是这些信息不足以用于确定服务器上部署了这些协议
+
+* VMess over TCP （还在继续改进中）
+
+### 并不建议
+
+以下配置组合不建议用于穿越被攻击者控制的网络：
+
+* 任何协议 + SOCKS5
+* 任何协议 + HTTP 代理
+* 任何协议 + HTTP 伪装
+* 任何协议 + mKCP + 任何伪装
