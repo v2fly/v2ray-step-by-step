@@ -2,19 +2,21 @@
 
 本节将说明如何安装 V2Ray，内容包含服务器安装和客户端安装。需要注意的是，与 Shadowsocks 不同，从软件上 V2Ray 不区分服务器版和客户端版，也就是说在服务器和客户端运行的 V2Ray 是同一个软件，区别只是配置文件的不同。因此 V2Ray 的安装在服务器和客户端上是一样的，但是通常情况下 VPS 使用的是 Linux 而 PC 使用的是 Windows，因此本章默认服务器为 Linux VPS，客户端为 Windows PC。如果你的 PC 使用的是 Linux 操作系统，那么请参考本文的服务器安装；VPS 使用的是 Windows，参考本文的客户端安装；如果你使用的是 MacOS ，请你自行研究怎么安装吧，安装完了跳过本节继续往下看。
 
-本文中会有不少的命令以 sudo 开头，代表着以管理员权限运行，如果你是用 root 账户执行文中的命令，就不用打 sudo。
-
 -----
 
-## 时间校准
+## 安装前的准备
+
+### 时间校准
 
 对于 V2Ray，它的验证方式包含时间，就算是配置没有任何问题，如果时间不正确，也无法连接 V2Ray 服务器的，服务器会认为你这是不合法的请求。所以系统时间一定要正确，只要保证时间误差在**90 秒**之内就没问题。
 
 对于 VPS(Linux) 可以执行命令 `date -R` 查看时间：
+
 ```plain
 $ date -R
 Sun, 22 Jan 2017 10:10:36 -0500
 ```
+
 输出结果中的 -0500 代表的是时区为西 5 区，如果转换成东 8 区时间则为 `2017-01-22 23:10:36`。
 
 如果时间不准确，可以使用 `date --set` 修改时间：
@@ -23,109 +25,216 @@ Sun, 22 Jan 2017 10:10:36 -0500
 $ sudo date --set="2017-01-22 16:16:23"
 Sun 22 Jan 16:16:23 GMT 2017
 ```
+
 如果你的服务器架构是 OpenVZ，那么使用上面的命令有可能修改不了时间，直接发工单联系 VPS 提供商的客服吧，就说你在 VPS 上运行的服务对时间有要求，要他们提供可行的修改系统时间的方法。
 
 对 VPS 的时间校准之后接着是个人电脑，如何修改电脑上的时间我想不必我多说了。
 
 无论是 VPS 还是个人电脑，时区是什么无所谓，因为 V2Ray 会自动转换时区，但是时间一定要准确。
 
+### 使用 root 账户
+为了方便后续脚本的执行安装，在此，我们切换成 root 账户。
+
+执行命令：`su`
+之后输入管理员密码（此处的密码是默认隐藏的，不要以为没打上去）。
+
+执行以后命令行形如：
+```plain
+xxx@xxx:~$ su
+Password: 
+root@xxx:/home/xxx# 
+```
+
 -----
 
 ## 服务器安装
 
-### 脚本安装
-
 在 Linux 操作系统， V2Ray 的安装有脚本安装、手动安装、编译安装 3 种方式，选择其中一种即可，本指南仅提供使用使用脚本安装的方法，并仅推荐使用脚本安装，该脚本由 V2Ray 官方提供。该脚本仅可以在 Debian 系列或者支持 Systemd 的 Linux 操作系统使用。
 
 **除非你是大佬，或者能够自行处理类似 command not found 的问题，否则请你使用 Debian 8.x 以上或者 Ubuntu 16.04 以上的 Linux 系统。**
-本指南默认使用 Debian 8.7 系统作为示范。
+本指南默认使用 Debian 10 系统作为示范。
 
-首先下载脚本：
+### 安装依赖软件
 
-```plain
-$ wget https://install.direct/go.sh
---2018-03-17 22:49:09--  https://install.direct/go.sh
-Resolving install.direct (install.direct)... 104.27.174.71, 104.27.175.71, 2400:cb00:2048:1::681b:af47, ...
-Connecting to install.direct (install.direct)|104.27.174.71|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/plain]
-Saving to: ‘go.sh’
+首先安装脚本的依赖软件，根据你的Linux发行版选择以下命令。
 
-go.sh                             [ <=>                                                 ]  11.24K  --.-KB/s    in 0.001s  
+**注意：下文中需要你输入的命令均以 # 开头，其他内容均来自系统执行命令的反馈，你可以通过比较自己屏幕上和文档中内容的异同来判断安装是否正确。**
 
-2018-03-17 22:49:09 (17.2 MB/s) - ‘go.sh’ saved [11510]
+Debian/Ubuntu:
+
+```
+# apt update
+# apt install curl
 ```
 
-然后执行脚本安装 V2Ray:
+CentOS/RedHat :
+
+```
+# yum makecache
+# yum install curl
+```
+
+Fedora:
+
+```
+# dnf makecache
+# dnf install curl
+```
+
+openSUSE/SUSE:
+
+```
+# zypper refresh
+# zypper install curl
+```
+
+### 下载安装脚本
+
+下载主程序安装脚本：
 
 ```plain
-$ sudo bash go.sh
-Installing curl
-Updating software repo
-Installing curl
-Selecting previously unselected package curl.
-(Reading database ... 36028 files and directories currently installed.)
-Preparing to unpack .../curl_7.38.0-4+deb8u5_amd64.deb ...
-Unpacking curl (7.38.0-4+deb8u5) ...
-Processing triggers for man-db (2.7.0.2-5) ...
-Setting up curl (7.38.0-4+deb8u5) ...
-Installing V2Ray v2.33 on x86_64
-Donwloading V2Ray.
+# curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100   608    0   608    0     0   2403      0 --:--:-- --:--:-- --:--:--  2412
-100 2583k  100 2583k    0     0  1229k      0  0:00:02  0:00:02 --:--:-- 1847k
-Installing unzip
-Installing unzip
-Selecting previously unselected package unzip.
-(Reading database ... 36035 files and directories currently installed.)
-Preparing to unpack .../unzip_6.0-16+deb8u3_amd64.deb ...
-Unpacking unzip (6.0-16+deb8u3) ...
-Processing triggers for mime-support (3.58) ...
-Processing triggers for man-db (2.7.0.2-5) ...
-Setting up unzip (6.0-16+deb8u3) ...
-Extracting V2Ray package to /tmp/v2ray.
-Archive:  /tmp/v2ray/v2ray.zip
-  inflating: /tmp/v2ray/v2ray-v2.33-linux-64/readme.md  
-  inflating: /tmp/v2ray/v2ray-v2.33-linux-64/systemd/v2ray.service  
-  inflating: /tmp/v2ray/v2ray-v2.33-linux-64/systemv/v2ray  
-  inflating: /tmp/v2ray/v2ray-v2.33-linux-64/v2ray  
-  inflating: /tmp/v2ray/v2ray-v2.33-linux-64/vpoint_socks_vmess.json  
-  inflating: /tmp/v2ray/v2ray-v2.33-linux-64/vpoint_vmess_freedom.json  
-PORT:40827
-UUID:505f001d-4aa8-4519-9c54-6b65749ee3fb
-Created symlink from /etc/systemd/system/multi-user.target.wants/v2ray.service to /lib/systemd/system/v2ray.service.
-V2Ray v2.33 is installed.
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+100 21613  100 21613    0     0   8732      0  0:00:02  0:00:02 --:--:--  8736
 ```
 
-看到类似于这样的提示就算安装成功了。如果安装不成功脚本会有红色的提示语句，这个时候你应当按照提示除错，除错后再重新执行一遍脚本安装 V2Ray。对于错误提示如果看不懂，使用翻译软件翻译一下就好。
+### 执行安装
 
-在上面的提示中，有一行 "PORT:40827" 代表着端口号为 40827，还有一行 "UUID:505f001d-4aa8-4519-9c54-6b65749ee3fb" 代表着 id 为 505f001d-4aa8-4519-9c54-6b65749ee3fb。这两个都是随机生成的，不用担心跟别人撞上了。
+安装 V2ray 主程序：
+
+```plain
+# bash install-release.sh
+Downloading V2Ray archive: https://github.com/v2fly/v2ray-core/releases/download/v4.27.0/v2ray-linux-64.zip
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   631  100   631    0     0    331      0  0:00:01  0:00:01 --:--:--   331
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
+100 12.2M  100 12.2M    0     0   841k      0  0:00:14  0:00:14 --:--:-- 1899k
+Downloading verification file for V2Ray archive: https://github.com/v2fly/v2ray-core/releases/download/v4.27.0/v2ray-linux-64.zip.dgst
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   636  100   636    0     0    294      0  0:00:02  0:00:02 --:--:--   295
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
+100   590  100   590    0     0    133      0  0:00:04  0:00:04 --:--:--   282
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Suggested packages:
+  zip
+The following NEW packages will be installed:
+  unzip
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 172 kB of archives.
+After this operation, 580 kB of additional disk space will be used.
+Get:1 http://mirrors.163.com/debian buster/main amd64 unzip amd64 6.0-23+deb10u1 [172 kB]
+Fetched 172 kB in 1s (173 kB/s)   
+Selecting previously unselected package unzip.
+(Reading database ... 31383 files and directories currently installed.)
+Preparing to unpack .../unzip_6.0-23+deb10u1_amd64.deb ...
+Unpacking unzip (6.0-23+deb10u1) ...
+Setting up unzip (6.0-23+deb10u1) ...
+Processing triggers for mime-support (3.62) ...
+Processing triggers for man-db (2.8.5-2) ...
+info: unzip is installed.
+info: Extract the V2Ray package to /tmp/tmp.vk9AF2EqKA/ and prepare it for installation.
+installed: /usr/local/bin/v2ray
+installed: /usr/local/bin/v2ctl
+installed: /usr/local/share/v2ray/geoip.dat
+installed: /usr/local/share/v2ray/geosite.dat
+installed: /usr/local/etc/v2ray/00_log.json
+installed: /usr/local/etc/v2ray/01_api.json
+installed: /usr/local/etc/v2ray/02_dns.json
+installed: /usr/local/etc/v2ray/03_routing.json
+installed: /usr/local/etc/v2ray/04_policy.json
+installed: /usr/local/etc/v2ray/05_inbounds.json
+installed: /usr/local/etc/v2ray/06_outbounds.json
+installed: /usr/local/etc/v2ray/07_transport.json
+installed: /usr/local/etc/v2ray/08_stats.json
+installed: /usr/local/etc/v2ray/09_reverse.json
+installed: /var/log/v2ray/
+installed: /var/log/v2ray/access.log
+installed: /var/log/v2ray/error.log
+installed: /etc/systemd/system/v2ray.service
+installed: /etc/systemd/system/v2ray@.service
+removed: /tmp/tmp.vk9AF2EqKA/
+info: V2Ray v4.27.0 is installed.
+You may need to execute a command to remove dependent software: apt remove curl unzip
+Please execute the command: systemctl enable v2ray; systemctl start v2ray
+```
+
+看到类似于这样的提示就算安装成功了。如果安装不成功脚本会有提示语句，这个时候你应当按照提示除错，除错后再重新执行一遍脚本安装 V2Ray。对于错误提示如果看不懂，使用翻译软件翻译一下就好。
+
+### 运行
 
 安装完之后，使用以下命令启动 V2Ray:
 
 ```plain
-$ sudo systemctl start v2ray
+# systemctl start v2ray
 ```
 
-在首次安装完成之后，V2Ray 不会自动启动，需要手动运行上述启动命令。而在已经运行 V2Ray 的 VPS 上再次执行安装脚本，安装脚本会自动停止 V2Ray 进程，升级 V2Ray 程序，然后自动运行 V2Ray。在升级过程中，配置文件不会被修改。
+在首次安装完成之后，V2Ray 不会自动启动，需要手动运行上述启动命令。
 
-对于安装脚本，还有更多用法，在此不多说了，可以执行 `bash go.sh -h` 看帮助。
+接下来看看 V2ray 是不是真的运行起来了:
+
+```plain
+# systemctl status v2ray
+● v2ray.service - V2Ray Service
+   Loaded: loaded (/etc/systemd/system/v2ray.service; disabled; vendor preset: enabled)
+   Active: active (running) since Sun 2020-08-16 23:17:13 CST; 41min ago
+ Main PID: 1984 (v2ray)
+    Tasks: 6 (limit: 2359)
+   Memory: 6.9M
+   CGroup: /system.slice/v2ray.service
+           └─1984 /usr/local/bin/v2ray -confdir /usr/local/etc/v2ray/
+
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/01_api.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/02_dns.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/03_routing.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/04_policy.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/05_inbounds.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/06_outbounds.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/07_transport.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/08_stats.json
+Aug 16 23:17:13 debian v2ray[1984]: v2ctl> Read config:  /usr/local/etc/v2ray/09_reverse.json
+Aug 16 23:17:13 debian v2ray[1984]: 2020/08/16 23:17:13 [Warning] v2ray.com/core: V2Ray 4.27.0 start
+lines 1-19/19 (END)
+```
+
+看到类似于这样的提示就算启动成功了。
+
+但是由于此时你还没有为 V2ray 配置，所以咱们还是把它关掉吧：
+
+```plain
+# systemctl stop v2ray
+```
+
+对于安装脚本，还有更多用法，在此不多说了，可以执行 `bash install-release.sh -h` 看帮助。
 
 ### 升级更新
 
 在 VPS，重新执行一遍安装脚本就可以更新了，在更新过程中会自动重启 V2Ray，配置文件保持不变。
 
 ```plain
-$ sudo bash go.sh
+# bash install-release.sh
 ```
 
 V2Ray 的更新策略是快速迭代，每周更新(无意外的情况下)。版本号的格式是 `vX.Y.Z`，如 `v2.44.0`。v 是固定的字母 v，version 的首字母；X、Y、Z 都是数字，X 是大版本号，每年更新一个大版本(现在是 v4.Y.Z，V2Ray 已经走到了第四个年头)，Y 是小版本，每周五更新一个小版本。Z 是区分正式版和测试版，Z 是 0 代表着是正式版，不是 0 说明是测试版。例如，v4.7.0 是正式版，v4.7.1 是测试版，建议只使用正式版，不手动指定的情况下 V2Ray 的安装脚本也只会安装最新的正式版。
 
 有些细心的朋友可能会注意到有时候周五 V2Ray 刚发布了一个新版本，次日或过两日又更新一个正式版。出现这种情况是因为周五发布的正式版出现了影响使用严重的 BUG，需要立马发布一个新版本。这种情况比较烦，但是为了保证兼容性、性能优化等又需要保证版本不要太老旧。所以我比较建议在周四更新，选这么一个日子是因为有重大的 BUG 肯定在前面几天就已经修复了，小问题(恐怕都不知道有)的话不会影响使用；而且版本号与最新版相比迟那么一两个也没什么关系。
 
+-----
+
 ## 客户端安装
+
 点[这里](https://github.com/v2ray/v2ray-core/releases)下载 V2Ray 的 Windows 压缩包，如果是 32 位系统，下载 v2ray-windows-32.zip，如果是 64 位系统，下载 v2ray-windows-64.zip（下载速度慢或无法下载请考虑挂已有的翻墙软件来下载）。下载并且解压之后会有下面这些文件：
+
 * `v2ray.exe` 运行 V2Ray 的程序文件
 * `wv2ray.exe` 同 v2ray.exe，区别在于 wv2ray.exe 是后台运行的，不像 v2ray.exe 会有类似于 cmd 控制台的窗口。运行 V2Ray 时从 v2ray.exe 和 wv2ray.exe 中任选一个即可
 * `config.json` V2Ray 的配置文件，后面我们对 V2Ray 进行配置其实就是修改这个文件
