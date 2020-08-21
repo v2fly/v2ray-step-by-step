@@ -1,10 +1,10 @@
 # 流量统计
 
-V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统计分三类：`inbound`，`user`和`outbound`（4.26.0+）。
+V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统计分三类：`inbound`，`user`和`outbound`（4.25.2+）。
 
 * `inbound` 即配置内各个 inbound 的入站的统计，需要根据 `tag` 来记录入站流量。
 * `user` 即 vmess 协议用户里面的统计，用户的 `email` 既是统计和区分的依据。socks, shadowsocks, http 等其他协议内的用户不支持被统计。
-* 从 4.26.0+ 起新增 `outbound` ，即配置内各个 outbound 的出站的统计，需要根据 `tag` 来记录出站流量。
+* 从 4.25.2+ 起新增 `outbound` ，即配置内各个 outbound 的出站的统计，需要根据 `tag` 来记录出站流量。
 
 ## 配置统计功能
 

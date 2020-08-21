@@ -150,14 +150,14 @@ Kitsunebi 的作者在 [《漫谈各种黑科技式 DNS 技术在代理环境中
 }
 ```
 
-2. 在 `dns-in` 中设置其它可靠的 DNS 服务器。例如，仅利用 v2ray 内置 DNS 实现 DNS 分流，而解析则使用 `dnscrypt-proxy` 实现。
+2. 在`dns-in`中设置其它可靠的 DNS 服务器。例如，仅利用 v2ray 内置 DNS 实现 DNS 分流，而解析则使用`dnscrypt-proxy`实现。
 
-如果非 `Type A` 和 `Type AAAA` 的 DNS 查询需求较少，可以无视上述改进。
+如果非`Type A`和`Type AAAA`的 DNS 查询需求较少，可以无视上述改进。
 
 
 ## DNS over HTTPS
 
-V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的 DNS 地址写成 DOH 服务地址。~~一般只在服务端使用 `https+local` 模式，而墙内目前似乎没有稳定的 DOH 提供商，只有 `1.1.1.1` 一家可用，而且效果并不稳定~~ 在中国大陆可以使用阿里云 DNS 提供的 DoH 服务解析境内域名：`https://dns.alidns.com/dns-query` 或 `https://223.5.5.5/dns-query`。
+V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配置里面的 DNS 地址写成 DOH 服务地址。~~~一般只在服务端使用`https+local`模式，而墙内目前似乎没有稳定的 DOH 提供商，只有`1.1.1.1`一家可用，而且效果并不稳定~~~在中国大陆可以使用阿里云 DNS 提供的 DoH 服务解析境内域名：`https://dns.alidns.com/dns-query`或`https://223.5.5.5/dns-query`。
 
 ```json
 {
@@ -172,7 +172,7 @@ V2Ray 4.22.0 新加入的功能，也没特殊配置的地方，就是上述配�
 
 DOH 服务商不像传统 DNS 那么成熟，目前网上提供 DOH 的服务商可以参考 [curl - DNS over HTTPS](https://github.com/curl/curl/wiki/DNS-over-HTTPS)
 
-注意，多数服务商的 DOH 的 tls 证书是没有对 IP 地址签发认证的，必须写实际的域名，但也有一些 DoH 提供商可以直接使用 IP 作为主机名访问，例如 CloudFlare 的 `1.1.1.1` 和阿里云公共 DNS 的 `223.5.5.5`。
+注意，多数服务商的 DOH 的 tls 证书是没有对 IP 地址签发认证的，必须写实际的域名，但也有一些 DoH 提供商可以直接使用 IP 作为主机名访问，例如 CloudFlare 的`1.1.1.1`和阿里云公共 DNS 的`223.5.5.5`。
 
 DOH 把 DNS 请求融入到常见的 https 流量当中，完全使用 DOH 可以避免出入口 ISP 知道你访问的域名。
 但需要注意，只有在客户端、服务端都使用 DOH 协议（客户端使用 https 模式，服务端使用 https+local 模式）时候，VPS 出口上才不会出现传统的 UDP DNS 请求。
