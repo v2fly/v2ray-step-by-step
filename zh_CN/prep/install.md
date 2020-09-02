@@ -181,6 +181,12 @@ Please execute the command: systemctl enable v2ray; systemctl start v2ray
 
 在首次安装完成之后，V2Ray 不会自动启动，需要手动运行上述启动命令。
 
+设置开机自启动 V2Ray:
+
+```plain
+# systemctl enable v2ray
+```
+
 接下来看看 V2ray 是不是真的运行起来了:
 
 ```plain
