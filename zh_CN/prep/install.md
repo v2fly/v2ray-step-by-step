@@ -223,6 +223,8 @@ lines 1-19/19 (END)
 
 对于安装脚本，还有更多用法，在此不多说了，可以执行 `bash install-release.sh -h` 看帮助。
 
+关于 V2ray 配置，请参考 [v2ray-examples](https://github.com/v2fly/v2ray-examples) 内的示例。
+
 ### 升级更新
 
 在 VPS，重新执行一遍安装脚本就可以更新了，在更新过程中会自动重启 V2Ray，配置文件保持不变。
