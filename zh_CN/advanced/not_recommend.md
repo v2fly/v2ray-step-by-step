@@ -12,4 +12,4 @@
 
 * 单纯使用 WebSocket
 
-理论上，使用 WebSocket 会比 TCP 性能差一些，单纯所以如果不是搭配 CDN、nginx 或者在 PaaS 上使用，那还是使用 TCP 吧。
+理论上，单纯使用 WebSocket 会比 TCP 性能差一些，所以如果不是搭配 CDN、nginx 或者在 PaaS 上使用，那还是使用 TCP 吧。
