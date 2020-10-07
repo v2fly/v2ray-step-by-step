@@ -77,6 +77,7 @@
     "error": "D:\\v2ray\\error.log"
   },
   "inbounds": [
+    {
       "port": 1080,
       "protocol": "socks",
       "sniffing": {
