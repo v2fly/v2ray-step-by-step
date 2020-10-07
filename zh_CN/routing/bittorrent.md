@@ -65,6 +65,67 @@
 
 ## 客户端配置
 
+```json
+{
+  "log": {
+    "loglevel": "warning",
+    "access": "D:\\v2ray\\access.log",
+    "error": "D:\\v2ray\\error.log"
+  },
+  "inbounds": [
+      "port": 1080,
+      "protocol": "socks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
+      "settings": {
+        "auth": "noauth",
+        "udp": true
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "serveraddr.com",
+            "port": 16823,  
+            "users": [
+              {
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct" //如果要使用路由，这个 tag 是一定要有的，在这里 direct 就是 freedom 的一个标号，在路由中说 direct V2Ray 就知道是这里的 freedom 了
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "direct",
+        "protocol": [
+          "bittorrent"
+        ]
+      }
+    ]
+  }
+}
+```
+
+`注意`: inbound 的 sniffing 必须开启。
+
 #### 更新历史
 
 - 2018-08-07 初版
