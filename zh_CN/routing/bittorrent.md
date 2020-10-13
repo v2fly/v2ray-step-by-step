@@ -12,9 +12,7 @@
 ```json
 {
   "log": {
-    "loglevel": "warning",
-    "access": "/var/log/v2ray/access.log",
-    "error": "/var/log/v2ray/error.log"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
@@ -31,7 +29,7 @@
         "clients": [
           {
             "id": "b831381d-6324-4d53-ad4f-8cda48b30811",
-            "alterId": 64
+            "alterId": 0
           }
         ]
       }
@@ -72,9 +70,7 @@
 ```json
 {
   "log": {
-    "loglevel": "warning",
-    "access": "D:\\v2ray\\access.log",
-    "error": "D:\\v2ray\\error.log"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
@@ -101,7 +97,7 @@
             "users": [
               {
                 "id": "b831381d-6324-4d53-ad4f-8cda48b30811",
-                "alterId": 64
+                "alterId": 0
               }
             ]
           }
