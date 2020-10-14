@@ -167,51 +167,7 @@ vhosts:
 }
 ```
 
-3. 确保按 [此建议](https://github.com/v2ray/v2ray-core/issues/1011) 配置了 `v2ray` 用户。
-
-4. 修改 V2Ray 的 systemd 配置文件(位于 `/etc/systemd/system/v2ray.service`)
-
-::: warning
-部分系统中可能需要修改 rm, mkdir, sleep, chmod 所在的目录。
-:::
-
-```text
-[Unit]
-Description=V2Ray - A unified platform for anti-censorship
-Documentation=https://v2ray.com https://guide.v2fly.org
-After=network.target nss-lookup.target
-Wants=network-online.target
-
-[Service]
-# If the version of systemd is 240 or above, then uncommenting Type=exec and commenting out Type=simple
-#Type=exec
-Type=simple
-# Runs as root or add CAP_NET_BIND_SERVICE ability can bind 1 to 1024 port.
-# This service runs as root. You may consider to run it as another user for security concerns.
-# By uncommenting User=v2ray and commenting out User=root, the service will run as user v2ray.
-# More discussion at https://github.com/v2ray/v2ray-core/issues/1011
-#User=root
-User=v2ray
-CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW
-NoNewPrivileges=yes
-
-ExecStartPre=/usr/bin/mkdir -p /tmp/v2ray-ds
-ExecStartPre=/usr/bin/rm -rf /tmp/v2ray-ds/*.sock
-
-ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
-
-ExecStartPost=/usr/bin/sleep 1
-ExecStartPost=/usr/bin/chmod 777 /tmp/v2ray-ds/v2ray.sock
-
-Restart=on-failure
-# Don't restart in the case of configuration error
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-```
-
-5. 重启服务
+3. 重启服务
   
 ```shell
 systemctl daemon-reload
