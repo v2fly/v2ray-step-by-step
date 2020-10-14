@@ -130,7 +130,7 @@ vhosts:
       args: /var/www/html
     default:
       handler: proxyPass
-      args: unix:/tmp/v2ray-ds/v2ray.sock
+      args: unix:@v2ray.sock
 ```
 
 2. 修改服务器 V2Ray 配置文件(位于 `/etc/v2ray/config.json`)。
@@ -152,7 +152,8 @@ vhosts:
             "streamSettings": {
                 "network": "ds",
                 "dsSettings": {
-                     "path": "/tmp/v2ray-ds/v2ray.sock"
+                     "path": "@v2ray.sock",
+                     "abstract": true
                 }
 
             }
