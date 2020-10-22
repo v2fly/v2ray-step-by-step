@@ -15,8 +15,8 @@ Docker Image 的文件结构：
 - `/etc/v2ray/config.json`：配置文件
 - `/usr/bin/v2ray/v2ray`：V2Ray 主程序
 - `/usr/bin/v2ray/v2ctl`：V2Ray 辅助工具
-- `/usr/bin/v2ray/geoip.dat`：IP 数据文件
-- `/usr/bin/v2ray/geosite.dat`：域名数据文件
+- `/usr/bin/share/v2ray/geoip.dat`：IP 数据文件
+- `/usr/bin/share/v2ray/geosite.dat`：域名数据文件
 
 ## 2、Docker 部署服务
 
