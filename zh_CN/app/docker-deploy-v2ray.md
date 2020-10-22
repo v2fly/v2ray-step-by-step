@@ -2,7 +2,7 @@
 
 > 原文档请移步 [Docker 部署 V2Ray](https://toutyrater.github.io/app/docker-deploy-v2ray.html)
 
-在阅读本内容时，我们假定你已经熟悉 Docker，同时准备好了 Docker 环境。如果你还不熟悉 Docker ，请阅读 [Docker Engine overview](https://docs.docker.com/engine/) 。如果你还没有 Docker 环境，请参考 [Install Docker Engine](https://docs.docker.com/engine/install/) 。本文档不再阐述如何安装 Docker 、介绍 Docker 的基础操作，因为这些内容并不符合该篇的主题。
+在阅读本内容时，本文档假定你已经熟悉 Docker，同时准备好了 Docker 环境。如果你还不熟悉 Docker ，请阅读 [Docker Engine overview](https://docs.docker.com/engine/) 。如果你还没有 Docker 环境，请参考 [Install Docker Engine](https://docs.docker.com/engine/install/) 。本文档不再阐述 Docker 的安装步骤和 Docker 的基础操作，因为这些内容并不符合该篇的主题。
 
 ## 1、社区 Docker 镜像
 
@@ -20,17 +20,17 @@ Docker Image 的文件结构：
 
 ## 2、Docker 部署服务
 
-**注意：**一下示例操作环境为 Linux ，Windows 下可能会有区别。
+**注意：**以下示例操作环境为 Linux ，Windows 下可能会有区别。
 
 ### 2.1 拉取 V2ray 镜像
 
-从 [Docker Hub](https://hub.docker.com/r/v2fly/v2fly-core) 拉去镜像。默认当前构建的最新版本镜像( `v2fly/v2ray-core:latest` )，如需使用老版本请在镜像名称后面加版本号，如 `v2fly/v2ray-core:4.27.0`
+从 [Docker Hub](https://hub.docker.com/r/v2fly/v2fly-core) 拉取镜像。默认是最新版本镜像( `v2fly/v2ray-core:latest` )，如需使用老版本，请在镜像名称后面加版本号，如 `v2fly/v2ray-core:4.27.0`
 
 ```bash
 docker pull v2fly/v2ray-core
 ```
 
-说明：`docker pull` 为拉去镜像命令，后接镜像名称。如果拉取过程特别慢，请自行配置 Docker 国内加速源。
+说明：`docker pull` 为拉取镜像命令，后接镜像名称。如果拉取过程特别慢，请自行配置 Docker 国内加速源。
 
 查看已拉取到的镜像
 
@@ -40,7 +40,7 @@ docker images | grep v2ray
 
 说明：
 
-- `docker images` ：是查看已拉去的 Docker 镜像
+- `docker images` ：是查看已拉取的 Docker 镜像
 - `| grep v2ray` ：是从上一条命令的输出结果中过滤带有 `v2ray` 关键词的行。
 
 ### 2.2 运行 V2ray 服务
@@ -108,10 +108,10 @@ docker run \
 说明：
 
 - `docker run` ：是运行一个 Docker 容器
-- `-d` ：为指定该容器在后台运行。没有该参数，会以前台运行。
+- `-d` ：是指定该容器在后台运行。没有该参数，容器会以前台运行。
 - `--name v2ray` ：是指定这个容器的名称为 `v2ray`
-- `-v /usr/local/etc/v2ray/config.json:/etc/v2ray/config.json` ：是将本地文件 `config.json` 通过卷（volumn）的方式挂在到容器内部，以便容器内的 `v2ray` 命令能读取用户配置。根据 [v2fly/v2ray-core](https://hub.docker.com/r/v2fly/v2fly-core) 镜像结构，容器启动时默认读取配置文件是 `/etc/v2ray/config.json` ，所以需要将配置文件挂在到此位置。冒号 `:` 用来分割容器内外文件路径位置。如果你的配置文件在 `/etc/v2ray/config.json` ，则需要修改为 `-v /etc/v2ray/config.json:/etc/v2ray/config.json` 。
-- `-p 1080:10086` ：是指将本机的 `1080` 端口映射到容器内部的 `10086` 端口。配置文件中指定服务的端口为 `10086` 。冒号右边是容器中服务启动的端口，即你配置文件中指定的端口，冒号左边是你需要在本机开放的端口。如果你需要访问 `8080` 来使用代理，则需要修改参数为 `-p 8080:10086` 。如果你修改了配置文件中的端口为 `9090` ，则需要修改参数为 ``-p 8080:9090` 。如果使用了 udp 协议，则需要修改为 `-p 8080:9090/udp` 。
+- `-v /usr/local/etc/v2ray/config.json:/etc/v2ray/config.json` ：是将本地文件 `/usr/local/etc/v2ray/config.json` 通过卷（volumn）的方式挂在到容器内部，以便容器内的 `v2ray` 命令能读取用户配置。根据 [v2fly/v2ray-core](https://hub.docker.com/r/v2fly/v2fly-core) 镜像中的文件结构，容器启动时默认读取配置文件是 `/etc/v2ray/config.json` ，所以需要将配置文件挂在到此位置。冒号 `:` 用来分割容器内外文件路径位置。如果你的配置文件在 `/etc/v2ray/config.json` ，则需要修改为 `-v /etc/v2ray/config.json:/etc/v2ray/config.json` 。
+- `-p 1080:10086` ：是指将本机的 `1080` 端口映射到容器内部的 `10086` 端口。配置文件中指定服务的端口为 `10086` 。冒号右边是容器中服务启动的端口，即你配置文件中指定的端口，冒号左边是你需要在本机开放的端口。如果你的浏览器需要访问 `8080` 来使用代理，则需要修改参数为 `-p 8080:10086` 。如果你修改了配置文件中的端口为 `9090` ，则需要修改参数为 `-p 8080:9090` 。如果使用了 udp 协议，则需要修改为 `-p 8080:9090/udp` 。
 - `v2fly/v2ray-core` ：为启动服务的镜像名称。
 
 启动完成后，可以查看已启动的容器：
@@ -130,7 +130,7 @@ docker ps -a
 
 - `docker ps` ：列出容器
 - `-a` ：列出所有容器
-- 输出结果容器有 `CONTAINER ID` 和 `NAMES` ，在查看容器时，可以通过传入容器 id 或者容器名称。
+- 输出结果容器有 `CONTAINER ID` 、 `NAMES` 、 `STATUS` 等列，在查看容器时，可以通过传入容器 id 或者容器名称。
 
 ### 2.3 停止 V2ray 服务
 
@@ -166,7 +166,7 @@ docker restart v2ray
 docker rm -f v2ray
 ```
 
-然后拉去最新版本容器：
+然后拉取最新版本容器：
 
 ```bash
 docker pull v2fly/v2ray-core
@@ -193,7 +193,7 @@ docker run \
 
 - 容器无法启动
 
-容器无法启动，多半是由于配置文件错误，引起的。也可能是挂载出了问题。
+容器无法启动，多半是由于配置文件错误引起的。也可能是挂载出了问题。
 
 **可能出现的情况：**
 
@@ -208,7 +208,6 @@ docker run \
 V2Ray 4.21.4 (v4.21.5-7-g63b7eeac) docker-fly
 A unified platform for anti-censorship.
 main: failed to load config: /etc/v2ray/config.json > v2ray.com/core/main/confloader/external: failed to load config file: /etc/v2ray/config.json > read /etc/v2ray/config.json: is a directory
-
 ```
 
 上述问题为 `-v` 使用了相对路径，导致容器内的程序找不到挂载的配置文件。
@@ -258,9 +257,9 @@ docker logs --tail 100 v2ray
 
 ## 3. docker-compose 部署服务
 
-**注意：**一下示例操作环境为 Linux ，Windows 下可能会有区别。
+**注意：**以下示例操作环境为 Linux ， Windows 下可能会有区别。
 
-本文假定你熟悉 Compose 并且已经有了 Compose 环境。如果你还不了解 Compose ，请阅读 [Overview of Docker Compose](https://docs.docker.com/compose/) 。如果你还没有 Docker Compose 环境，请参考 [Install Docker Compose](https://docs.docker.com/compose/install/) 内容安装。
+本文假定你熟悉 Compose 并且已经有了 Compose 环境。如果你还不了解 Compose ，请阅读 [Overview of Docker Compose](https://docs.docker.com/compose/) 。如果你还没有 Docker Compose 环境，请参阅 [Install Docker Compose](https://docs.docker.com/compose/install/) 内容安装。
 
 ### 3.1 编写 docker-compose 文件
 
@@ -287,8 +286,8 @@ networks:
 
 说明：
 
-- `volumes` ：表示要挂在到容器中的卷，意思是将本地 `/usr/local/etc/v2ray/config.json` 配置文件挂载到容器的 `/etc/v2ray/config.json` 位置。
-- `ports` ：表示将本地端口 `1080` 映射到容器内的 `10086` 端口中。容器内的端口应该和传入配置文件中的端口一致。
+- `volumes` ：表示要挂载到容器内的卷，意思是将本地 `/usr/local/etc/v2ray/config.json` 配置文件挂载到容器内 `/etc/v2ray/config.json` 位置。
+- `ports` ：表示将本地端口 `1080` 映射到容器内的 `10086` 端口。容器内的端口应该和传入配置文件中的端口一致。
 
 演示配置文件 `config.json`：
 
