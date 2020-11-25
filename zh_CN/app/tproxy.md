@@ -357,5 +357,5 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 - 2019-10-26 改善 DNS 配置
 - 2019-10-27 改进
 - 2019-10-28 解释重路由
-- 2020-08-31 添加 DIVERT 规格
+- 2020-08-31 添加 DIVERT 规则
 - 2020-09-29 添加 iptables 规则，解决 V2Ray 占用大量 CPU 的问题
