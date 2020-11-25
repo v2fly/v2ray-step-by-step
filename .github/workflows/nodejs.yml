@@ -47,6 +47,6 @@ jobs:
         git config user.email SharedAccount+V2FlyContrib@unial.org
         git config commit.gpgsign false
         git add -A
-        git commit -m "build $(date -u '+#%U%g%w-%N')"
+        git commit -m "GitHub Actions @ $(date -u -Ins)"
         git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/v2fly/v2ray-step-by-step.git
         git push -f -v --progress origin master:gh-pages
