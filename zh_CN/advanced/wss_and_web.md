@@ -106,7 +106,7 @@ server {
 
 ::: tip
   在配置之前请先检查当前安装的 Caddy 的版本，两者的配置格式并不完全兼容。推荐使用 Caddy v2。
-  注意Caddy在v2.2.0-rc.1 版本以后修复了无法转发 WebSocket 的bug，请使用以后的版本进行安装。
+  注意 Caddy 在 v2.2.0-rc.1 版本以后修复了无法转发 WebSocket 的 bug，请使用以后的版本进行安装。
 :::
 
 ```plain
