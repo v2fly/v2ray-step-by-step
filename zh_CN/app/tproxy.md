@@ -209,6 +209,10 @@
 
 ### 配置透明代理规则
 
+此部分分为 iptables 和 nftables，两者作用相同，择其一即可。
+
+#### iptables 规则
+
 执行下面的命令开启透明代理。由于使用了 TPROXY 方式的透明代理，所以 TCP 流量也是使用 mangle 表。以下命令中，以 `#` 开头的为注释。
 
 ```plain
@@ -262,14 +266,52 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 ```
 这几句是说给 OUTPUT 链的 TCP 和 UDP 打个标记 1(OUTPUT 应用 V2RAY_MASK 链)。由于 Netfilter 的特性，在 OUTPUT 链打标记会使相应的包重路由到 PREROUTING 链上，在已经配置好了 PREROUTING 相关的透明代理的情况下，OUTPUT 链也可以透明代理了，也就是网关对自身的 UDP 流量透明代理自身（当然 TCP 也不在话下）。因为这是 netfilter 本身的特性，Shadowsocks 应该也可以用同样的方法对本机的 UDP 透明代理，但我没有实际测试过效果。
 
+#### nftables 规则
+
+nftables 与 iptables 同样基于 netfilter 框架，早在 2014 年就引入 Linux 内核中，旨在改进 iptables 的一些问题并且将之替换。目前有不少 Linux 发行版默认网络过滤以 nftables 替换了 iptables，但是直到 4.19 的 Linux 内核才有 nft_tproxy 模块，这个模块是透明代理所必须的。如果使用 nftables 配置透明代理，必须具备 nft_tproxy 和 nft_socket 模块，可通过命令 `lsmod | gerp nft` 查看。尽管 nftables 是趋势，可以预见的是在相当长的时间里 iptables 仍将是主流。以下 nftables 规则仅在 Debian 11 测试通过，暂未发现问题。
+
+以下是 nftables 规则语句，本质与 iptables 没什么差别。
+
+``` plain
+# 设置策略路由
+ip rule add fwmark 1 table 100 
+ip route add local 0.0.0.0/0 dev lo table 100
+
+#代理局域网设备
+nft add table v2ray
+nft add chain v2ray PREROUTING { type filter hook prerouting priority 0 \; }
+nft add rule v2ray PREROUTING ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
+nft add rule v2ray PREROUTING meta l4proto tcp ip daddr 192.168.0.0/16 return
+nft add rule v2ray PREROUTING ip daddr 192.168.0.0/16 udp dport != 53 return
+nft add rule v2ray PREROUTING mark 0xff return # 直连 0xff 流量
+nft add rule v2ray PREROUTING meta l4proto {tcp, udp} mark set 1 tproxy to :12345 accept # 转发至 V2Ray 12345 端口
+
+# 代理网关本机
+nft add chain v2ray OUTPUT { type route hook output priority 0 \; }
+nft add rule v2ray OUTPUT ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
+nft add rule v2ray OUTPUT meta l4proto tcp ip daddr 192.168.0.0/16 return
+nft add rule v2ray OUTPUT ip daddr 192.168.0.0/16 udp dport != 53 return
+nft add rule v2ray OUTPUT mark 0xff return # 直连 0xff 流量
+nft add rule v2ray OUTPUT meta l4proto {tcp, udp} mark set 1 accept # 重路由至 prerouting
+
+# DIVERT 规则
+nft add table filter
+nft add chain filter divert { type filter hook prerouting priority -150 \; }
+nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1 accept
+```
+
 ## 开机自动运行透明代理规则
-由于策略路由以及 iptables 有重启会失效的特性，所以当测试配置没有问题之后，需要再弄个服务在开机时自动配置策略路由和 iptables，否则每次开机的时候就要手动来一遍了。
+
+由于策略路由以及 iptables/nftables 有重启会失效的特性，所以当测试配置没有问题之后，需要再弄个服务在开机时自动配置策略路由和 iptables，否则每次开机的时候就要手动执行一遍。
 
 1. 由于 iptables 命令有点多，所以先将 iptables 规则保存到 /etc/iptables/rules.v4 中。
   ```plain
   mkdir -p /etc/iptables && iptables-save > /etc/iptables/rules.v4
   ```
-
+  如果是 nftables，则执行：
+  ```plain
+  mkdir -p /etc/nftables && nft list ruleset > /etc/nftables/rules.v4
+  ```
 2. 在 /etc/systemd/system/ 目录下创建一个名为 tproxyrule.service 的文件，然后添加以下内容并保存。
 
   ```plain
@@ -281,8 +323,12 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
   [Service]
 
   Type=oneshot
-  #注意分号前后要有空格
+  # 注意分号前后要有空格
   ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables-restore /etc/iptables/rules.v4
+  ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables -t mangle -F
+  # 如果是 nftables，则改为以下命令
+  # ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/nft -f /etc/nftables/rules.v4
+  # ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/nft flush ruleset
 
   [Install]
   WantedBy=multi-user.target
@@ -296,26 +342,22 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 ## 其他
 
 ### 解决 too many open files 问题
-对 UDP 透明代理比较容易出现”卡住“的情况，这个时候细心的朋友可能会发现日志中出现了非常多 "too many open files" 的语句,这主要是受到最大文件描述符数值的限制，把这个数值往大调就好了。设置步骤如下。
+对 UDP 透明代理比较容易出现“卡住”的情况，这个时候细心的朋友可能会发现日志中出现了非常多 "too many open files" 的语句,这主要是受到最大文件描述符数值的限制，把这个数值往大调就好了。设置步骤如下。
 1. 修改 /etc/systemd/system/v2ray.service 文件，在 `[Service]` 下加入 `LimitNPROC=500` 和 `LimitNOFILE=1000000`，修改后的内容如下。
 
   ```plain
   [Unit]
   Description=V2Ray Service
-  After=network.target
-  Wants=network.target
+  Documentation=https://www.v2fly.org/
+  After=network.target nss-lookup.target
 
   [Service]
-  # This service runs as root. You may consider to run it as another user for security concerns.
-  # By uncommenting the following two lines, this service will run as user v2ray/v2ray.
-  # More discussion at https://github.com/v2ray/v2ray-core/issues/1011
-  # User=v2ray
-  # Group=v2ray
-  Type=simple
-  PIDFile=/run/v2ray.pid
-  ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
+  User=nobody
+  CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+  AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+  NoNewPrivileges=true
+  ExecStart=/usr/local/bin/v2ray -config /usr/local/etc/v2ray/config.json
   Restart=on-failure
-  # Don't restart in the case of configuration error
   RestartPreventExitStatus=23
   LimitNPROC=500
   LimitNOFILE=1000000
@@ -348,7 +390,12 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 * [Linux transparent proxy support](https://powerdns.org/tproxydoc/tproxy.md.html)
 * [V2Ray 透明代理样例](https://v2ray.com/chapter_02/protocols/dokodemo.html#example)
 * [iptables - Wikipedia](https://en.wikipedia.org/wiki/Iptables)
-
+* [Nftables - Archwiki](https://wiki.archlinux.org/index.php/nftables)
+* [Man page of NFT](https://www.netfilter.org/projects/nftables/manpage.html)
+* [Transparent proxy support](https://www.kernel.org/doc/html/latest/networking/tproxy.html)
+* [Nftables wiki](https://wiki.nftables.org/wiki-nftables/index.php/Supported_features_compared_to_xtables)
+* [Nftables - Debian Wiki](https://wiki.debian.org/nftables)
+* [包的路由转圈圈](https://www.dazhuanlan.com/2019/09/26/5d8ca8b9730d5/)
 
 ## 更新历史
 
@@ -359,3 +406,4 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 - 2019-10-28 解释重路由
 - 2020-08-31 添加 DIVERT 规则
 - 2020-09-29 添加 iptables 规则，解决 V2Ray 占用大量 CPU 的问题
+- 2020-11-27 新增 nftables
