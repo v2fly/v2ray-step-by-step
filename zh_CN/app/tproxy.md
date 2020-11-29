@@ -16,7 +16,7 @@
 
 ## 树莓派安装配置 V2Ray
 
-1. 安装 V2Ray。可以使用 V2Ray 提供的 go.sh 脚本安装，由于 GFW 会恶化对 GitHub 的访问，直接运行脚本几乎无法安装，建议先下载 V2Ray 的压缩包，然后用安装脚本通过 --local 参数进行安装。
+1. 安装 V2Ray。可以使用 V2Fly 提供的 [fhs-install-v2ray](https://github.com/v2fly/fhs-install-v2ray) 脚本安装，由于 GFW 会恶化对 GitHub 的访问，直接运行脚本几乎无法安装，建议先下载 V2Ray 的压缩包，然后用安装脚本通过 --local 参数进行安装。
 2. 配置 V2Ray。按照前文教程将 V2Ray 配置成客户端形式。然后执行 `curl -so /dev/null -w "%{http_code}" google.com -x socks5://127.0.0.1:1080` 确认 V2Ray 已经可以翻墙(命令中 socks5 指 inbound 协议为 socks，1080 指该 inbound 端口是 1080)。如果执行这个命令出现了 301 或 200 这类数字的话代表可以翻墙，如果长时间没反应或者是 000 的话说明不可以翻墙。
 
 ## 配置透明代理
@@ -112,9 +112,6 @@
   ],
   "dns": {
     "servers": [
-      "8.8.8.8", // 非中中国大陆域名使用 Google 的 DNS
-      "1.1.1.1", // 非中中国大陆域名使用 Cloudflare 的 DNS(备用)
-      "114.114.114.114", // 114 的 DNS (备用)
       {
         "address": "223.5.5.5", //中国大陆域名使用阿里的 DNS
         "port": 53,
@@ -122,6 +119,29 @@
           "geosite:cn",
           "ntp.org",   // NTP 服务器
           "$myserver.address" // 此处改为你 VPS 的域名
+        ]
+      },
+      {
+        "address": "114.114.114.114", //中国大陆域名使用 114 的 DNS (备用)
+        "port": 53,
+        "domains": [
+          "geosite:cn",
+          "ntp.org",   // NTP 服务器
+          "$myserver.address" // 此处改为你 VPS 的域名
+        ]
+      },
+      {
+        "address": "8.8.8.8", //非中中国大陆域名使用 Google 的 DNS
+        "port": 53,
+        "domains": [
+          "geosite:geolocation-!cn"
+        ]
+      },
+      {
+        "address": "1.1.1.1", //非中中国大陆域名使用 Cloudflare 的 DNS
+        "port": 53,
+        "domains": [
+          "geosite:geolocation-!cn"
         ]
       }
     ]
@@ -279,20 +299,20 @@ ip route add local 0.0.0.0/0 dev lo table 100
 
 #代理局域网设备
 nft add table v2ray
-nft add chain v2ray PREROUTING { type filter hook prerouting priority 0 \; }
-nft add rule v2ray PREROUTING ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
-nft add rule v2ray PREROUTING meta l4proto tcp ip daddr 192.168.0.0/16 return
-nft add rule v2ray PREROUTING ip daddr 192.168.0.0/16 udp dport != 53 return
-nft add rule v2ray PREROUTING mark 0xff return # 直连 0xff 流量
-nft add rule v2ray PREROUTING meta l4proto {tcp, udp} mark set 1 tproxy to :12345 accept # 转发至 V2Ray 12345 端口
+nft add chain v2ray prerouting { type filter hook prerouting priority 0 \; }
+nft add rule v2ray prerouting ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
+nft add rule v2ray prerouting meta l4proto tcp ip daddr 192.168.0.0/16 return
+nft add rule v2ray prerouting ip daddr 192.168.0.0/16 udp dport != 53 return
+nft add rule v2ray prerouting mark 0xff return # 直连 0xff 流量
+nft add rule v2ray prerouting meta l4proto {tcp, udp} mark set 1 tproxy to :12345 accept # 转发至 V2Ray 12345 端口
 
 # 代理网关本机
-nft add chain v2ray OUTPUT { type route hook output priority 0 \; }
-nft add rule v2ray OUTPUT ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
-nft add rule v2ray OUTPUT meta l4proto tcp ip daddr 192.168.0.0/16 return
-nft add rule v2ray OUTPUT ip daddr 192.168.0.0/16 udp dport != 53 return
-nft add rule v2ray OUTPUT mark 0xff return # 直连 0xff 流量
-nft add rule v2ray OUTPUT meta l4proto {tcp, udp} mark set 1 accept # 重路由至 prerouting
+nft add chain v2ray output { type route hook output priority 0 \; }
+nft add rule v2ray output ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
+nft add rule v2ray output meta l4proto tcp ip daddr 192.168.0.0/16 return
+nft add rule v2ray output ip daddr 192.168.0.0/16 udp dport != 53 return
+nft add rule v2ray output mark 0xff return # 直连 0xff 流量
+nft add rule v2ray output meta l4proto {tcp, udp} mark set 1 accept # 重路由至 prerouting
 
 # DIVERT 规则
 nft add table filter
@@ -380,8 +400,7 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 
 1. TPROXY 与 REDIRECT 是针对 TCP 而言的两种透明代理模式，两者的差异主要在于 TPROXY 可以透明代理 IPV6，而 REDIRECT 不行，本文主要是将透明代理模式改为 TPROXY 并且使用了 V2Ray 的 DNS。但我没有 IPV6 环境，无法进行测试，所以本文只适用于 IPV4。
 2. 据我了解，到目前（2019.10）为止，在我所知的具备透明代理功能的翻墙工具中，TCP 透明代理方式可以使用的 TPROXY 的只有 V2Ray。所以你要找其他资料参考的话，要注意透明代理方式，因为基本上都是 REDIRECT 模式的（包括 V2Ray 官网给的示例）。
-3. 在透明代理中，不要用 V2Ray 开放 53 端口做 DNS 服务器。如果这么做了，DNS 会出问题，这应该是个 BUG。(详情见[此 Issue](https://github.com/v2ray/v2ray-core/issues/1971))
-4. ~~我用 [NatTypeTester](https://github.com/HMBSbige/NatTypeTester) 测试过 NAT 类型，结果是 FullCone，但也看到有反馈说玩游戏依然是 PortRestrictedCone。我也不清楚是怎么回事，这点需要玩游戏的朋友来确认了。不过目前测试发现代理 QUIC 的效果还不不错的。~~ V2Ray 仍然不支持 FullCone，详情见[此 Issue](https://github.com/v2ray/v2ray-core/issues/1429)。
+3. 由于设计原因，V2Ray 不支持 Full Cone 类型的 NAT，详情见[此 Issue](https://github.com/v2ray/v2ray-core/issues/1429)。
 
 ## 参考资料
 
@@ -407,3 +426,4 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 - 2020-08-31 添加 DIVERT 规则
 - 2020-09-29 添加 iptables 规则，解决 V2Ray 占用大量 CPU 的问题
 - 2020-11-27 新增 nftables
+- 2020-11-29 修改 DNS 配置以适应 v4.27.4 修改的 DNS 匹配顺序
