@@ -22,7 +22,7 @@ Docker Image 的文件结构：
 
 **注意：**以下示例操作环境为 Linux ，Windows 下可能会有区别。
 
-### 2.1 拉取 V2ray 镜像
+### 2.1 拉取 V2Ray 镜像
 
 从 [Docker Hub](https://hub.docker.com/r/v2fly/v2fly-core) 拉取镜像。默认是最新版本镜像( `v2fly/v2ray-core:latest` )，如需使用老版本，请在镜像名称后面加版本号，如 `v2fly/v2ray-core:4.27.0`
 
@@ -43,7 +43,7 @@ docker images | grep v2ray
 - `docker images` ：是查看已拉取的 Docker 镜像
 - `| grep v2ray` ：是从上一条命令的输出结果中过滤带有 `v2ray` 关键词的行。
 
-### 2.2 运行 V2ray 服务
+### 2.2 运行 V2Ray 服务
 
 由于需要将配置传入容器中，所以请先准备好你的配置文件，然后在运行 Docker 容器的时，将其挂在到 Docker 容器中。
 
@@ -120,7 +120,7 @@ docker run \
 docker ps
 ```
 
-如果发现没有名称为 v2ray 的容器，可以查看所有容器：
+如果发现没有名称为 V2Ray 的容器，可以查看所有容器：
 
 ```bash
 docker ps -a
@@ -132,9 +132,9 @@ docker ps -a
 - `-a` ：列出所有容器
 - 输出结果容器有 `CONTAINER ID` 、 `NAMES` 、 `STATUS` 等列，在查看容器时，可以通过传入容器 id 或者容器名称。
 
-### 2.3 停止 V2ray 服务
+### 2.3 停止 V2Ray 服务
 
-如需停止 V2ray 服务，直接将容器停止即可。
+如需停止 V2Ray 服务，直接将容器停止即可。
 
 ```bash
 docker stop v2ray
@@ -142,13 +142,13 @@ docker stop v2ray
 
 说明：停止命令后面可以跟容器名称，或者容器 id 。请使用 `docker ps` 列出所有运行的容器，如果容器没有启动，需要使用 `docker ps -a` 列出所有容器。
 
-如果不需要 v2ray 可以将其删除。
+如果不需要 V2Ray 可以将其删除。
 
 ```bash
 docker rm v2ray
 ```
 
-### 2.4 重启 V2ray 服务
+### 2.4 重启 V2Ray 服务
 
 在修改过配置文件内容后，直接重启容器，即可重启服务。
 
@@ -336,7 +336,7 @@ networks:
 
 **注意：**配置文件建议开启 `log` ，同时将日志调整到 `warnning` 级别。方便后续调试。
 
-### 3.2 启动 V2ray 服务
+### 3.2 启动 V2Ray 服务
 
 在 `docker-compose.yaml` 文件所在目录执行：
 
@@ -346,7 +346,7 @@ docker-compose up -d
 
 如果在其他位置执行也可以使用 `docker-compose -f /tmp/v2ray/docker-compose.yaml up -d`
 
-### 3.3 停止 V2ray 服务
+### 3.3 停止 V2Ray 服务
 
 在 `docker-compose.yaml` 文件所在目录执行：
 
@@ -354,13 +354,13 @@ docker-compose up -d
 docker-compose stop
 ```
 
-如果不需要 V2ray 了，可以将其删除
+如果不需要 V2Ray 了，可以将其删除
 
 ```bash
 docker-compose down
 ```
 
-### 3.4 重启 V2ray 服务
+### 3.4 重启 V2Ray 服务
 
 修改配置文件后，可以重启服务生效。
 
