@@ -120,7 +120,7 @@ docker run \
 docker ps
 ```
 
-如果发现没有名称为 V2Ray 的容器，可以查看所有容器：
+如果发现没有名称为 v2ray 的容器，可以查看所有容器：
 
 ```bash
 docker ps -a
