@@ -399,7 +399,7 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 ## 备注
 
 1. TPROXY 与 REDIRECT 是针对 TCP 而言的两种透明代理模式，两者的差异主要在于 TPROXY 可以透明代理 IPV6，而 REDIRECT 不行，本文主要是将透明代理模式改为 TPROXY 并且使用了 V2Ray 的 DNS。但我没有 IPV6 环境，无法进行测试，所以本文只适用于 IPV4。
-2. 据我了解，到目前（2019.10）为止，在我所知的具备透明代理功能的翻墙工具中，TCP 透明代理方式可以使用的 TPROXY 的只有 V2Ray。所以你要找其他资料参考的话，要注意透明代理方式，因为基本上都是 REDIRECT 模式的（包括 V2Ray 官网给的示例）。
+2. 据了解，到目前（2020.12）为止，在所知的具备透明代理功能的翻墙工具中，TCP 透明代理方式可以使用的 TPROXY 的除 V2Ray 外只有 Trojan-Go、Trojan-rs 和 Brook。所以你要找其他资料参考的话，要注意透明代理方式，因为大多数是 REDIRECT 模式的（包括 V2Ray 官网给的示例）。
 3. 由于设计原因，V2Ray 不支持 Full Cone 类型的 NAT，详情见[此 Issue](https://github.com/v2ray/v2ray-core/issues/1429)。
 
 ## 参考资料
@@ -427,3 +427,4 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 - 2020-09-29 添加 iptables 规则，解决 V2Ray 占用大量 CPU 的问题
 - 2020-11-27 新增 nftables
 - 2020-11-29 修改 DNS 配置以适应 v4.27.4 修改的 DNS 匹配顺序
+- 2020-12-04 补充支持 TPROXY 的工具
