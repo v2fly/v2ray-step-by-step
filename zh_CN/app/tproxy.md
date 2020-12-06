@@ -45,7 +45,8 @@
       },
       "streamSettings": {
         "sockopt": {
-          "tproxy": "tproxy" // 透明代理使用 TPROXY 方式
+          "tproxy": "tproxy", // 透明代理使用 TPROXY 方式
+          "mark":255
         }
       }
     },
@@ -224,7 +225,7 @@
 * DNS 配置只是说明哪些域名查哪个 DNS，至于哪个 DNS 走代理哪个 DNS 直连要在 routing 里设置规则；
 * routing 也要设置 123 端口的 UDP 流量直连，不然的话要是时间误差超出允许范围(90s)，要使用 NTP 校准时间就要先连上代理，但是连代理又要确保时间准确，结果就是既连不上代理，也无法自动校准时间；
 * freedom 的出站设置 domainStrategy 为 UseIP，以避免直连时因为使用本机的 DNS 出现一些奇怪问题；
-* 注意要在所有的 outbound 加一个 255 的 mark,这个 mark 与下文 iptables 命令中 `iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff` 配合，以直连 V2Ray 发出的流量（blackhole 可以不配置 mark）。
+* 注意要在 dokodemo inbound 和所有的 outbound 加一个 255 的 mark,这个 mark 与下文 iptables 命令中 `iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff` 配合，以直连 V2Ray 发出的流量（blackhole 可以不配置 mark）。
 
 
 ### 配置透明代理规则
@@ -248,8 +249,8 @@ iptables -t mangle -A V2RAY -d 255.255.255.255/32 -j RETURN
 iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p tcp -j RETURN # 直连局域网，避免 V2Ray 无法启动时无法连网关的 SSH，如果你配置的是其他网段（如 10.x.x.x 等），则修改成自己的
 iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN # 直连局域网，53 端口除外（因为要使用 V2Ray 的 DNS)
 iptables -t mangle -A V2RAY -j RETURN -m mark --mark 0xff    # 直连 SO_MARK 为 0xff 的流量(0xff 是 16 进制数，数值上等同与上面V2Ray 配置的 255)，此规则目的是解决v2ray占用大量CPU（https://github.com/v2ray/v2ray-core/issues/2621）
-iptables -t mangle -A V2RAY -p udp -j TPROXY --on-port 12345 --tproxy-mark 1 # 给 UDP 打标记 1，转发至 12345 端口
-iptables -t mangle -A V2RAY -p tcp -j TPROXY --on-port 12345 --tproxy-mark 1 # 给 TCP 打标记 1，转发至 12345 端口
+iptables -t mangle -A V2RAY -p udp -j TPROXY --on-ip 127.0.0.1 --on-port 12345 --tproxy-mark 1 # 给 UDP 打标记 1，转发至 12345 端口
+iptables -t mangle -A V2RAY -p tcp -j TPROXY --on-ip 127.0.0.1 --on-port 12345 --tproxy-mark 1 # 给 TCP 打标记 1，转发至 12345 端口
 iptables -t mangle -A PREROUTING -j V2RAY # 应用规则
 
 # 代理网关本机
@@ -304,7 +305,7 @@ nft add rule v2ray prerouting ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.2
 nft add rule v2ray prerouting meta l4proto tcp ip daddr 192.168.0.0/16 return
 nft add rule v2ray prerouting ip daddr 192.168.0.0/16 udp dport != 53 return
 nft add rule v2ray prerouting mark 0xff return # 直连 0xff 流量
-nft add rule v2ray prerouting meta l4proto {tcp, udp} mark set 1 tproxy to :12345 accept # 转发至 V2Ray 12345 端口
+nft add rule v2ray prerouting meta l4proto {tcp, udp} mark set 1 tproxy to 127.0.0.1:12345 accept # 转发至 V2Ray 12345 端口
 
 # 代理网关本机
 nft add chain v2ray output { type route hook output priority 0 \; }
@@ -428,3 +429,4 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 - 2020-11-27 新增 nftables
 - 2020-11-29 修改 DNS 配置以适应 v4.27.4 修改的 DNS 匹配顺序
 - 2020-12-04 补充支持 TPROXY 的工具
+- 2020-12-06 添加 dokodemo mark 和 --on-ip 参数
