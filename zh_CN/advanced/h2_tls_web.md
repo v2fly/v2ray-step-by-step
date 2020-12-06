@@ -8,7 +8,7 @@ V2RayClient --|-> Caddy -> V2RayServer -> Internet
 
 ::: tip CDN
 <!--如果有人试过可以套CF，请将括号内容删除。否则修改这一行-->
-H2 流量理论上跟 ws 一样可以被 CDN 转发。 但是遗憾的是, Cloudflare 只支持与源服务器进行HTTP/1.x通信。 [Cloudflare only uses HTTP/1.x between the origin web server and Cloudflare.](https://support.cloudflare.com/hc/en-us/articles/200168076-Understanding-Cloudflare-HTTP-2-and-HTTP-3-Support)
+H2 流量理论上跟 ws 一样可以被 CDN 转发。 但是遗憾的是, Cloudflare 只支持与源服务器进行 HTTP/1.x 通信。 [Cloudflare only uses HTTP/1.x between the origin web server and Cloudflare.](https://support.cloudflare.com/hc/en-us/articles/200168076-Understanding-Cloudflare-HTTP-2-and-HTTP-3-Support)
 :::
 
 ## 缺陷
