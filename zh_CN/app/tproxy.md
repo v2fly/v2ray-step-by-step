@@ -132,14 +132,14 @@
         ]
       },
       {
-        "address": "8.8.8.8", //非中中国大陆域名使用 Google 的 DNS
+        "address": "8.8.8.8", //非中国大陆域名使用 Google 的 DNS
         "port": 53,
         "domains": [
           "geosite:geolocation-!cn"
         ]
       },
       {
-        "address": "1.1.1.1", //非中中国大陆域名使用 Cloudflare 的 DNS
+        "address": "1.1.1.1", //非中国大陆域名使用 Cloudflare 的 DNS
         "port": 53,
         "domains": [
           "geosite:geolocation-!cn"
@@ -180,7 +180,7 @@
       {
         "type": "field",
         "ip": [ 
-          // 设置 DNS 配置中的国内 DNS 服务器地址走代理，以达到 DNS 分流目的
+          // 设置 DNS 配置中的国外 DNS 服务器地址走代理，以达到 DNS 分流目的
           "8.8.8.8",
           "1.1.1.1"
         ],
@@ -221,11 +221,11 @@
 以上是 V2Ray 透明代理的参考配置，关于配置有一些注意点及说明:
 * dokodemo-door 是用来接收透明代理的入站协议，followRedirect 项须为 true 以及 sockopt.tproxy 项须为 tproxy，建议开启 snifing，否则路由无法匹配域名；
 * 本节添加了 DNS 配置，用来对国内外域名进行 DNS 分流，需要 `DNS 配置`、`DNS 入站`、`DNS 出站`和`路由`四者配合，在本例中 DNS 入站直接使用透明代理入站，可参考[DNS 及其应用](https://steemit.com/cn/@v2ray/dns)；
-* 在 DNS 配置中，依次配置了 Google、Cloudflare、114 和阿里的 DNS，由于在阿里的 DNS 中指定了 domain，所以匹配的域名会用阿里的 DNS 查询，其他的先查询 Google 的 DNS，如果查不到的话再依次查 Cloudflare 及 114 的。所以达到了国内外域名 DNS 分流，以及 DNS 备用。要注意把 NTP 服务器和你自己 VPS 域名也加入到直连的 DNS ，否则会导致 V2Ray 无法与 VPS 正常连接；
+* 在 DNS 配置中，依次配置了 Google、Cloudflare、114 和阿里的 DNS，由于在阿里的 DNS 中指定了 domain，所以匹配的域名会用阿里的 DNS 查询，其他的先查询 Google 的 DNS，如果查不到的话再依次查 Cloudflare 及 114 的。所以达到了国内外域名 DNS 分流，以及 DNS 备用。要注意把 NTP 服务器和你自己 VPS 域名也加入到直连的 DNS，否则会导致 V2Ray 无法与 VPS 正常连接；
 * DNS 配置只是说明哪些域名查哪个 DNS，至于哪个 DNS 走代理哪个 DNS 直连要在 routing 里设置规则；
 * routing 也要设置 123 端口的 UDP 流量直连，不然的话要是时间误差超出允许范围(90s)，要使用 NTP 校准时间就要先连上代理，但是连代理又要确保时间准确，结果就是既连不上代理，也无法自动校准时间；
 * freedom 的出站设置 domainStrategy 为 UseIP，以避免直连时因为使用本机的 DNS 出现一些奇怪问题；
-* 注意要在 dokodemo inbound 和所有的 outbound 加一个 255 的 mark,这个 mark 与下文 iptables 命令中 `iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff` 配合，以直连 V2Ray 发出的流量（blackhole 可以不配置 mark）。
+* 注意要在 dokodemo inbound 和所有的 outbound 加一个 255 的 mark，这个 mark 与下文 iptables 命令中 `iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff` 配合，以直连 V2Ray 发出的流量（blackhole 可以不配置 mark）。
 
 
 ### 配置透明代理规则
@@ -260,7 +260,7 @@ iptables -t mangle -A V2RAY_MASK -d 255.255.255.255/32 -j RETURN
 iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p tcp -j RETURN # 直连局域网
 iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN # 直连局域网，53 端口除外（因为要使用 V2Ray 的 DNS）
 iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff    # 直连 SO_MARK 为 0xff 的流量(0xff 是 16 进制数，数值上等同与上面V2Ray 配置的 255)，此规则目的是避免代理本机(网关)流量出现回环问题
-iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 1   # 给 UDP 打标记,重路由
+iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 1   # 给 UDP 打标记，重路由
 iptables -t mangle -A V2RAY_MASK -p tcp -j MARK --set-mark 1   # 给 TCP 打标记，重路由
 iptables -t mangle -A OUTPUT -j V2RAY_MASK # 应用规则
 
@@ -363,7 +363,7 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 ## 其他
 
 ### 解决 too many open files 问题
-对 UDP 透明代理比较容易出现“卡住”的情况，这个时候细心的朋友可能会发现日志中出现了非常多 "too many open files" 的语句,这主要是受到最大文件描述符数值的限制，把这个数值往大调就好了。设置步骤如下。
+对 UDP 透明代理比较容易出现“卡住”的情况，这个时候细心的朋友可能会发现日志中出现了非常多 "too many open files" 的语句，这主要是受到最大文件描述符数值的限制，把这个数值往大调就好了。设置步骤如下。
 1. 修改 /etc/systemd/system/v2ray.service 文件，在 `[Service]` 下加入 `LimitNPROC=500` 和 `LimitNOFILE=1000000`，修改后的内容如下。
 
   ```plain
