@@ -233,6 +233,9 @@ DATA=$(apidata $1)
 echo "------------Inbound----------"
 print_sum "$DATA" "inbound"
 echo "-----------------------------"
+echo "------------Outbound----------"
+print_sum "$DATA" "outbound"
+echo "-----------------------------"
 echo
 echo "-------------User------------"
 print_sum "$DATA" "user"
@@ -274,4 +277,4 @@ SUM->TOTAL:        2.5GB
 - 2019-08-07 统计脚本识别科学计数法的输出情况
 - 2019-08-09 优化流量脚本，增加了 SUM->TOTAL 的累加项
 - 2020-07-04 增加了 outbound 的流量统计
-- 2020-12-13 修复 v2ctl 路径
+- 2020-12-13 修复 v2ctl 路径，脚本添加 outbound 统计
