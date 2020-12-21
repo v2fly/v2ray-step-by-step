@@ -367,3 +367,9 @@ docker-compose down
 ```bash
 docker-compose restart
 ```
+
+## 4. 更新历史
+
+- 2020-12-21 重构文档，原文请移步：[https://toutyrater.github.io/app/docker-deploy-v2ray.html](https://toutyrater.github.io/app/docker-deploy-v2ray.html)
+- 2018-04-05 Update
+- 2018-09-06 UDP 说明
