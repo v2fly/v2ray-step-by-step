@@ -32,6 +32,32 @@ ___
 
 > 话说都 2020 年了不会还有人时常重启手机吧
 
+## 准备
+
+由于 Android 系统中没有 `/etc/resolv.conf` 加上没有 Root 权限也就无法创建；
+
+由于读取不到文件 Go 语言默认设定了一个地址为 `127.0.0.1:53` 的 DNS 地址，但是因为系统限制不能监听低位端口号；
+
+因此直接运行 `core` 会由于 Go 语言的影响导致 DNS 解析出现问题
+
+解决方法如下：
+
+只需要修改一行代码即可，找到 Go 语言的安装位置，然后编辑 `src/net/dnsconfig_unix.go`，在 19 行(go version go1.15.6)
+
+```vim
+defaultNS   = []string{"127.0.0.1:53", "[::1]:53"}
+```
+
+这里改为了阿里的 DNS，也可以改为其他的
+
+示例如下：
+
+```vim
+defaultNS   = []string{"223.5.5.5:53", "[2400:3200::1]:53"}
+```
+
+保存即可，然后即可开始[编译](#编译)，之后再改回即可
+
 ## 编译
 
 不可以使用[预编译](https://github.com/v2fly/v2ray-core/releases)中的 `linux-armXXX`，不然运行时会出现[这个问题](https://github.com/v2ray/discussion/issues/555)
