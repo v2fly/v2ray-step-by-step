@@ -8,7 +8,7 @@ vuepress build .
 DEV_VER=$(git rev-parse --short dev)
 TRANSIFEX_VER=$(git rev-parse --short transifex)
 COMMIT_MSG="dev@$DEV_VER / transifex@$TRANSIFEX_VER"
-echo "\nNext deployment will be noted as \"$COMMIT_MSG\""
+echo -e "\nNext deployment will be noted as \"$COMMIT_MSG\""
 echo -e "\nCheck if build prompted any errors.\nPress any key to countinue..."
 read
 cp -rpf .vuepress/dist/* .vuepress/old_dist/
