@@ -91,13 +91,13 @@ go build -o D:/v2ctl -trimpath -ldflags "-s -w -buildid=" -tags confonly ./infra
 
 将 `v2ray` 和 `v2ctl` 已经你的配置文件、geo 资源等放入你的手机内部存储中
 
-例如：手机U盘/V2Ray
+例如 “手机内部存储/V2Ray” 文件夹
 
 ## 运行 V2Ray
 
 ### 连接 ADB
 
-用数据线连接电脑，打开设备的 USB 调试、开启 "仅充电"模式下允许 ADB 调试；USB连接模式改为 "文件传输"
+用数据线连接电脑，打开设备的 USB 调试、开启 "仅充电"模式下允许 ADB 调试；USB 连接模式改为 "文件传输"
 
 打开终端输入以下命令
 
@@ -105,7 +105,7 @@ go build -o D:/v2ctl -trimpath -ldflags "-s -w -buildid=" -tags confonly ./infra
 adb devices
 ```
 
-若手机会提示 "是否允许xxxx计算机USB调试"则勾选 "一律允许"然后确认
+若手机提示 "是否允许 USB 调试"，勾选 "始终允许..." 后确认
 
 终端显示如下则表示为连接成功
 
@@ -130,7 +130,7 @@ cd /data/local/tmp/
 chmod 777 v2*
 ```
 
-尝试运行一下；由于系统限制建议使用 `1000+` 以上的端口号
+尝试运行一下；由于系统限制建议使用 `1024` 以上的端口号
 
 ```
 ./v2ray
