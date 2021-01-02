@@ -344,6 +344,7 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
   [Service]
 
   Type=oneshot
+  RemainAfterExit=yes
   # 注意分号前后要有空格
   ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables-restore /etc/iptables/rules.v4
   ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables -t mangle -F
@@ -430,3 +431,4 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 - 2020-11-29 修改 DNS 配置以适应 v4.27.4 修改的 DNS 匹配顺序
 - 2020-12-04 补充支持 TPROXY 的工具
 - 2020-12-06 添加 dokodemo mark 和 --on-ip 参数
+- 2021-01-01 修复 iptables 可能无法开机启动问题
