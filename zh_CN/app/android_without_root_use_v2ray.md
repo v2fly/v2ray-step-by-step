@@ -195,9 +195,3 @@ HTTP 代理只在 HTTP 场景下才会使用，理论上来讲并不会影响游
 ## 其他
 
 相比套壳 App，使用此方式启动的 `core` 长时间运行并不会导致设备发热和明显的电量消耗
-
-### 测试版本
-
-go version go1.15.6 windows/amd64
-
-v2fly/v2ray-core master
