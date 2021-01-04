@@ -416,7 +416,7 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 * [Transparent proxy support](https://www.kernel.org/doc/html/latest/networking/tproxy.html)
 * [Nftables wiki](https://wiki.nftables.org/wiki-nftables/index.php/Supported_features_compared_to_xtables)
 * [Nftables - Debian Wiki](https://wiki.debian.org/nftables)
-* [包的路由转圈圈](https://www.dazhuanlan.com/2019/09/26/5d8ca8b9730d5/)
+* [包的路由转圈圈](https://koswu.github.io/2019/08/19/tproxy-config-with-nftables/)
 
 ## 更新历史
 
