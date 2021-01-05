@@ -80,18 +80,16 @@ V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统�
         }
     ],
     "routing": {
-        "settings": {
-            "rules": [
-                {
-                    "inboundTag": [
-                        "api"
-                    ],
-                    "outboundTag": "api",
-                    "type": "field"
-                }
-            ]
-        },
-        "strategy": "rules"
+        "rules": [
+            {
+                "inboundTag": [
+                    "api"
+                ],
+                "outboundTag": "api",
+                "type": "field"
+            }
+        ],
+        "domainStrategy": "rules"
     }
 }
 ```
@@ -265,3 +263,4 @@ SUM->TOTAL:        2.5GB
 
 - 2019-08-07 统计脚本识别科学计数法的输出情况
 - 2019-08-09 优化流量脚本，增加了 SUM->TOTAL 的累加项
+- 2021-01-05 改了下示例配置
