@@ -23,6 +23,10 @@ ___
 * Android 10
 * ARM V8
 
+::: warning 注意
+由于 Golang 仅支持 Android 10+ 低版本 Android 可能无法通过此方法运行
+:::
+
 缺点：
 
 * 设备重启后需要手动启动程序
@@ -45,25 +49,12 @@ V2Ray 来处理这个问题；因此直接运行 `core` 会由于 Go 语言(Andr
 
 ### 解决方法
 
-只需要修改一行代码即可，找到 Go 语言的安装位置，然后编辑 `src/net/dnsconfig_unix.go`
-
-在 19 行 (go version go1.15.6)
+克隆代码后，[修改这里](https://github.com/v2fly/v2ray-core/blob/master/infra/conf/dns_bootstrap_android.go#L10)即可；例如修改为 `1.1.1.1` DNS 则
 
 ```go
-defaultNS   = []string{"127.0.0.1:53", "[::1]:53"}
+const bootstrapDNS = "1.1.1.1:53"
 ```
-
-这里改为了阿里的 DNS，也可以改为其他的
-
-示例如下：
-
-```go
-defaultNS   = []string{"223.5.5.5:53", "[2400:3200::1]:53"}
-```
-
-保存即可，然后即可开始[编译](#编译)
-
-之后再改回即可
+仅支持传统 UDP DNS
 
 ## 编译
 
