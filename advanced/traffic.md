@@ -89,7 +89,7 @@ V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统�
                 "type": "field"
             }
         ],
-        "domainStrategy": "rules"
+        "domainStrategy": "AsIs"
     }
 }
 ```
