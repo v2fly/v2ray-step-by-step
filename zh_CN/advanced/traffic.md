@@ -88,18 +88,16 @@ V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统�
         }
     ],
     "routing": {
-        "settings": {
-            "rules": [
-                {
-                    "inboundTag": [
-                        "api"
-                    ],
-                    "outboundTag": "api",
-                    "type": "field"
-                }
-            ]
-        },
-        "strategy": "rules"
+        "rules": [
+            {
+                "inboundTag": [
+                    "api"
+                ],
+                "outboundTag": "api",
+                "type": "field"
+            }
+        ],
+        "domainStrategy": "AsIs"
     }
 }
 ```
