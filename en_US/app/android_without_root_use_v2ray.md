@@ -25,22 +25,31 @@ Tested terminal environment:
 
 Disadvantages:
 
-Since the files are stored in the temporary directory, the files will be deleted after the device restarts, so you need to reset the settings after restarting
-
-> By the way, in 2020, no one will restart the phone from time to time, right?
+* You need to manually start the program after the device restarts
+* USB will automatically end all processes started by this method when using the `file transfer` mode
 
 ## Preparation
 
-Since there is no `/etc/resolv.conf` in the Android system and no Root permission, it cannot be created;
+::: tip
 
-Because the file cannot be read, the Go language uses the default address `127.0.0.1:53` (but Android does not have a local DNS for 53), but it cannot be used because of system restrictions that cannot monitor the lower port number
+This phenomenon has been dealt with in v4.34+ version, you can directly proceed to the [compile](#compile) step
+
+See [#572](https://github.com/v2fly/v2ray-core/pull/572) for details
+
+If you want to customize the default DNS, you can still use the solution to modify the source code in [Solution](#Solution)
+
+:::
+
+Since there is no `/etc/resolv.conf` in the Android system and it cannot be created without Root permission, the Go language cannot read the file and uses the default address `127.0.0.1:53` (but Android There is no local DNS of 53), and because of the system limitation, it cannot monitor the lower port number and cannot be used
 V2Ray handles this problem; therefore, running `core` directly will cause DNS resolution problems due to the influence of the Go language (Android)
 
-The solution is as follows:
+### Solution
 
-You only need to modify one line of code, find the installation location of the Go language, and edit `src/net/dnsconfig_unix.go`, at line 19 (go version go1.15.6)
+You only need to modify one line of code, find the installation location of the Go language, and edit `src/net/dnsconfig_unix.go`
 
-```vim
+At line 19 (go version go1.15.6)
+
+```go
 defaultNS = []string{"127.0.0.1:53", "[::1]:53"}
 ```
 
@@ -48,21 +57,21 @@ Here is changed to Alibaba’s DNS, or it can be changed to other
 
 Examples are as follows:
 
-```vim
+```go
 defaultNS = []string{"223.5.5.5:53", "[2400:3200::1]:53"}
 ```
 
-Just save, and then you can start [compile](#compile), and then change back to
+Just save, and then you can start [compile](#compile)
+
+Change it back later
 
 ## Compile
 
-You cannot use the `linux-armXXX` in [precompilation](https://github.com/v2fly/v2ray-core/releases), otherwise [this problem](https://github.com/ v2ray/discussion/issues/555)
-
-Go language mainly uses `GOOS` and `GOARCH` to control the compilation environment
+Go language mainly controls the compilation environment through `GOOS` and `GOARCH`
 
 ### Environment variable
 
-For ARM architecture, the default is ARM V8
+Using `arm64` is ARM V8
 
 ```bash
 SET GOOS=android
@@ -87,17 +96,24 @@ go build -o D:/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
 go build -o D:/v2ctl -trimpath -ldflags "-s -w -buildid=" -tags confonly ./infra/control/main
 ```
 
+The compiled program is placed in `D:/`
+
 ## Resource storage
 
-Put `v2ray` and `v2ctl` and your configuration files, geo resources, etc. into the internal storage of your phone
+Put `v2ray` and `v2ctl` and configuration files and other resources into the internal storage of your device
 
-For example, "mobile phone internal storage/V2Ray" folder
+For example, "Mobile phone internal storage/V2Ray" folder
 
 ## Run V2Ray
 
 ### Connect to ADB
 
-Connect the computer with a data cable, turn on the USB debugging of the device, and enable ADB debugging in the "charge only" mode; change the USB connection mode to "file transfer"
+1. Use the data cable to connect to the computer
+2. Turn on USB debugging of the device
+3. Enable ADB debugging in "Charge Only" mode
+4. Change the USB connection mode to "File Transfer"
+
+### Testing Equipment
 
 Open the terminal and enter the following command
 
@@ -105,7 +121,7 @@ Open the terminal and enter the following command
 adb devices
 ```
 
-If the phone prompts "Whether to allow USB debugging", check "Always allow..." and confirm
+If the device prompts "Whether to allow USB debugging", check "Always allow..." and confirm
 
 If the terminal displays as follows, the connection is successful
 
@@ -130,7 +146,7 @@ cd /data/local/tmp/
 chmod 777 v2*
 ```
 
-Try to run it; due to system limitations, it is recommended to use port numbers above `1024`
+Try to run it; due to system limitations, it is recommended to use port numbers above `1024` for inbound in Inbound
 
 ```
 ./v2ray
@@ -138,11 +154,11 @@ Try to run it; due to system limitations, it is recommended to use port numbers 
 
 After the test is no problem, press `Ctrl+C` to end the process, and then change the USB transfer mode to "charge only"
 
-Then reconnect to the `/data/local/tmp` directory
-
-::: tip Note
-It is measured that in the "transfer file" mode, the background will hang up as long as you disconnect it, but not in the charging mode.
+::: warning note
+Due to Android system limitations, all programs running through this method will be terminated when the connection is disconnected in the "transfer file" mode.
 :::
+
+Connect again to the `/data/local/tmp` directory
 
 Run V2Ray in the background
 
@@ -150,28 +166,32 @@ Run V2Ray in the background
 nohup ./v2ray &
 ```
 
-At this point, open the task manager, find the process named `adb`, and end it; if there are two processes in Windows, end the second one
+At this point, open the task manager, find the process named `adb` and end it; if there are two processes in Windows, end the second one
 
-This way, you can avoid the problem of program hanging after disconnection
+This can solve the problem that the process is terminated after adb is disconnected
 
 ## Global proxy
 
-Open your APN settings. Since the default APN cannot be changed, you need to create a new one. Just copy the default one.
+The system APN is used here to complete. Inbound requires an HTTP inbound proxy
 
-Then fill in `127.0.0.1` in the "Proxy" column, the port number is your port number, save it
+Since the default APN is not allowed to be changed, it is necessary to create a new APN; copy the default content.
+
+In the settings, fill in `127.0.0.1` in the "Proxy" column, the port number is your HTTP inbound port number, save it
 
 Go back to the upper setting and select this APN
 
-All done.
+### detail
+
+HTTP proxy is only used in HTTP scenarios. In theory, it will not affect the game match, but there is no experiment here.
+
+Most applications using APN's proxy method will work, but special applications such as Telegram will not work
+
+::: tip
+The in-app settings of such programs usually provide the option to set the proxy, you can set it manually
+:::
+
+Because this method is inconvenient to update resources, it is recommended to use the `IPOnDemand` mode for reliable DNS routing
 
 ## other
 
-The actual measurement is very power-saving, and I can’t feel the existence of `core` at all; I personally feel that the response speed is much faster than that of the shell
-
-For the game, the actual measurement will not affect the champion, of course it may be related to the diversion, so I won’t repeat it here.
-
-### test version
-
-go version go1.15.6 windows/amd64
-
-v2fly/v2ray-core master
+Compared with shell apps, long-running of the `core` started in this way will not cause the device to heat up and cause significant power consumption
