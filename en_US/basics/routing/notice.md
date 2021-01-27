@@ -1,7 +1,7 @@
 
 # Notes for routing rules
 
-In this section, we organised some common mistakes from beginners' feedbacks. We hope you can avoid these common mistakes
+This section records the mistakes that some novice friends often make when using V2Ray to use the routing function. I hope you can avoid them.
 
 ## Wildcard
 
