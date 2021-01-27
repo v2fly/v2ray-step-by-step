@@ -9,7 +9,7 @@ In order to provide a better performance, V2Ray has a caching mechanism. It cach
 (** Note: After multiple versions of iterative optimisations, V2Ray's memory footprint has been dramatically reduced. Now, the default cache size is only 512 KBytes; the cache parameter is not applicable through environment variables. **)
 
 On you VPS, edit /etc/systemd/system/v2ray.service , edit `ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json`  as  `ExecStart=/usr/bin/env v2ray.ray.buffer.size=1 /usr/bin/v2ray/v2ray -config /etc/v2ray/config.json`. Then save it, excute the following command
-```
+```plain
 $ sudo systemctl daemon-reload && sudo systemctl restart v2ray.service
 ```
 The above v2ray.ray.buffer.size is the cached variable. If it is set to 1, it doesn't matter much (personal feeling, no actual test comparison).
