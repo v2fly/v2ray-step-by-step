@@ -1,7 +1,7 @@
 # Domain file
 
 ## Built-in domain list file
-When downloading V2Ray, the downloaded file contains a geosite.dat. This file is used in the routing feature, which has many built-in [common website domain names](https://github.com/v2ray/domain-list-community). The configuration is as follows, geosite refers to the geosite.dat file, and the following cn is a label, which represents the use of the cn rule in the geosite.dat file.
+When downloading V2Ray, the downloaded compressed package has a geosite.dat. This file is used in the routing function. There are many [common website domain names](https://github.com/v2fly/domain-list-community) built into the file. The configuration method is as follows, geosite refers to the geosite.dat file, and the following cn is a label, which means to use the cn rule in the geosite.dat file.
 ```json
 {
     "type": "field",
