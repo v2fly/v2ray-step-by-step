@@ -83,7 +83,7 @@ More specifically, logging is an essential part of software development. It prov
 ```
 
 Let's look at the settings of log:
-* `loglevel`: level of log, there are 5 levels,  `warning` level is used in this example.
+* loglevel: log level, there are 5 respectively, in this example, the setting is warning
   - `debug`: the most detailed level, used for debugging
   - `info`: detailed log information, will show each request through V2Ray
   - `warning`: warning information, will contain some unimportant errors
