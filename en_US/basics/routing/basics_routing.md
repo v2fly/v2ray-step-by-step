@@ -77,12 +77,12 @@ The configuration above is the client configuration file of the previous VMess. 
 ```
 
 If you change this configuration and restarting the client, you will find that the browser does not set the proxy at this time. The website that is walled like Google cannot be accessed. The domestic website of Taobao can still be used as usual. If it is the previous introduction to VMess, the flow of the packet is:
-```
-{browser} <--(socks)--> {V2Ray client inbound  <->  V2Ray client outbound} <--(VMess)--> {V2Ray server inbound  <->  V2Ray server outbound} <--(Freedom)--> {Target site}
+```plain
+{Browser} <--(socks)--> {V2Ray client inbound <-> V2Ray client outbound} <--(VMess)--> {V2Ray server inbound <-> V2Ray server outbound} <--(Freedom)--> {target website}
 ```
 Because the outbound of the V2Ray client is now set to freedom, freedom is directly connected, the modified packet flow becomes like this:
-```
-{Browser} <--(socks)--> {V2Ray client inbound <-> V2Ray client outbound} <--(Freedom)--> {Website}
+```plain
+{Browser} <--(socks)--> {V2Ray client inbound <-> V2Ray client outbound} <--(Freedom)--> {target website}
 ```
 After receiving the data from inbound, the V2Ray client does not pass through the VPS, but is sent directly by freedom, so the effect is the same as directly accessing a website.
 
