@@ -14,13 +14,10 @@ V2Ray is a tool under Project V. Project V is a project that includes a set of t
 If you still don't understand, then we simply say, V2Ray is a similar proxy software to Shadowsocks. V2Ray can be used to access the internet (over the censorship) to learn advanced science and technology from the free internet.
 
 V2Ray User manual:
- - [https://www.v2ray.com](https://www.v2ray.com) (Has been blocked in China)
  - [https://v2fly.org](https://v2fly.org)
 
-V2Ray repository address: [https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
-V2Ray repository address (V2Fly repository): [https://github.com/v2ray/v2ray-core](https://github.com/v2fly/v2ray-core)
-
-V2Ray Telegram user discussion group: [https://t.me/projectv2ray](https://t.me/v2fly_chat)
+V2Ray repository address: [https://github.com/v2fly/v2ray-core](https://github.com/v2ray/v2ray-core)
+V2Ray repository address (V2Fly repository): [https://github.com/v2fly/v2ray-core](https://github.com/v2fly/v2ray-core)
 
 
 ## Frequent questions: Q&A
@@ -35,27 +32,6 @@ Anyone familiar with the history of Shadowsocks should know that it is a self-us
 Due to the different historical backgrounds at birth, they have different features.
 
 Merely speaking, Shadowsocks is a single proxy protocol, and V2Ray is more complicated than a single protocol proxy. Sounds a bit bleak to Shadowsocks? of course not! From another point of view, Shadowsocks is easy to deploy, and V2Ray has more complicated configurations while deploying.
-
-#### Since V2Ray is more complicated, why we using it?
-
-The advantages and disadvantages of something always come along. For instance, V2Ray has the following advantages:
-
-* **A new and powerful protocol:** V2Ray uses the new self-developed VMess protocol, which improves some of the existing shortcomings of Shadowsocks and is more difficult to detect by the firewall.
-* **Better performance:** Better network performance, specific data can be seen [V2Ray official blog](https://steemit.com/cn/@v2ray/3cjiux)
-* **More features:** The following are some of the features of V2Ray:
-    * mKCP: KCP protocol implementation on V2Ray, you don't need to install another kcptun.
-    * Dynamic port: dynamically change the communication port to combat the speed limit of long-term large traffic port
-    * Routing features: you can freely set the flow direction of the specified data packet, to block advertisements and enable anti-tracking
-    * Outbound proxy, or say chain proxy, uses many links for better privacy
-    * Obfuscation: similar to the obfuscation of ShadowsocksR, and the data package for mKCP can also be obfuscated. Obfuscating the traffic packets other protocol traffic, making inspection more difficult
-    * WebSocket protocol: Only use WebSocket proxy, or for CDN intermediate proxy (better anti-blocking)
-    * Mux: Multiplexing, further improving the concurrent performance of the proxy
-
-#### There is no silver bullet
-
-For now, V2Ray has the following disadvantages:
-- Complex configuration
-- Lack of 3rd-party clients and services
 
 #### It seems V2Ray good, but I just want to cross the internet censorship, don't want to waste too long time. How can I do?
 

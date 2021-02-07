@@ -14,12 +14,9 @@ V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构�
 如果还是不理解，那么简单地说，V2Ray 是一个与 Shadowsocks 类似的代理软件，可以用来科学上网（翻墙）学习国外先进科学技术。
 
 V2Ray 用户手册：
- - [https://www.v2ray.com](https://www.v2ray.com)（已被墙）
  - [https://v2fly.org](https://v2fly.org)
 
-V2Ray 项目地址：[https://github.com/v2ray/v2ray-core](https://github.com/v2ray/v2ray-core)
-
-V2Ray Telegram 使用群链接：[https://t.me/projectv2ray](https://t.me/v2fly_chat)
+V2Ray 项目地址：[https://github.com/v2fly/v2ray-core](https://github.com/v2fly/v2ray-core)
 
 
 ## 常见问题：Q&A
@@ -34,27 +31,6 @@ Shadowsocks 是一个纯粹的代理工具，而 V2Ray 定位为一个平台，�
 由于出生时的历史背景不同，导致了它们性格特点的差异。
 
 简单来说，Shadowsocks 功能单一，V2Ray 功能强大。听起来似乎有点贬低 Shadowsocks 呢？当然不！换一个角度来看，Shadowsocks 简单好上手，V2Ray 复杂配置多。
-
-#### 既然 V2Ray 复杂，为什么要用它
-
-童鞋，某事物的优点和缺点总是相生相随的。相对来说，V2Ray 有以下优势：
-
-* **更完善的协议:** V2Ray 使用了新的自行研发的 VMess 协议，改正了 Shadowsocks 一些已有的缺点，更难被墙检测到
-* **更强大的性能:** 网络性能更好，具体数据可以看 [V2Ray 官方博客](https://steemit.com/cn/@v2ray/3cjiux)
-* **更丰富的功能:** 以下是部分 V2Ray 的功能
-    * mKCP: KCP 协议在 V2Ray 上的实现，不必另行安装 kcptun
-    * 动态端口：动态改变通信的端口，对抗对长时间大流量端口的限速封锁
-    * 路由功能：可以随意设定指定数据包的流向，去广告、反跟踪都可以
-    * 传出代理：也可称为链式代理，通过不断接力加强隐蔽性
-    * 数据包伪装：类似于 Shadowsocks-rss 的混淆，另外对于 mKCP 的数据包也可伪装，伪装常见流量，令识别更困难
-    * WebSocket 协议：可以单独使用 WebSocket 代理。也可以通过它使用 CDN 中转，抗封锁效果更好
-    * Mux:多路复用，进一步提高科学上网的并发性能
-
-#### 哪有十全十美的东西
-
-少年悟性很高啊！当然没有！目前来说，V2Ray 有下面的缺点：
-- 配置复杂
-- 产业链不成熟
 
 #### 听你说了这么多，好像 V2Ray 还不错的样子。但我只是要翻翻墙而已，不想花太多时间怎么办
 
