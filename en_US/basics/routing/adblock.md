@@ -155,8 +155,7 @@ In routing section, two rules are added:
 }
 ```
 
-In the first rule added, connection would be denied if the domain contains tanx.com or baidu.com. If you want to fitler out some connections to specific domains, just add those into the adblock rule.
-In the second rule,  if domains are amazon.com, microsoft.com, youku.com, or baidu.com, connection would go through direct route. Consider baidu.com appeared in both rules, only the first would be actually implement (which is adblock), because:
+In the first rule, if the domain name contains tanx.com or baidu.com, the connection will be blocked. If you want to block certain websites, write the domain name you want to block in the adblock rules. In the second rule, domain names containing amazon.com or microsoft.com or youku.com or baidu.com will be directly connected. There is a problem, did you find that, both rules have baidu.com, so which one will be implemented? The answer is that only the first one (i.e. adblock) will be executed because:
 1. rules are stored in routing.rules vector, which is in-order data structure, and the rule matching process would follow the order.
 2. Therefore it would only apply the match that dispatcher first hits.
 
