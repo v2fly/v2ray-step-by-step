@@ -23,6 +23,10 @@ Tested terminal environment:
 * Android 10
 * ARM V8
 
+::: warning note
+Since Golang only supports Android 10+, lower versions of Android may not be able to run through this method
+:::
+
 Disadvantages:
 
 * You need to manually start the program after the device restarts
@@ -45,25 +49,12 @@ V2Ray handles this problem; therefore, running `core` directly will cause DNS re
 
 ### Solution
 
-You only need to modify one line of code, find the installation location of the Go language, and edit `src/net/dnsconfig_unix.go`
-
-At line 19 (go version go1.15.6)
+After cloning the code, [modify here](https://github.com/v2fly/v2ray-core/blob/master/infra/conf/dns_bootstrap_android.go#L10); for example, modify DNS to `1.1.1.1`
 
 ```go
-defaultNS = []string{"127.0.0.1:53", "[::1]:53"}
+const bootstrapDNS = "1.1.1.1:53"
 ```
-
-Here is changed to Alibaba’s DNS, or it can be changed to other
-
-Examples are as follows:
-
-```go
-defaultNS = []string{"223.5.5.5:53", "[2400:3200::1]:53"}
-```
-
-Just save, and then you can start [compile](#compile)
-
-Change it back later
+Only supports traditional UDP DNS
 
 ## Compile
 
