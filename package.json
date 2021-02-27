@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "vuepress-plugin-mermaidjs": "^1.8.1"
+  }
+}

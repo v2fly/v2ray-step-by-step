@@ -208,5 +208,8 @@ module.exports = {
   },
   extendPageData($page) {
     $page.frontmatter.editLink = ('/' === $page._computed.$localePath)
-  }
+  },
+  plugins: [
+    'vuepress-plugin-mermaidjs'
+  ],
 }
