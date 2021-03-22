@@ -55,7 +55,7 @@ Nginx 配置和 Apache 配置中使用的是域名和证书使用 TLS 小节的�
 证书生成
 
 ```plain
-$ ~/.acme.sh/acme.sh --issue -d mydomain.me --webroot --keylength ec-256
+$ ~/.acme.sh/acme.sh --issue -d mydomain.me --webroot /path/to/webroot --keylength ec-256
 ```
 
 安装证书和密钥
