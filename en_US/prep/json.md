@@ -25,10 +25,3 @@ Regarding the format of JSON, you can see [V2Ray Document](https://www.v2ray.com
   ```
 
   The above two JSONs are actually equivalent.
-
-
-  #### Updates
-
-  - 2018-04-05 Update
-  - 2018-07-08 Update
-
