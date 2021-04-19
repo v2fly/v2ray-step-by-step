@@ -33,16 +33,18 @@ Sun 22 Jan 16:16:23 GMT 2017
 无论是 VPS 还是个人电脑，时区是什么无所谓，因为 V2Ray 会自动转换时区，但是时间一定要准确。
 
 ### 使用 root 账户
+
 为了方便后续脚本的执行安装，在此，我们切换成 root 账户。
 
 执行命令：`su`
 之后输入管理员密码（此处的密码是默认隐藏的，不要以为没打上去）。
 
 执行以后命令行形如：
+
 ```plain
-xxx@xxx:~$ su
+user@host:~$ su
 Password: 
-root@xxx:/home/xxx# 
+root@host:/home/user# 
 ```
 
 -----
@@ -58,34 +60,34 @@ root@xxx:/home/xxx#
 
 首先安装脚本的依赖软件，根据你的 Linux 发行版选择以下命令。
 
-**注意：下文中需要你输入的命令均以 # 开头，其他内容均来自系统执行命令的反馈，你可以通过比较自己屏幕上和文档中内容的异同来判断安装是否正确。**
+**注意：下文中需要你输入的命令均以 $ 开头，其他内容均来自系统执行命令的反馈，你可以通过比较自己屏幕上和文档中内容的异同来判断安装是否正确。**
 
 Debian/Ubuntu:
 
-```
-# apt update
-# apt install curl
+```plain
+$ apt update
+$ apt install curl
 ```
 
 CentOS/RedHat :
 
-```
-# yum makecache
-# yum install curl
+```plain
+$ yum makecache
+$ yum install curl
 ```
 
 Fedora:
 
-```
-# dnf makecache
-# dnf install curl
+```plain
+$ dnf makecache
+$ dnf install curl
 ```
 
 openSUSE/SUSE:
 
-```
-# zypper refresh
-# zypper install curl
+```plain
+$ zypper refresh
+$ zypper install curl
 ```
 
 ### 下载安装脚本
@@ -93,7 +95,7 @@ openSUSE/SUSE:
 下载主程序安装脚本：
 
 ```plain
-# curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+$ curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
@@ -106,7 +108,7 @@ openSUSE/SUSE:
 安装 V2ray 主程序：
 
 ```plain
-# bash install-release.sh
+$ bash install-release.sh
 Downloading V2Ray archive: https://github.com/v2fly/v2ray-core/releases/download/v4.27.0/v2ray-linux-64.zip
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -176,7 +178,7 @@ Please execute the command: systemctl enable v2ray; systemctl start v2ray
 安装完之后，使用以下命令启动 V2Ray:
 
 ```plain
-# systemctl start v2ray
+$ systemctl start v2ray
 ```
 
 在首次安装完成之后，V2Ray 不会自动启动，需要手动运行上述启动命令。
@@ -184,13 +186,13 @@ Please execute the command: systemctl enable v2ray; systemctl start v2ray
 设置开机自启动 V2Ray:
 
 ```plain
-# systemctl enable v2ray
+$ systemctl enable v2ray
 ```
 
 接下来看看 V2ray 是不是真的运行起来了:
 
 ```plain
-# systemctl status v2ray
+$ systemctl status v2ray
 ● v2ray.service - V2Ray Service
    Loaded: loaded (/etc/systemd/system/v2ray.service; disabled; vendor preset: enabled)
    Active: active (running) since Sun 2020-08-16 23:17:13 CST; 41min ago
@@ -218,7 +220,7 @@ lines 1-19/19 (END)
 但是由于此时你还没有为 V2ray 配置，所以咱们还是把它关掉吧：
 
 ```plain
-# systemctl stop v2ray
+$ systemctl stop v2ray
 ```
 
 对于安装脚本，还有更多用法，在此不多说了，可以执行 `bash install-release.sh -h` 看帮助。
@@ -230,7 +232,7 @@ lines 1-19/19 (END)
 在 VPS，重新执行一遍安装脚本就可以更新了，在更新过程中会自动重启 V2Ray，配置文件保持不变。
 
 ```plain
-# bash install-release.sh
+$ bash install-release.sh
 ```
 
 V2Ray 的更新策略是快速迭代，每周更新(无意外的情况下)。版本号的格式是 `vX.Y.Z`，如 `v2.44.0`。v 是固定的字母 v，version 的首字母；X、Y、Z 都是数字，X 是大版本号，每年更新一个大版本(现在是 v4.Y.Z，V2Ray 已经走到了第四个年头)，Y 是小版本，每周五更新一个小版本。Z 是区分正式版和测试版，Z 是 0 代表着是正式版，不是 0 说明是测试版。例如，v4.7.0 是正式版，v4.7.1 是测试版，建议只使用正式版，不手动指定的情况下 V2Ray 的安装脚本也只会安装最新的正式版。
@@ -252,7 +254,8 @@ V2Ray 的更新策略是快速迭代，每周更新(无意外的情况下)。版
 * `其它` 除上面的提到文件外，其他的不是运行 V2Ray 的必要文件。更详细的说明可以看 doc 文件夹下的 readme.md 文件，可以通过记事本或其它的文本编辑器打开查看
 
 实际上双击 v2ray.exe （或 wv2ray.exe） 就可以运行 V2Ray 了，V2Ray 会读取 config.json 中的配置与服务器连接。~~默认的配置文件包含 V2Ray 官方服务器的配置，也就是说你可以不自己搭建服务器而直接使用 V2Ray 提供的服务器科学上网。在不修改 config.json 的情况下，双击运行 v2ray.exe，可以直接科学上网~~（V2Ray 官方服务器已下线）。
-![](../resource/images/v2rayrunnig.png)
+
+![v2rayrunnig.png](../resource/images/v2rayrunnig.png)
 
 V2Ray 将所有选择权交给用户，它不会自动设置系统代理，因此还需要在浏览器里设置代理。以火狐（Firefox）为例，点菜单 -> 选项 -> 高级 -> 设置 -> 手动代理设置，在 SOCKS Host 填上 127.0.0.1，后面的 Port 填 1080，再勾上使用 SOCKS v5 时代理 DNS (这个勾选项在旧的版本里叫做远程 DNS)。
 
@@ -260,12 +263,12 @@ V2Ray 将所有选择权交给用户，它不会自动设置系统代理，因�
 
 操作图见下：
 
-![](../resource/images/firefox_proxy_setting1.png)
+![firefox_proxy_setting1.png](../resource/images/firefox_proxy_setting1.png)
 
-![](../resource/images/firefox_proxy_setting2.png)
+![firefox_proxy_setting2.png](../resource/images/firefox_proxy_setting2.png)
 
-![](../resource/images/firefox_proxy_setting3.png)
+![firefox_proxy_setting3.png](../resource/images/firefox_proxy_setting3.png)
 
-![](../resource/images/firefox_proxy_setting4.png)
+![firefox_proxy_setting4.png](../resource/images/firefox_proxy_setting4.png)
 
 如果使用的是其它的浏览器，请自行在网上搜一下怎么设置 SOCKS 代理。
