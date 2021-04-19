@@ -12,7 +12,7 @@
 
 对于 VPS(Linux) 可以执行命令 `date -R` 查看时间：
 
-```plain
+```console
 $ date -R
 Sun, 22 Jan 2017 10:10:36 -0500
 ```
@@ -21,7 +21,7 @@ Sun, 22 Jan 2017 10:10:36 -0500
 
 如果时间不准确，可以使用 `date --set` 修改时间：
 
-```plain
+```console
 $ sudo date --set="2017-01-22 16:16:23"
 Sun 22 Jan 16:16:23 GMT 2017
 ```
@@ -41,7 +41,7 @@ Sun 22 Jan 16:16:23 GMT 2017
 
 执行以后命令行形如：
 
-```plain
+```console
 user@host:~$ su
 Password: 
 root@host:/home/user# 
@@ -64,28 +64,28 @@ root@host:/home/user#
 
 Debian/Ubuntu:
 
-```plain
+```console
 $ apt update
 $ apt install curl
 ```
 
 CentOS/RedHat :
 
-```plain
+```console
 $ yum makecache
 $ yum install curl
 ```
 
 Fedora:
 
-```plain
+```console
 $ dnf makecache
 $ dnf install curl
 ```
 
 openSUSE/SUSE:
 
-```plain
+```console
 $ zypper refresh
 $ zypper install curl
 ```
@@ -94,7 +94,7 @@ $ zypper install curl
 
 下载主程序安装脚本：
 
-```plain
+```console
 $ curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -107,7 +107,7 @@ $ curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/insta
 
 安装 V2ray 主程序：
 
-```plain
+```console
 $ bash install-release.sh
 Downloading V2Ray archive: https://github.com/v2fly/v2ray-core/releases/download/v4.27.0/v2ray-linux-64.zip
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -177,7 +177,7 @@ Please execute the command: systemctl enable v2ray; systemctl start v2ray
 
 安装完之后，使用以下命令启动 V2Ray:
 
-```plain
+```console
 $ systemctl start v2ray
 ```
 
@@ -185,13 +185,13 @@ $ systemctl start v2ray
 
 设置开机自启动 V2Ray:
 
-```plain
+```console
 $ systemctl enable v2ray
 ```
 
 接下来看看 V2ray 是不是真的运行起来了:
 
-```plain
+```console
 $ systemctl status v2ray
 ● v2ray.service - V2Ray Service
    Loaded: loaded (/etc/systemd/system/v2ray.service; disabled; vendor preset: enabled)
@@ -219,7 +219,7 @@ lines 1-19/19 (END)
 
 但是由于此时你还没有为 V2ray 配置，所以咱们还是把它关掉吧：
 
-```plain
+```console
 $ systemctl stop v2ray
 ```
 
@@ -231,7 +231,7 @@ $ systemctl stop v2ray
 
 在 VPS，重新执行一遍安装脚本就可以更新了，在更新过程中会自动重启 V2Ray，配置文件保持不变。
 
-```plain
+```console
 $ bash install-release.sh
 ```
 
