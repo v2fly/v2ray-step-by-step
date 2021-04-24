@@ -55,22 +55,34 @@ NGINX 不能向后端转发 HTTP2 流量。<sup id="a1">[1](#f1)</sup>
 
 ::: details Caddyfile
 ```caddyfile
-http://<Host> {
-    redir https://<Host>{url}
-}
-
-https://<Host> {
-    log stdout
-    errors stderr
-    root <Path to webroot>
+<Host> {
     tls <Path to cert> <Path to key>
-    proxy <H2 Path> https://localhost:<Port> {
-        insecure_skip_verify
-        header_upstream Host {host}
-        header_upstream X-Real-IP {remote}
-        header_upstream X-Forwarded-For {remote}
-        header_upstream X-Forwarded-Port {server_port}
-        header_upstream X-Forwarded-Proto "https"
+    reverse_proxy <H2 Path> localhost:<Port> {
+        transport http {
+            insecure_skip_verify
+            compression off
+        }
+    }
+    root * <Path to webroot>
+    file_server
+}
+```
+:::
+
+或者你不希望 Caddy 转发到 V2Ray 的流量再被加密一次，可以使用 `h2c` 并把 V2ray 配置中 `security` 设置为 `none`
+
+::: details Caddyfile
+```caddyfile
+<Host> {
+    tls <Path to cert> <Path to key>
+    reverse_proxy <H2 Path> localhost:<Port> {
+        transport http {
+            versions h2c 2
+            compression off
+        }
+    }
+    root * <Path to webroot>
+    file_server
 }
 ```
 :::
@@ -134,3 +146,5 @@ https://<Host> {
 ## 参考文献
 
 <b id="f1">1.</b> v2ray-core [#1063](https://github.com/v2ray/v2ray-core/issues/1063)[↩](#a1)
+
+<b id="f2">2.</b> [Caddy reverse_proxy transports](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#transports)
