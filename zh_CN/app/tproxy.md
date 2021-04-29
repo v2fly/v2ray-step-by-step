@@ -289,7 +289,7 @@ iptables -t mangle -A OUTPUT -j V2RAY_MASK
 
 #### nftables 规则
 
-nftables 与 iptables 同样基于 netfilter 框架，早在 2014 年就引入 Linux 内核中，旨在改进 iptables 的一些问题并且将之替换。目前有不少 Linux 发行版默认网络过滤以 nftables 替换了 iptables，但是直到 4.19 的 Linux 内核才有 nft_tproxy 模块，这个模块是透明代理所必须的。如果使用 nftables 配置透明代理，必须具备 nft_tproxy 和 nft_socket 模块，可通过命令 `lsmod | gerp nft` 查看。尽管 nftables 是趋势，可以预见的是在相当长的时间里 iptables 仍将是主流。以下 nftables 规则仅在 Debian 11 测试通过，暂未发现问题。
+nftables 与 iptables 同样基于 netfilter 框架，早在 2014 年就引入 Linux 内核中，旨在改进 iptables 的一些问题并且将之替换。目前有不少 Linux 发行版默认网络过滤以 nftables 替换了 iptables，但是直到 4.19 的 Linux 内核才有 nft_tproxy 模块，这个模块是透明代理所必须的。如果使用 nftables 配置透明代理，必须具备 nft_tproxy 和 nft_socket 模块，可通过命令 `lsmod | grep nft` 查看。尽管 nftables 是趋势，可以预见的是在相当长的时间里 iptables 仍将是主流。以下 nftables 规则仅在 Debian 11 测试通过，暂未发现问题。
 
 以下是 nftables 规则语句，本质与 iptables 没什么差别。
 
