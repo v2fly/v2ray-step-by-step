@@ -173,7 +173,7 @@ The document has moved
 随后使用 `root` 权限新建文件 `/etc/mtg.toml` ，写入如下内容并保存：
 
 ```toml
-secret = "7tTr01QmYIE1csd8stb-KCRleGFtcGxlLmNvbQ" # 生成的密钥
+secret = "secret" # 引号中填写自己生成的密钥
 bind-to = "0.0.0.0:8443" # 监听用的地址与端口，使用地址 0.0.0.0 监听所有地址
 
 [network]
