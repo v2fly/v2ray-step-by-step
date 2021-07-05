@@ -21,7 +21,7 @@
 
 ## 基于 TLS 握手后的数据包分流
 由于原理是根据 TLS 握手后的数据进行分流，对 Nginx 采用 stream 的配置方式，具体如下：
- - 如果是 HTTP/1.1，直接路由到某个正常的网站，这要求我们没有把代理协议承载在 HTTPS/1.1 上；
+ - 如果是 HTTP/1.1，直接路由到某个正常的网站，这要求我们没有把代理协议承载在 HTTP/1.1 上；
  - 如果是 HTTP/2，就路由到 HTTP/2 代理后端比如 V2Ray 或 Trojan。尽管 Trojan-Go 支持 HTTP2，但鉴于 Trojan-GFW 项目组对引入 HTTP/2 的反对，所以我们的实现也不考虑 Trojan-Go 的 HTTP/2 实现。这就要求 V2Ray 支持对其他来源的 HTTP/2 网站请求的返回即自动回落，但目前尚没有支持。
  - 如果是纯 VMess 协议数据即常说的 TCP+TLS+VMess+Web，直接转发到 V2Ray，这同样需要 V2Ray 在解析失败的情况下返回一个普通网页以实现伪装，算是另一种自动回落机制。目前 V2Ray 没有相关实现，但有个[开源实现](https://gist.github.com/liberal-boy/04f875b86a5e54cb4e1752d24077f2be) 可供参考或使用。
  - 如果是纯 Trojan 协议数据，直接转发到 Trojan 后端，这里 Trojan 实现了协议自动回落。
