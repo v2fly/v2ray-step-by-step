@@ -89,12 +89,19 @@
   - warning：警告信息。轻微的问题信息，经我观察 warning 级别的信息大多是网络错误。推荐使用 warning
   - error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行
   - none：空。不记录任何信息
-* access：将访问的记录保存到文件中，这个选项的值是要保存到的文件的路径
-* error：将错误的记录保存到文件中，这个选项的值是要保存到的文件的路径
-* error、access 字段留空，并且在手动执行 V2Ray 时，V2Ray 会将日志输出在 stdout 即命令行中（terminal、cmd 等），便于排错
+* access：访问记录输出路径
+  - "": 输出至控制台即stdout
+  - "none": 不输出
+  - "/path/access.log": 输出至/path/access.log
+* error：错误记录输出路径
+  - "": 输出至控制台即stdout
+  - "none": 不输出
+  - "/path/error.log": 输出至/path/error.log
+
+
 
 ::: tip 提示
-需要注意的一点是，在 json 中，反斜杠 `\` 有特殊意义，因此 Windows 操作系统目录的 `\` 符号在配置中要使用 `\\` 来表示。
+需要注意的一点是，在 json 中，反斜杠 `\` 是转义字符，因此 Windows 操作系统目录的 `\` 符号在配置中要使用 `\\` 来表示。
 :::
 
 ------
