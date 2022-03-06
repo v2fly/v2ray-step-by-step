@@ -126,6 +126,7 @@ function i18nSidebar(locale) {
         'advanced/tcp_tls_shunt_proxy',
         'advanced/websocket',
         'advanced/wss_and_web',
+	'advanced/wss_and_browserforwarder',
         'advanced/h2',
         'advanced/h2_tls_web',
         'advanced/tls_routing_with_nginx',
