@@ -12,7 +12,7 @@
 
 这次 TLS 的配置将写入 Nginx/Caddy/Apache 配置中，由这些软件来监听 443 端口（443 比较常用，并非 443 不可），然后将流量转发到 V2Ray 的 WebSocket 所监听的内网端口（本例是 10000），V2Ray 服务器端不需要配置 TLS。
 
-#### 服务器 V2Ray 配置 
+#### 服务器 V2Ray 配置
 
 ```json
 {
@@ -122,7 +122,7 @@ mydomain.me {
     }
     @v2ray_websocket {
         path /ray
-        header Connection *Upgrade*
+        header Connection Upgrade
         header Upgrade websocket
     }
     reverse_proxy @v2ray_websocket localhost:10000
