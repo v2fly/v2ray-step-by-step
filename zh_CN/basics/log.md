@@ -90,11 +90,11 @@
   - error：错误信息。比较严重的错误信息。当出现 error 时该问题足以影响 V2Ray 的正常运行
   - none：空。不记录任何信息
 * access：访问记录输出路径
-  - "": 输出至控制台即stdout
+  - "": 输出至控制台即 stdout
   - "none": 不输出
   - "/path/access.log": 输出至/path/access.log
 * error：错误记录输出路径
-  - "": 输出至控制台即stdout
+  - "": 输出至控制台即 stdout
   - "none": 不输出
   - "/path/error.log": 输出至/path/error.log
 
