@@ -13,7 +13,7 @@
 [Browser A] --> [V2Ray client] --> [Browser B] --> {Internet} --> [HTTP server] --> [V2Ray server] --> [github.com]
 ```
 
-`Browser A` 是面向用户的浏览器， `Browser B` 则仅仅用于转发 V2ray 流量。
+`Browser A` 是面向用户的浏览器， `Browser B` 则仅仅用于转发 V2Ray 流量。
 
 如果不想用两个浏览器的话，就需要注意配置路由规则，确保浏览器是直连科学服务器的。以下配置假定用户使用同一个浏览器上网以及转发。
 
