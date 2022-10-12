@@ -6,6 +6,18 @@
 
 V2Ray 对于时间有比较严格的要求，要求服务器和客户端时间差绝对值不能超过**90 秒**，所以一定要保证时间足够准确。还好 V2Ray 并不要求时区一致。比如说自个儿电脑上的时间是北京时间（东 8 区）2017-07-31 12:08:31，但是 VPS 上的时区是东 9 区，所以 VPS 上的时间应该是 2017-07-31 13:07:01 到 2017-07-31 13:10:01 之间才能正常使用 V2Ray。当然，也可以自行改成自己想要的时区。
 
+例如我们把时区设成上海
+
+```console
+> timedatectl list-timezones | grep Shanghai
+Asia/Shanghai
+
+> sudo timedatectl set-timezone Asia/Shanghai
+
+> date -R
+Sat, 26 Jun 2021 18:03:36 +0800
+```
+
 ## Linux 版本的问题
 
 感谢 Golang 编程语言提供的特性和原作者的精心设计，V2Ray 可以不依赖其它软件（库）而运行，并且提供了跨平台支持（如： Windows, Linux, MacOS, BSD 等）。但是由于新手在学习使用过程中可能会遇到各种问题，却缺乏相应的解决问题的能力，因此在 VPS 上建议使用 Debian 9.x, Debian 10 以上或 Ubuntu 18.04 及以上的 Linux 发行版。请不要迷信某个（些）“最稳定”的 Linux 发行版。
