@@ -35,7 +35,7 @@ $ jq . config.json
 
 不过，最好还是使用 V2Ray 提供的配置检查功能（test 选项），因为可以检查 JSON 语法错误外的问题，比如说突然间手抖把 vmess 写成了 vmss，一下子就检查出来了。
 ```plain
-$ /usr/bin/v2ray/v2ray -test -config /etc/v2ray/config.json
+$ /usr/bin/v2ray/v2ray test -config /etc/v2ray/config.json
 failed to parse json config: Ext|Tools|Conf|Serial: failed to parse json config > Ext|Tools|Conf: failed to load inbound detour config. > Ext|Tools|Conf: unknown config id: vmss
 Main: failed to read config file: /etc/v2ray/config.json > Main|Json: failed to execute v2ctl to convert config file. > exit status 255
 ```
@@ -43,7 +43,7 @@ Main: failed to read config file: /etc/v2ray/config.json > Main|Json: failed to 
 如果是配置文件没问题，则是这样的：
 
 ```plain
-$ /usr/bin/v2ray/v2ray -test -config /etc/v2ray/config.json
+$ /usr/bin/v2ray/v2ray test -config /etc/v2ray/config.json
 V2Ray v3.15 (die Commanderin) 20180329
 An unified platform for anti-censorship.
 Configuration OK.
