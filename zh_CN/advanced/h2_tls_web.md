@@ -71,6 +71,7 @@ https://<Host> {
         header_upstream X-Forwarded-For {remote}
         header_upstream X-Forwarded-Port {server_port}
         header_upstream X-Forwarded-Proto "https"
+    }
 }
 ```
 :::
