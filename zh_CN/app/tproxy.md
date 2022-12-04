@@ -409,7 +409,7 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 * [DNS 及其应用](https://steemit.com/cn/@v2ray/dns)
 * [漫谈各种黑科技式 DNS 技术在代理环境中的应用](https://medium.com/@TachyonDevel/%E6%BC%AB%E8%B0%88%E5%90%84%E7%A7%8D%E9%BB%91%E7%A7%91%E6%8A%80%E5%BC%8F-dns-%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-62c50e58cbd0)
 * [Linux transparent proxy support](https://powerdns.org/tproxydoc/tproxy.md.html)
-* [V2Ray 透明代理样例](https://v2ray.com/chapter_02/protocols/dokodemo.html#example)
+* [V2Ray 透明代理样例](https://www.v2fly.org/config/protocols/dokodemo.html#%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%A0%B7%E4%BE%8B)
 * [iptables - Wikipedia](https://en.wikipedia.org/wiki/Iptables)
 * [Nftables - Archwiki](https://wiki.archlinux.org/index.php/nftables)
 * [Man page of NFT](https://www.netfilter.org/projects/nftables/manpage.html)

@@ -169,7 +169,7 @@ VMess 协议的认证基于时间，一定要保证服务器和客户端的系�
 
 ## 注意事项
 
-- 为了让浅显地介绍 V2Ray 的工作方式，本节中关于原理简析的描述有一些地方是错误的。但我知识水平又不够，还不知道该怎么改，暂且将错就错。正确的工作原理在用户手册的 [VMess 协议](https://www.v2ray.com/developer/protocols/vmess.html) 有详细的说明。
+- 为了让浅显地介绍 V2Ray 的工作方式，本节中关于原理简析的描述有一些地方是错误的。但我知识水平又不够，还不知道该怎么改，暂且将错就错。正确的工作原理在用户手册的 [VMess 协议](https://www.v2fly.org/developer/protocols/vmess.html) 有详细的说明。
 - id 为 UUID 格式，请使用软件生成，不要尝试自己造一个，否则很大程度上造出一个错误的格式来。
 - VMess 协议可以设定加密方式，但 VMess 不同的加密方式对于过墙没有明显差别，本节没有给出相关配置方式（因为这不重要，默认情况下 VMess 会自己选择一种比较合适的加密方式），具体配置可见 [V2Ray 手册](https://www.v2fly.org/developer/protocols/vmess.html)，不同加密方式的性能可参考[性能测试](/app/benchmark.md)。
 

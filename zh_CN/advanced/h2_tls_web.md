@@ -14,7 +14,7 @@ H2 流量理论上跟 ws 一样可以被 CDN 转发。 但是遗憾的是, Cloud
 ## 缺陷
 
 - 没有使用 [h2c](https://v2ray.com/chapter_00/01_versions.html#20190712-v4200)
-- 没有使用 [DomainSocket](https://v2ray.com/chapter_02/transport/domainsocket.html)
+- 没有使用 [DomainSocket](https://www.v2fly.org/config/transport/domainsocket.html)
 - 其他尚未注明的缺陷，急需你的补充。
 
 ## 服务端配置
