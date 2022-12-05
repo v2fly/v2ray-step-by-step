@@ -159,7 +159,7 @@
 1. 规则是放在 routing.rules 这个数组当中，数组的内容是有顺序的，也就是说在这里规则是有顺序的，匹配规则时是从上往下匹配；
 2. 当路由匹配到一个规则时就会跳出匹配而不会对之后的规则进行匹配；
 
-关于路由更多内容请参考 [V2Ray 用户手册](https://www.v2ray.com/chapter_02/03_routing.html)
+关于路由更多内容请参考 [V2Ray 用户手册](https://www.v2fly.org/config/routing.html)
 
 #### 更新历史
 

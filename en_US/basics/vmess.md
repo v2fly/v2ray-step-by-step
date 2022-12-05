@@ -143,7 +143,7 @@ Whether the process of V2Ray behaves as a client or a server, the configuration 
 
 Inbounds in the example client configuration, listening port is 1080, that is, V2Ray listens on a port 1080, and the protocol is socks. Assuming that we have set up the browser proxy (SOCKS Host: 127.0.0.1, Port: 1080), then if you visit google.com, the browser will send a packet to the socks protocol to send to the machine to the 1080 port of the local device (127.0.0.1 is your local device, or say localhost). At this time, the packet will be received by V2Ray.
 
-Then let's looking at outbounds, the protocol is VMess, indicating that V2Ray will encrypt the packet by [VMess](https://www.v2ray.com/developer/protocols/vmess.html) protocol. The packet will be encrypted by the UUID (In this example, UUID is b831381d-6324-4d53-ad4f-8cda48b30811) and then sent the package to remote server address `serveraddr.com` with port `16823`, where the server address and port are. The server address can be either a domain name or an IP address, as long as it is connectable.
+Then let's looking at outbounds, the protocol is VMess, indicating that V2Ray will encrypt the packet by [VMess](https://www.v2fly.org/en_US/developer/protocols/vmess.html) protocol. The packet will be encrypted by the UUID (In this example, UUID is b831381d-6324-4d53-ad4f-8cda48b30811) and then sent the package to remote server address `serveraddr.com` with port `16823`, where the server address and port are. The server address can be either a domain name or an IP address, as long as it is connectable.
 
 
 In the inbounds configured by the client, there is a `"sniffing"` field. The V2Ray manual is interpreted as "traffic detection, resetting the requested target according to the specified traffic type". It is not very easy to understand. Say this thing. It is to identify the domain name from the network traffic. This sniffing has two uses:
@@ -171,9 +171,9 @@ Some people wondered how the data came back after the request was sent. After al
 
 ## Notes
 
-- In order to give a brief introduction to the way V2Ray works, there are some places where the description of the principle in this section may be not correct. However, it is enough for you to understand the brief principle. The design of VMess protocl is detailed in the [VMess Protocol](https://www.v2ray.com/developer/protocols/vmess.html) in the developer manual or alternatively you may like to check with the original codes on github.
+- In order to give a brief introduction to the way V2Ray works, there are some places where the description of the principle in this section may be not correct. However, it is enough for you to understand the brief principle. The design of VMess protocl is detailed in the [VMess Protocol](https://www.v2fly.org/en_US/developer/protocols/vmess.html) in the developer manual or alternatively you may like to check with the original codes on github.
 - The id is in UUID format. Please use software to generate. Don't try to create one yourself, otherwise it will create a wrong format.
-- The VMess protocol can set the encryption cipher suite, but the different encryption methods of VMess have no obvious difference for the wall. This section does not give the relevant configuration method (because this is not important, VMess will choose a suitable encryption method by default). The specific configuration can be found in the [V2Ray Manual](https://v2ray.com/chapter_02/protocols/vmess.html). For the performance of different encryption methods, refer to [Performance Test](/app/benchmark.md).
+- The VMess protocol can set the encryption cipher suite, but the different encryption methods of VMess have no obvious difference for the wall. This section does not give the relevant configuration method (because this is not important, VMess will choose a suitable encryption method by default). The specific configuration can be found in the [V2Ray Manual](https://www.v2fly.org/en_US/v5/config/proxy/vmess.html). For the performance of different encryption methods, refer to [Performance Test](/app/benchmark.md).
 
 -------
 
