@@ -140,22 +140,13 @@ vhosts:
     "inbounds": [
         {
             "protocol": "vmess",
-            "listen": "127.0.0.1",
-            "port": 40001,
+            "listen": "@v2ray.sock",
             "settings": {
                 "clients": [
                     {
                         "id": "f2435e5c-9ad9-4367-836a-8341117d0a5f"
                     }
                 ]
-            },
-            "streamSettings": {
-                "network": "ds",
-                "dsSettings": {
-                     "path": "@v2ray.sock",
-                     "abstract": true
-                }
-
             }
         }
     ],
