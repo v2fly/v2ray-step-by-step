@@ -99,6 +99,27 @@ iptables -t mangle -A V2RAY_MASK -p udp -j TPROXY --on-port 12345 --tproxy-mark 
 iptables -t mangle -A PREROUTING -p udp -j V2RAY_MASK
 ```
 
+   ICMP流量透明代理规则
+```plain
+# 不需要转发的流量
+ipset create local_ip hash:net
+ipset add local_ip 0.0.0.0/8
+ipset add local_ip 10.0.0.0/8
+ipset add local_ip 127.0.0.0/8
+ipset add local_ip 169.254.0.0/16
+ipset add local_ip 172.16.0.0/12
+ipset add local_ip 192.168.0.0/16
+ipset add local_ip 224.0.0.0/4
+ipset add local_ip 239.0.0.0/4
+
+# 开启ICMP转发
+iptables -t mangle -A PREROUTING 0 -m set ! --match-set local_ip dst -p icmp  -j REDIRECT --to-ports 12345
+
+# firewall edition
+# firewall-cmd --direct --add-rule ipv4 nat PREROUTING 0 -m set ! --match-set local_ip dst -p icmp  -j REDIRECT --to-ports 12345
+
+```
+
 6. 使用电脑/手机尝试直接访问被墙网站，这时应该是可以访问的（如果不能，你可能得请教大神手把手指导了）。
 
 7. 写开机自动加载上述的 iptables 的脚本，或者使用第三方软件(如 iptables-persistent)，否则网关重启后 iptables 会失效(即透明代理会失效)。
@@ -110,7 +131,7 @@ iptables -t mangle -A PREROUTING -p udp -j V2RAY_MASK
 * sniffing 目前只能从 TLS 和 HTTP 流量中提取域名，如果上网流量有非这两种类型的慎用 sniffing 解决 DNS 污染。
 * 由于对 iptables 不熟，我总感觉上面对 UDP 流量的透明代理的设置使用上有点问题，知道为什么的朋友请反馈一下。如果你只是简单的上上网看看视频等，可以只代理 TCP 流量，不设 UDP 透明代理。
 * 喜欢玩网游的朋友可能要失望了，使用 V2Ray 加速游戏效果不是很好。
-* V2Ray 只能代理 TCP/UDP 的流量，ICMP 不支持，即就算透明代理成功了之后 ping Google 这类网站也是不通的。
+* V2Ray 代理ICMP流量后，跟踪路由节点时只有一跳即到目标。
 * 按照网上其他的透明代理教程，设置 iptables 肯定要 RETURN 127.0.0.0/8 这类私有地址，但我个人观点是放到 V2Ray 的路由里好一些。
 
 -------
