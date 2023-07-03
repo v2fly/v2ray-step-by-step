@@ -134,6 +134,7 @@ $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force
 
 Place certificate and private key into `/etc/v2ray` folder:
 ```
+$ sudo mkdir -p /etc/v2ray
 $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
 ```
 
