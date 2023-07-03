@@ -210,7 +210,7 @@ systemctl restart v2ray
 systemctl status v2ray
 ```
 
-If you see errors when checking its status, `cat /var/log/syslog` to see the actual errors. One problem you will likely run into is that v2ray can't load the certificate files due to permission issue. This is because v2ray isn't run as the root user by default. To fix it, we need to change the systemctl config (https://github.com/shadowsocks/v2ray-plugin/issues/54). 
+If you see errors when checking its status, `cat /var/log/syslog` to see the actual errors.You will likely run into a permission issue that prevents certificate files from being loaded. This is because v2ray isn't run as the root user by default. To fix it, we need to specify the user in the systemctl service config (https://github.com/shadowsocks/v2ray-plugin/issues/54). 
 
 Run `systemctl status v2ray` to locate the service config file `/etc/systemd/system/v2ray.service`
 
@@ -219,6 +219,7 @@ add `user=root` under [Service]:
 ```
 [Service]
 User=root
+...
 ```
 
 Then reload and verify v2ray runs.
@@ -226,6 +227,7 @@ Then reload and verify v2ray runs.
 ```bash
 systemctl daemon-reload
 systemctl restart v2ray
+systemctl status v2ray
 ```
 
 
