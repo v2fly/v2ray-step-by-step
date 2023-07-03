@@ -303,4 +303,4 @@ Here it is your certificate information. In this screenshot, we can see it is va
 - 2017-12-31 Typo fixed.
 - 2018-04-05 Update
 - 2018-11-17 Adapted for V4.0+
-- 2023-07-03 Add a few trouble shooting tips
+- 2023-07-03 Add a few troubleshooting tips and missing steps
