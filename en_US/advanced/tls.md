@@ -153,7 +153,7 @@ If you have read an older document, you probably saw `alterId` in the config. Yo
 
 Some clients might have an alterId as a mandatory field. In this situation, put `0`.
 
-To know where to save the server side log, run the command
+To know where to put the server side config file, run the command
 
 ```bash
 systemctl status v2ray
