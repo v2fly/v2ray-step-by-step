@@ -26,7 +26,7 @@ HaProxy 监听 443 端口，处理 TLS 之后，将 HTTP 流量交由 Web 服务
 
 2. 安装 Web 服务器，Caddy 参考[这个教程](https://github.com/caddyserver/caddy/blob/v1/dist/init/linux-systemd/README.md)，Nginx 使用命令 `apt install nginx`安装。
 
-3. 安装 V2Ray，可以使用官方脚本[官方脚本](https://www.v2ray.com/chapter_00/install.html#linuxscript)
+3. 安装 V2Ray，可以使用官方脚本[官方脚本](https://www.v2fly.org/guide/install.html#%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC)
 
 4. 修改 V2Ray 配置文件，以 Vmess + TCP 方式监听 40001 端口。
 

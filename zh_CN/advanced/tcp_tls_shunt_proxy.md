@@ -4,7 +4,7 @@
 
 ## 实现
 
-1. 安装 V2Ray，可以使用官方脚本[官方脚本](https://www.v2ray.com/chapter_00/install.html#linuxscript)
+1. 安装 V2Ray，可以使用官方脚本[官方脚本](https://www.v2fly.org/guide/install.html#%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC)
 
 2. 安装 [TLS 分流器](https://github.com/liberal-boy/tls-shunt-proxy)，见[安装说明](https://github.com/liberal-boy/tls-shunt-proxy#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85).
 

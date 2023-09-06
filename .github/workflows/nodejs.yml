@@ -33,8 +33,8 @@ jobs:
 
     - name: Install and Build
       run: |
-        npm install -g vuepress
-        vuepress build .
+        yarn install
+        yarn build
         
     - name: Publish gh-pages
       env:

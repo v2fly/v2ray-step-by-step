@@ -14,7 +14,7 @@ H2 流量理论上跟 ws 一样可以被 CDN 转发。 但是遗憾的是, Cloud
 ## 缺陷
 
 - 没有使用 [h2c](https://v2ray.com/chapter_00/01_versions.html#20190712-v4200)
-- 没有使用 [DomainSocket](https://v2ray.com/chapter_02/transport/domainsocket.html)
+- 没有使用 [DomainSocket](https://www.v2fly.org/config/transport/domainsocket.html)
 - 其他尚未注明的缺陷，急需你的补充。
 
 ## 服务端配置
@@ -71,6 +71,42 @@ https://<Host> {
         header_upstream X-Forwarded-For {remote}
         header_upstream X-Forwarded-Port {server_port}
         header_upstream X-Forwarded-Proto "https"
+    }
+}
+```
+:::
+
+::: details Caddyfile (Caddy v2）
+```caddyfile
+https://<Host> {
+    root * <Path to webroot>
+    file_server
+    tls <Path to cert> <Path to key>
+    proxy <H2 Path> https://localhost:<Port> {
+        transport http {
+            tls_insecure_skip_verify
+        }
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Port {server_port}
+        header_up X-Forwarded-Proto "https"
+    }
+}
+```
+:::
+
+::: details Caddyfile (Caddy v2 & H2C）
+```caddyfile
+https://<Host> {
+    root * <Path to webroot>
+    file_server
+    tls <Path to cert> <Path to key>
+    proxy <H2 Path> https://localhost:<Port> {
+        transport http {
+            versions h2c
+        }
+    }
 }
 ```
 :::
@@ -126,6 +162,83 @@ https://<Host> {
 ```
 :::
 
+::: details V2Ray Server(H2C) config.json
+```json
+{
+  "inbounds": [
+    {
+      "port": "<Port>",
+      "listen": "127.0.0.1",
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "<UUID>",
+            "alterId": 64
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "h2",
+        "security": "none",
+        # 此处改为"none"
+        "httpSettings": {
+          "path": "<H2 Path>",
+          "host": [
+            "<Host>"
+          ]
+        }
+      }
+      # "tlsSettings"字段删除
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ]
+}
+```
+:::
+
+::: details V2Ray Client(H2C) config.json
+```json
+  "outbounds":
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "<Host>",
+            "port": 443,
+            "users": [
+              {
+                "id": "<UUID>",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "h2",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": ""
+          # 注意此处为空值
+        },
+        "httpSettings": {
+          "path": "<H2 Path>",
+          "host": [
+            "<Host>"
+          ]
+        }
+      }
+    }
+```
+:::
+    
 ## 排错
 
 - 如果你后端的 V2Ray 挂了或配置不正确，访问 *\<H2 Path\>* 仍然会返回 `502`，因此不能通过 `502` 错误判断 V2Ray 正在运行。
@@ -134,3 +247,4 @@ https://<Host> {
 ## 参考文献
 
 <b id="f1">1.</b> v2ray-core [#1063](https://github.com/v2ray/v2ray-core/issues/1063)[↩](#a1)
+https://github.com/veekxt/v2ray-template/tree/master/H2C%2Bvmess%2BCaddy2

@@ -36,6 +36,7 @@ $ jq . config.json
 不过，最好还是使用 V2Ray 提供的配置检查功能（test 选项），因为可以检查 JSON 语法错误外的问题，比如说突然间手抖把 vmess 写成了 vmss，一下子就检查出来了。
 ```plain
 $ /usr/local/bin/v2ray -test -config /usr/local/etc/v2ray/config.json
+
 failed to parse json config: Ext|Tools|Conf|Serial: failed to parse json config > Ext|Tools|Conf: failed to load inbound detour config. > Ext|Tools|Conf: unknown config id: vmss
 Main: failed to read config file: /usr/local/etc/v2ray/config.json > Main|Json: failed to execute v2ctl to convert config file. > exit status 255
 ```
@@ -44,6 +45,7 @@ Main: failed to read config file: /usr/local/etc/v2ray/config.json > Main|Json: 
 
 ```plain
 $ /usr/local/bin/v2ray -test -config /usr/local/etc/v2ray/config.json
+
 V2Ray v3.15 (die Commanderin) 20180329
 An unified platform for anti-censorship.
 Configuration OK.
@@ -169,7 +171,7 @@ VMess 协议的认证基于时间，一定要保证服务器和客户端的系�
 
 ## 注意事项
 
-- 为了让浅显地介绍 V2Ray 的工作方式，本节中关于原理简析的描述有一些地方是错误的。但我知识水平又不够，还不知道该怎么改，暂且将错就错。正确的工作原理在用户手册的 [VMess 协议](https://www.v2ray.com/developer/protocols/vmess.html) 有详细的说明。
+- 为了让浅显地介绍 V2Ray 的工作方式，本节中关于原理简析的描述有一些地方是错误的。但我知识水平又不够，还不知道该怎么改，暂且将错就错。正确的工作原理在用户手册的 [VMess 协议](https://www.v2fly.org/developer/protocols/vmess.html) 有详细的说明。
 - id 为 UUID 格式，请使用软件生成，不要尝试自己造一个，否则很大程度上造出一个错误的格式来。
 - VMess 协议可以设定加密方式，但 VMess 不同的加密方式对于过墙没有明显差别，本节没有给出相关配置方式（因为这不重要，默认情况下 VMess 会自己选择一种比较合适的加密方式），具体配置可见 [V2Ray 手册](https://www.v2fly.org/developer/protocols/vmess.html)，不同加密方式的性能可参考[性能测试](/app/benchmark.md)。
 
