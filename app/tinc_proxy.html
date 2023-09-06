@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>挂载 Tinc 局域网节点 | 新 V2Ray 白话文指南</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="V2Fly 社区维护的新手向教程。">
+    
+    <link rel="preload" href="/assets/css/0.styles.1b90a7f8.css" as="style"><link rel="preload" href="/assets/js/app.11f247ac.js" as="script"><link rel="preload" href="/assets/js/2.e676ec79.js" as="script"><link rel="preload" href="/assets/js/46.54c82a65.js" as="script"><link rel="prefetch" href="/assets/js/10.4ffdc970.js"><link rel="prefetch" href="/assets/js/100.7c974c86.js"><link rel="prefetch" href="/assets/js/101.5b6fce86.js"><link rel="prefetch" href="/assets/js/102.4146af1c.js"><link rel="prefetch" href="/assets/js/103.8cf25788.js"><link rel="prefetch" href="/assets/js/104.15065e7a.js"><link rel="prefetch" href="/assets/js/105.51b5ba16.js"><link rel="prefetch" href="/assets/js/106.18a4245b.js"><link rel="prefetch" href="/assets/js/11.69c155a3.js"><link rel="prefetch" href="/assets/js/12.4586e087.js"><link rel="prefetch" href="/assets/js/13.551a7f25.js"><link rel="prefetch" href="/assets/js/14.666f2a4c.js"><link rel="prefetch" href="/assets/js/15.bec91889.js"><link rel="prefetch" href="/assets/js/16.cfa20867.js"><link rel="prefetch" href="/assets/js/17.1438f443.js"><link rel="prefetch" href="/assets/js/18.15065ed6.js"><link rel="prefetch" href="/assets/js/19.7936348c.js"><link rel="prefetch" href="/assets/js/20.597905c8.js"><link rel="prefetch" href="/assets/js/21.fb9a9186.js"><link rel="prefetch" href="/assets/js/22.7171a2fa.js"><link rel="prefetch" href="/assets/js/23.eb633efc.js"><link rel="prefetch" href="/assets/js/24.efe1076e.js"><link rel="prefetch" href="/assets/js/25.a6579cfd.js"><link rel="prefetch" href="/assets/js/26.15732875.js"><link rel="prefetch" href="/assets/js/27.5c4bccd7.js"><link rel="prefetch" href="/assets/js/28.c3ed6bfc.js"><link rel="prefetch" href="/assets/js/29.498eb96c.js"><link rel="prefetch" href="/assets/js/3.17b07f63.js"><link rel="prefetch" href="/assets/js/30.bb66ca00.js"><link rel="prefetch" href="/assets/js/31.f4e75936.js"><link rel="prefetch" href="/assets/js/32.3ff04109.js"><link rel="prefetch" href="/assets/js/33.8b071e05.js"><link rel="prefetch" href="/assets/js/34.db8006b5.js"><link rel="prefetch" href="/assets/js/35.f9c0e427.js"><link rel="prefetch" href="/assets/js/36.605f49cc.js"><link rel="prefetch" href="/assets/js/37.abd848e8.js"><link rel="prefetch" href="/assets/js/38.96ac5224.js"><link rel="prefetch" href="/assets/js/39.dc147656.js"><link rel="prefetch" href="/assets/js/4.aa294e3d.js"><link rel="prefetch" href="/assets/js/40.16b8efc5.js"><link rel="prefetch" href="/assets/js/41.7c4a98a6.js"><link rel="prefetch" href="/assets/js/42.ad8fe014.js"><link rel="prefetch" href="/assets/js/43.2ca0d0f6.js"><link rel="prefetch" href="/assets/js/44.b78f507d.js"><link rel="prefetch" href="/assets/js/45.2a2122d2.js"><link rel="prefetch" href="/assets/js/47.5baa5d78.js"><link rel="prefetch" href="/assets/js/48.32d1228b.js"><link rel="prefetch" href="/assets/js/49.ef859e66.js"><link rel="prefetch" href="/assets/js/5.3765c642.js"><link rel="prefetch" href="/assets/js/50.cc9f3854.js"><link rel="prefetch" href="/assets/js/51.dc15e1ed.js"><link rel="prefetch" href="/assets/js/52.d0f49d7a.js"><link rel="prefetch" href="/assets/js/53.3518a838.js"><link rel="prefetch" href="/assets/js/54.f0662c33.js"><link rel="prefetch" href="/assets/js/55.192fbc60.js"><link rel="prefetch" href="/assets/js/56.ed0f67e4.js"><link rel="prefetch" href="/assets/js/57.bca465b6.js"><link rel="prefetch" href="/assets/js/58.fcedf3b6.js"><link rel="prefetch" href="/assets/js/59.dfc5b378.js"><link rel="prefetch" href="/assets/js/6.c4f6085e.js"><link rel="prefetch" href="/assets/js/60.1d581ebe.js"><link rel="prefetch" href="/assets/js/61.385a5fe0.js"><link rel="prefetch" href="/assets/js/62.d1bb189d.js"><link rel="prefetch" href="/assets/js/63.999409e1.js"><link rel="prefetch" href="/assets/js/64.885cb476.js"><link rel="prefetch" href="/assets/js/65.e955dff3.js"><link rel="prefetch" href="/assets/js/66.48116b73.js"><link rel="prefetch" href="/assets/js/67.4a1543e0.js"><link rel="prefetch" href="/assets/js/68.dd3d79cb.js"><link rel="prefetch" href="/assets/js/69.e1889862.js"><link rel="prefetch" href="/assets/js/7.f9a4d79a.js"><link rel="prefetch" href="/assets/js/70.c2c9e610.js"><link rel="prefetch" href="/assets/js/71.d70dfd73.js"><link rel="prefetch" href="/assets/js/72.100533aa.js"><link rel="prefetch" href="/assets/js/73.26e6f18b.js"><link rel="prefetch" href="/assets/js/74.0650e362.js"><link rel="prefetch" href="/assets/js/75.c0156f05.js"><link rel="prefetch" href="/assets/js/76.df6ac65b.js"><link rel="prefetch" href="/assets/js/77.cd8ccde9.js"><link rel="prefetch" href="/assets/js/78.44c2e514.js"><link rel="prefetch" href="/assets/js/79.6321f68c.js"><link rel="prefetch" href="/assets/js/8.c48fcb6b.js"><link rel="prefetch" href="/assets/js/80.809b19c2.js"><link rel="prefetch" href="/assets/js/81.ca1c314f.js"><link rel="prefetch" href="/assets/js/82.693124ab.js"><link rel="prefetch" href="/assets/js/83.aa098740.js"><link rel="prefetch" href="/assets/js/84.74c5775b.js"><link rel="prefetch" href="/assets/js/85.30897b5d.js"><link rel="prefetch" href="/assets/js/86.b06cedfb.js"><link rel="prefetch" href="/assets/js/87.23131726.js"><link rel="prefetch" href="/assets/js/88.dab2ef95.js"><link rel="prefetch" href="/assets/js/89.35626385.js"><link rel="prefetch" href="/assets/js/9.73750180.js"><link rel="prefetch" href="/assets/js/90.25d56649.js"><link rel="prefetch" href="/assets/js/91.9a75ff45.js"><link rel="prefetch" href="/assets/js/92.f48516bc.js"><link rel="prefetch" href="/assets/js/93.6b879d43.js"><link rel="prefetch" href="/assets/js/94.d350b85c.js"><link rel="prefetch" href="/assets/js/95.a93da06d.js"><link rel="prefetch" href="/assets/js/96.97a4d5a7.js"><link rel="prefetch" href="/assets/js/97.9155fb6c.js"><link rel="prefetch" href="/assets/js/98.9f59c4bd.js"><link rel="prefetch" href="/assets/js/99.d2e59011.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.1b90a7f8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">新 V2Ray 白话文指南</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/app/tinc_proxy.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/app/tinc_proxy.html" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/app/tinc_proxy.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/app/tinc_proxy.html" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前言</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/" aria-current="page" class="sidebar-link">V2Ray 配置指南</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/prep/prep" class="sidebar-heading clickable"><span>开篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/basics/basics" class="sidebar-heading clickable"><span>基本篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/advanced/advanced" class="sidebar-heading clickable"><span>高级篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/app/app" class="sidebar-heading clickable open"><span>应用篇</span> <span class="arrow down"></span></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/app/transparent_proxy.html" class="sidebar-link">透明代理</a></li><li><a href="/app/tproxy.html" class="sidebar-link">透明代理(TPROXY)</a></li><li><a href="/app/reverse.html" class="sidebar-link">反向代理</a></li><li><a href="/app/reverse2.html" class="sidebar-link">反向代理 2</a></li><li><a href="/app/parent.html" class="sidebar-link">前置代理</a></li><li><a href="/app/balance.html" class="sidebar-link">负载均衡</a></li><li><a href="/app/docker-deploy-v2ray.html" class="sidebar-link">Docker 部署 V2Ray</a></li><li><a href="/app/benchmark.html" class="sidebar-link">性能测试</a></li><li><a href="/app/optimization.html" class="sidebar-link">内存优化</a></li><li><a href="/app/mtproto.html" class="sidebar-link">MTProto 代理</a></li><li><a href="/app/tinc_proxy.html" aria-current="page" class="active sidebar-link">挂载 Tinc 局域网节点</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#tinc-安装" class="sidebar-link">Tinc 安装</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#tinc-编译安装" class="sidebar-link">Tinc 编译安装</a></li><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#systemd-服务文件修改" class="sidebar-link">systemd 服务文件修改</a></li><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#收尾工作" class="sidebar-link">收尾工作</a></li></ul></li><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#搭建-tinc-节点" class="sidebar-link">搭建 Tinc 节点</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#主节点的搭建" class="sidebar-link">主节点的搭建</a></li><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#负载点的搭建" class="sidebar-link">负载点的搭建</a></li></ul></li><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#负载节点-v2ray-搭建-10-0-0-2-n" class="sidebar-link">负载节点 V2Ray 搭建 (10.0.0.2~n)</a></li><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#主节点反向代理-10-0-0-1" class="sidebar-link">主节点反向代理 (10.0.0.1)</a></li><li class="sidebar-sub-header"><a href="/app/tinc_proxy.html#常见问题" class="sidebar-link">常见问题</a></li></ul></li><li><a href="/app/android_without_root_use_v2ray.html" class="sidebar-link">Android 免 Root 运行 core</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/routing/routing" class="sidebar-heading clickable"><span>路由</span> <span class="arrow right"></span></a> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="挂载-tinc-局域网节点"><a href="#挂载-tinc-局域网节点" class="header-anchor">#</a> 挂载 Tinc 局域网节点</h1> <div class="custom-block warning"><p class="custom-block-title">WARNING</p> <p>本篇配置示例基于 CentOS 8，请酌情修改。</p></div> <p>现在普遍使用 Cloudflare 的 CDN 来防止 GFW 对 IP 屏蔽，但是目前 Cloudflare 已经对这种用途流量转发早已不堪重负，特别是到晚上的时候频繁出现 CDN 节点爆炸的问题，提供个新方式来缓解 Cloudflare 晚上常年缓慢的问题。</p> <p>这种架构 V2Ray 方案的方式是利用内网穿透软件，把所有手里的 VPS 当作网络节点来选出没有被 GFW 屏蔽的 IP 作为主节点，所有的 V2Ray 数据都请求该主节点来分流到其他 VPS；当 GFW 将主节点的 IP  屏蔽阻断的时候，让其他节点上升为主节点，而原来的主节点则下降为负载节点。</p> <blockquote><p>这种模式类似于 <code>Follwer/Leader</code> 模式，<code>Leader</code> 选取最优 VPS 来代理所有 V2ray 流量从而转发给 <code>Follwer</code>。</p></blockquote> <p>请注意：这个教程提供的思路和手段必须最少对 Linux 系统有一定水平的操作能力，如果没有较清晰的认识请务必不要自行乱来！</p> <p>这里的方案需求有以下要求:</p> <ul><li>至少有两台服务器</li> <li>基于 Nginx 的 upstream</li> <li>基于 Tinc 的内网穿透节点功能</li></ul> <p>这里主要配置用途：
+服务器 IP 被封，直接使用另一个服务器参与节点转发；一般 GFW 封禁 IP 有时限，随便开穿透节点转发等封禁周期过了继续使用原来 IP 轮换着用。</p> <h2 id="tinc-安装"><a href="#tinc-安装" class="header-anchor">#</a> Tinc 安装</h2> <p>在配置开始前必须要开启内核的 <code>ip_foward</code> 功能，如果没有开启请手动开启转发.</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> <span class="token function">sysctl</span> -a<span class="token operator">|</span><span class="token function">grep</span> ip_forward <span class="token comment"># 查看 ip_forward 转发是否开启 [ net.ipv4.ip_forward=1 ]</span>
+</code></pre></div><p>本例之所以使用 Tinc 来作为穿透软件是因为足够简单和基于 C 语言程序的性能依赖，且 Tinc 的 IPv6 支持还算不错，且配置相对简单不是那么复杂，其他 frp、ngrok 等都可以按照个人习惯来选择。</p> <p>有的发行版的源已经内置了 Tinc，但本篇使用编译安装来部署 Tinc。
+Tinc 最新版的下载地址见<a href="https://www.tinc-vpn.org/" target="_blank" rel="noopener noreferrer">官网<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>：</p> <h3 id="tinc-编译安装"><a href="#tinc-编译安装" class="header-anchor">#</a> Tinc 编译安装</h3> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token builtin class-name">cd</span> /tmp <span class="token comment"># 我常用惯例是在 /tmp 目录进行下载和编译，防止下载和编译到处散乱在其他目录</span>
+$ <span class="token function">wget</span> https://www.tinc-vpn.org/packages/tinc-1.0.36.tar.gz <span class="token parameter variable">-O</span> tinc.tar.gz <span class="token comment"># 下载获取最新版的源码包</span>
+$ <span class="token function">tar</span> <span class="token parameter variable">-xf</span> tinc.tar.gz --one-top-level --strip-components<span class="token operator">=</span><span class="token number">1</span> <span class="token comment"># 解压压缩包</span>
+$ <span class="token builtin class-name">cd</span> tinc <span class="token comment"># 进入文件夹</span>
+</code></pre></div><p>在开始编译工作之前，需要安装相应的依赖库：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> dnf <span class="token function">install</span> gcc cmake <span class="token function">make</span> openssl-devel zlib-devel lzo-devel <span class="token comment"># CentOS 的安装，其他发行版按照名称搜索安装即可</span>
+</code></pre></div><p>依赖库确认安装之后就开始编译安装工作：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ ./configure
+$ <span class="token function">make</span>
+$ <span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span> <span class="token comment"># 这里需要用到 root 权限安装</span>
+$ tincd <span class="token parameter variable">--version</span> <span class="token comment"># 安装之后测试打印版本号即可</span>
+</code></pre></div><h3 id="systemd-服务文件修改"><a href="#systemd-服务文件修改" class="header-anchor">#</a> systemd 服务文件修改</h3> <p>这里下载的压缩包本身带了两个系统服务，实际上修修改改就行:</p> <ul><li>/tmp/tinc/systemd/tinc.service.in</li> <li>/tmp/tinc/systemd/tinc@.service.in</li></ul> <p><code>tinc.service.in</code> 文件配置：</p> <p>内容修改:</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment"># 屏蔽 `WorkingDirectory=@sysconfdir@/tinc`</span>
+<span class="token comment"># 新增以下内容</span>
+<span class="token key attr-name">WorkingDirectory</span><span class="token punctuation">=</span><span class="token value attr-value">/usr/local/etc/tinc</span>
+</code></pre></div><p>复制到 systemd 文件夹：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> <span class="token function">cp</span> /tmp/tinc/systemd/tinc.service.in /lib/systemd/system/tinc.service <span class="token comment"># 复制到系统服务文件夹</span>
+$ <span class="token function">sudo</span> <span class="token function">vi</span> /lib/systemd/system/tinc.service <span class="token comment"># 修改内容</span>
+</code></pre></div><p><code>tinc@.service.in</code> 文件配置：</p> <p>内容修改：</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment"># 屏蔽以下内容</span>
+<span class="token comment"># WorkingDirectory=@sysconfdir@/tinc/%i</span>
+<span class="token comment"># ExecStart=@sbindir@/tincd -n %i -D</span>
+<span class="token comment"># ExecReload=@sbindir@/tincd -n %i -kHUP</span>
+<span class="token comment"># 新增以下内容</span>
+<span class="token key attr-name">WorkingDirectory</span><span class="token punctuation">=</span><span class="token value attr-value">/usr/local/etc/tinc/%i</span>
+<span class="token key attr-name">ExecStart</span><span class="token punctuation">=</span><span class="token value attr-value">/usr/local/sbin/tincd -n %i -D</span>
+<span class="token key attr-name">ExecReload</span><span class="token punctuation">=</span><span class="token value attr-value">/usr/local/sbin/tincd -n %i -kHUP</span>
+</code></pre></div><p>复制到 systemd 文件夹：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> <span class="token function">cp</span> /tmp/tinc/systemd/tinc@.service.in /lib/systemd/system/tinc@.service <span class="token comment"># 复制到系统服务文件夹</span>
+$ <span class="token function">sudo</span> <span class="token function">vi</span> /lib/systemd/system/tinc@.service <span class="token comment"># 修改内容</span>
+</code></pre></div><h3 id="收尾工作"><a href="#收尾工作" class="header-anchor">#</a> 收尾工作</h3> <p>完成配置复制和修改之后没问题就准备最后的系统配置加载流程</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/local/var/run/ <span class="token comment"># 创建运行 PID 目录</span>
+$ <span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /usr/local/etc/tinc <span class="token comment"># 创建服务配置加载的配置目录</span>
+$ <span class="token function">sudo</span> <span class="token function">ln</span> <span class="token parameter variable">-s</span> /usr/local/etc/tinc /etc/tinc <span class="token comment"># 设置 /etc 配置文件的软链接</span>
+$ <span class="token function">sudo</span> systemctl unmask tinc <span class="token comment"># 刷新刚刚加载的 Systemctl 系统服务</span>
+</code></pre></div><h2 id="搭建-tinc-节点"><a href="#搭建-tinc-节点" class="header-anchor">#</a> 搭建 Tinc 节点</h2> <p>在这里需要说明需要明确以下规范:</p> <ul><li>10.0.0.1 是主要接受客户端 V2ray 数据的主节点</li> <li>10.0.0.2~n 是代理转发过来过来的负载节点</li> <li>主节点使用 Nginx 来转发数据流量到 10.0.0.2~n 到其他服务器</li> <li>所有的节点都需要安装 Tinc 和 Nginx</li></ul> <h3 id="主节点的搭建"><a href="#主节点的搭建" class="header-anchor">#</a> 主节点的搭建</h3> <p>创建节点的搭建信息：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token builtin class-name">cd</span> /etc/tinc <span class="token comment"># 进入配置目录</span>
+$ <span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/tinc/v2ray/hosts <span class="token comment"># 创建 V2ray 的穿透节点并且设置允许访问主机配置目录</span>
+</code></pre></div><p>编辑配置文件（/etc/tinc/v2ray/tinc.conf）：</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment">## 这里Name就是配置文件名称,这个文件节点我一般喜欢起名 `master-slave`/`node_01-node_02` 之类</span>
+<span class="token comment">## 默认端口监听665,这里设置20665,一般我都不喜欢直接使用默认端口,很容易被机器人扫出对应服务</span>
+<span class="token comment">## 这里路由模式使用交换器模式 [ Switch ] ，其他模式可以参考官网配置</span>
+<span class="token key attr-name">Name</span> <span class="token punctuation">=</span> <span class="token value attr-value">master</span>
+<span class="token key attr-name">Interface</span> <span class="token punctuation">=</span> <span class="token value attr-value">v2ray</span>
+<span class="token key attr-name">Port</span><span class="token punctuation">=</span><span class="token value attr-value">20065</span>
+<span class="token key attr-name">Mode</span><span class="token punctuation">=</span><span class="token value attr-value">switch</span>
+</code></pre></div><p>编写主节点的详细信息：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> <span class="token function">vi</span> /etc/tinc/v2ray/hosts/master
+</code></pre></div><p>主节点链路信息内容：</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment">## 这里 Address 代表了自己地址 IP 和端口开放信息</span>
+<span class="token comment">## 如果服务器 IP 被 Ban ,需要把主节点切换成负载节点记得把该 IP 修改成主节点 IP</span>
+<span class="token comment">## Subnet 代表了内网穿透节点的地址</span>
+<span class="token key attr-name">Address</span> <span class="token punctuation">=</span> <span class="token value attr-value">VPS自己IP 20665</span>
+<span class="token key attr-name">Subnet</span> <span class="token punctuation">=</span> <span class="token value attr-value">10.0.0.1/32</span>
+</code></pre></div><p>完成之后就需要生成连接密钥,他会在 master 文件最后附上密钥信息</p> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>这里一般格式 tincd -n 节点名称 -K [2048/4096,加密程度不推荐太高,本身 V2Ray 就是带有加密没必要数据再进行太过复杂加密]</p></div> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> /usr/local/sbin/tincd <span class="token parameter variable">-n</span> v2ray <span class="token parameter variable">-K</span> <span class="token number">2048</span>
+</code></pre></div><p>编写启动虚拟交换器脚本（/etc/tinc/v2ray/tinc-up），内容如下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># 10.0.0.1 代表了该节点占用的节点地址，必须是唯一性</span>
+<span class="token function">ifconfig</span> <span class="token variable">$INTERFACE</span> <span class="token number">10.0</span>.0.1 netmask <span class="token number">255.255</span>.255.0
+</code></pre></div><p>编写错误关闭的脚本（/etc/tinc/v2ray/tinc-down）如下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/bash</span>
+<span class="token function">ifconfig</span> <span class="token variable">$INTERFACE</span> down
+</code></pre></div><p>收尾工作,最后赋予脚本执行权限和手动开放端口/服务即可：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> <span class="token function">chmod</span> +x /etc/tinc/v2ray/tinc-* <span class="token comment"># 赋予脚本启动权限,</span>
+$ <span class="token function">sudo</span> systemctl start tinc@v2ray <span class="token comment"># 启动系统服务</span>
+$ <span class="token function">sudo</span> firewall-cmd <span class="token parameter variable">--zone</span><span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">20665</span>/tcp <span class="token parameter variable">--permanent</span> <span class="token comment"># 如果有防火墙记得开启对外端口</span>
+$ <span class="token function">sudo</span> firewall-cmd <span class="token parameter variable">--reload</span> <span class="token comment"># 更新防火墙配置</span>
+$ <span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> tinc@v2ray <span class="token comment"># 开机自动启动服务,这个实际上推荐最后调试没问题再启用</span>
+</code></pre></div><h3 id="负载点的搭建"><a href="#负载点的搭建" class="header-anchor">#</a> 负载点的搭建</h3> <p>安装和配置方式基本上和主节点一致，这里下面大致理下流程，只对重点配置节点地方注明。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> <span class="token function">mkdir</span> /etc/tinc/v2ray/hosts <span class="token comment"># 确认和主节点一致的配置文件目录</span>
+</code></pre></div><p>这里配置节点信息（/etc/tinc/v2ray/tinc.conf）稍微不同，参考如下例子：</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment"># Name 代表了负载节点的配置文件名称 [ hosts/slave_01 ] ,这个文件后续要放入主节点的 hosts 目录</span>
+<span class="token comment"># ConnectTo 代表接入穿透的内网节点配置文件 [ hosts/master ] ,这个文件是拷贝主节点的 hosts 的配置文件</span>
+<span class="token comment">#   这里需要知道的点:</span>
+<span class="token comment">#     * Name 不能和其他节点冲突</span>
+<span class="token comment">#     * ConnectTo 必须是主节点附加带有密钥的配置文件</span>
+<span class="token comment">#     * Interface/Mode 必须和主节点配置保持一致</span>
+<span class="token key attr-name">Name</span> <span class="token punctuation">=</span> <span class="token value attr-value">slave_01</span>
+<span class="token key attr-name">Interface</span> <span class="token punctuation">=</span> <span class="token value attr-value">v2ray</span>
+<span class="token key attr-name">ConnectTo</span> <span class="token punctuation">=</span> <span class="token value attr-value">master</span>
+<span class="token key attr-name">Mode</span><span class="token punctuation">=</span><span class="token value attr-value">switch</span>
+</code></pre></div><p>配置链路（/etc/tinc/v2ray/hosts/slave_01），内容如下：</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment"># 注意这里必须对应服务端的 10.0.0.2～255</span>
+<span class="token comment"># 这是作为节点的内网IP</span>
+<span class="token key attr-name">Subnet</span> <span class="token punctuation">=</span> <span class="token value attr-value">10.0.0.2/32</span>
+</code></pre></div><p>最后配置完之后生成密钥信息：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> /usr/local/sbin/tincd <span class="token parameter variable">-n</span> v2ray <span class="token parameter variable">-K</span>
+</code></pre></div><p>负载节点的启动脚本内容有所不同 [ /etc/tinc/v2ray/tinc-up ]</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># 这里的 IP 地址改为该节点选择的地址</span>
+<span class="token function">ifconfig</span> <span class="token variable">$INTERFACE</span> <span class="token number">10.0</span>.0.2 netmask <span class="token number">255.255</span>.255.0
+</code></pre></div><p>在启动的时候，请千万记得复制主节点/负载节点下的 hosts 文件到各自目录下保证,保证双方 hosts 目录有以下对应内容：</p> <div class="language-plain extra-class"><pre class="language-plain"><code>$ ls -l /etc/v2ray/hosts
+  master [主节点文件]
+  slave_01 [负载节点01]
+  slave_02 [负载节点02]
+  ...
+</code></pre></div><p>这里负载节点不需要开放什么端口，所有连接信息都记录在 master 主节点信息（公网 IP 和端口信息）。
+但是需要手动配置防火墙，所有的负载节点开放内部的 10.0.0.1 的放行（后面章节会提到）。</p> <p>Tinc 没有日志文件功能，这里推荐个调试连接思路，利用 SSH 连接来测试是否联通：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">ssh</span> root@10.0.0.1 <span class="token comment"># 负载节点测试 ssh 是否能够通过挂起的 10.0.0.1 接入到主节点</span>
+</code></pre></div><h2 id="负载节点-v2ray-搭建-10-0-0-2-n"><a href="#负载节点-v2ray-搭建-10-0-0-2-n" class="header-anchor">#</a> 负载节点 V2Ray 搭建 (10.0.0.2~n)</h2> <p>这里安装的 V2Ray 直接参考其他配置，只需要说明的是不推荐使用任何转发/伪装协议来处理；
+直接用 TCP 转发数据，因为本身 Tinc 就是带有数据安全加密功能，如果选用其他 V2ray 的其他伪装协议，性能会出现大幅降低。
+所有的负载节点都需要安装 V2Ray，同时配置文件基本上没什么大的区别：</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+    <span class="token property">&quot;log&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;access&quot;</span><span class="token operator">:</span> <span class="token string">&quot;/var/log/v2ray/access.log&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;error&quot;</span><span class="token operator">:</span> <span class="token string">&quot;/var/log/v2ray/error.log&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;loglevel&quot;</span><span class="token operator">:</span> <span class="token string">&quot;warning&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;inbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">10000</span>，<span class="token comment">//这里随便启动个 V2ray 端口,直接按照负载节点请求 10.0.0.2:10000/10.0.0.3:10000</span>
+        <span class="token property">&quot;listen&quot;</span><span class="token operator">:</span><span class="token string">&quot;0.0.0.0&quot;</span><span class="token punctuation">,</span><span class="token comment">//这里开放公网,记得 firewall-cmd 我一般使用 firewal-cmd 管理端口,这里外部是没办法通过公网访问的.</span>
+        <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;vmess&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;clients&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">{</span>
+            <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;alterId&quot;</span><span class="token operator">:</span> <span class="token number">64</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;outbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;freedom&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>启动 V2Ray 之后需要对 10.0.0.x 地址进行针对性放行，port 记得改成负载节点下的 V2Ray 服务器端口信息：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">sudo</span> firewall-cmd <span class="token parameter variable">--permanent</span> --add-rich-rule<span class="token operator">=</span><span class="token string">&quot;rule family=&quot;</span>ipv4<span class="token string">&quot; source address=&quot;</span><span class="token number">10.0</span>.0.1<span class="token string">&quot; port protocol=&quot;</span>tcp<span class="token string">&quot; port=&quot;</span><span class="token punctuation">[</span>V2Ray 的服务器端口<span class="token punctuation">]</span><span class="token string">&quot; accept&quot;</span>
+</code></pre></div><p>这样 V2Ray 的负载节点也就完成配置了。</p> <h2 id="主节点反向代理-10-0-0-1"><a href="#主节点反向代理-10-0-0-1" class="header-anchor">#</a> 主节点反向代理 (10.0.0.1)</h2> <p>我这里使用 Nginx 的 upstream 来反向代理到其他负载节点流量 （/etc/nginx/nginx.conf），配置如下：</p> <div class="language-plain extra-class"><pre class="language-plain"><code>events {
+    # 这个系统会自动选择,可有可无
+    use epoll;
+    # 这个看机器配置的最大连接 [ sudo ulimit -n # 命令查看最大]
+    worker_connections 65535;
+}
+
+//主要是添加配置该选项
+stream{
+  include /etc/nginx/stream.d/*.conf;
+}
+
+http{
+  //........
+}
+</code></pre></div><p>编写 Nginx 反向代理的配置（ /etc/nginx/stream.d/v2ray.conf ），内容如下：</p> <div class="language-plain extra-class"><pre class="language-plain"><code>upstream v2ray {
+
+  hash $remote_addr consistent;
+  server 10.0.0.2:10000 weight=5;
+  server 10.0.0.3:10000 weight=5;
+  server 10.0.0.4:10000 weight=5;
+  //.......
+  //主节点按照平均权重不断转发对应的内网穿透节点下
+}
+
+# 挂起 TCP 反向代理服务
+server {
+  # 设置对外访问 V2ray 端口
+  # v2ray 的客户端全部请求主节点:6666 端口，之后由节点内网穿透转发到指定的内网节点
+  listen 6666;
+
+  # 这里直接转发到上面配置的数据配置
+  proxy_pass v2ray;
+}
+</code></pre></div><p>完成之后启动主节点，连接 V2ray 查看是否能够正确转发数据数据.</p> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>如果有防火墙请记得打开允许 Nginx 对应的端口进行访问。</p></div> <h2 id="常见问题"><a href="#常见问题" class="header-anchor">#</a> 常见问题</h2> <p>Q: 如果主节点的 IP 被封了，怎么将负载节点转化主节点？
+A: 直接复制主节点的 /etc/tinc/v2ray 目录下到可用负载节点（记得备份），将所有节点 /etc/tinc/vpn/hosts/master 文件的公网 IP 修改成新的节点 IP ，复制 Nginx 启动配置即可，同时开放 Tinc 或 Nginx 的端口。</p> <p>Q: 可以通过中国服务器参与节点吗?
+A: 目前测试如果中国服务器节点参与负载转发会有频繁的超时、卡顿等现象，效率不如直连海外服务器，但是速度比 WSS+CDN 快，稳定性却很差。</p> <p>Q: 可以不选择 TCP 而使用更加高级的伪装协议吗?
+A: 可以用但是不推荐，本身 Tinc 是附带的安全加密数据功能，大量加密套壳过程会导致性能锐减。</p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/v2fly/v2ray-step-by-step/edit/transifex/zh_CN/app/tinc_proxy.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">5/30/2020, 1:48:14 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/app/mtproto.html" class="prev">
+        MTProto 代理
+      </a></span> <span class="next"><a href="/app/android_without_root_use_v2ray.html">
+        Android 免 Root 运行 core
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.11f247ac.js" defer></script><script src="/assets/js/2.e676ec79.js" defer></script><script src="/assets/js/46.54c82a65.js" defer></script>
+  </body>
+</html>

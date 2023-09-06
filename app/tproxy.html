@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>透明代理(TPROXY) | 新 V2Ray 白话文指南</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="V2Fly 社区维护的新手向教程。">
+    
+    <link rel="preload" href="/assets/css/0.styles.1b90a7f8.css" as="style"><link rel="preload" href="/assets/js/app.11f247ac.js" as="script"><link rel="preload" href="/assets/js/2.e676ec79.js" as="script"><link rel="preload" href="/assets/js/47.5baa5d78.js" as="script"><link rel="prefetch" href="/assets/js/10.4ffdc970.js"><link rel="prefetch" href="/assets/js/100.7c974c86.js"><link rel="prefetch" href="/assets/js/101.5b6fce86.js"><link rel="prefetch" href="/assets/js/102.4146af1c.js"><link rel="prefetch" href="/assets/js/103.8cf25788.js"><link rel="prefetch" href="/assets/js/104.15065e7a.js"><link rel="prefetch" href="/assets/js/105.51b5ba16.js"><link rel="prefetch" href="/assets/js/106.18a4245b.js"><link rel="prefetch" href="/assets/js/11.69c155a3.js"><link rel="prefetch" href="/assets/js/12.4586e087.js"><link rel="prefetch" href="/assets/js/13.551a7f25.js"><link rel="prefetch" href="/assets/js/14.666f2a4c.js"><link rel="prefetch" href="/assets/js/15.bec91889.js"><link rel="prefetch" href="/assets/js/16.cfa20867.js"><link rel="prefetch" href="/assets/js/17.1438f443.js"><link rel="prefetch" href="/assets/js/18.15065ed6.js"><link rel="prefetch" href="/assets/js/19.7936348c.js"><link rel="prefetch" href="/assets/js/20.597905c8.js"><link rel="prefetch" href="/assets/js/21.fb9a9186.js"><link rel="prefetch" href="/assets/js/22.7171a2fa.js"><link rel="prefetch" href="/assets/js/23.eb633efc.js"><link rel="prefetch" href="/assets/js/24.efe1076e.js"><link rel="prefetch" href="/assets/js/25.a6579cfd.js"><link rel="prefetch" href="/assets/js/26.15732875.js"><link rel="prefetch" href="/assets/js/27.5c4bccd7.js"><link rel="prefetch" href="/assets/js/28.c3ed6bfc.js"><link rel="prefetch" href="/assets/js/29.498eb96c.js"><link rel="prefetch" href="/assets/js/3.17b07f63.js"><link rel="prefetch" href="/assets/js/30.bb66ca00.js"><link rel="prefetch" href="/assets/js/31.f4e75936.js"><link rel="prefetch" href="/assets/js/32.3ff04109.js"><link rel="prefetch" href="/assets/js/33.8b071e05.js"><link rel="prefetch" href="/assets/js/34.db8006b5.js"><link rel="prefetch" href="/assets/js/35.f9c0e427.js"><link rel="prefetch" href="/assets/js/36.605f49cc.js"><link rel="prefetch" href="/assets/js/37.abd848e8.js"><link rel="prefetch" href="/assets/js/38.96ac5224.js"><link rel="prefetch" href="/assets/js/39.dc147656.js"><link rel="prefetch" href="/assets/js/4.aa294e3d.js"><link rel="prefetch" href="/assets/js/40.16b8efc5.js"><link rel="prefetch" href="/assets/js/41.7c4a98a6.js"><link rel="prefetch" href="/assets/js/42.ad8fe014.js"><link rel="prefetch" href="/assets/js/43.2ca0d0f6.js"><link rel="prefetch" href="/assets/js/44.b78f507d.js"><link rel="prefetch" href="/assets/js/45.2a2122d2.js"><link rel="prefetch" href="/assets/js/46.54c82a65.js"><link rel="prefetch" href="/assets/js/48.32d1228b.js"><link rel="prefetch" href="/assets/js/49.ef859e66.js"><link rel="prefetch" href="/assets/js/5.3765c642.js"><link rel="prefetch" href="/assets/js/50.cc9f3854.js"><link rel="prefetch" href="/assets/js/51.dc15e1ed.js"><link rel="prefetch" href="/assets/js/52.d0f49d7a.js"><link rel="prefetch" href="/assets/js/53.3518a838.js"><link rel="prefetch" href="/assets/js/54.f0662c33.js"><link rel="prefetch" href="/assets/js/55.192fbc60.js"><link rel="prefetch" href="/assets/js/56.ed0f67e4.js"><link rel="prefetch" href="/assets/js/57.bca465b6.js"><link rel="prefetch" href="/assets/js/58.fcedf3b6.js"><link rel="prefetch" href="/assets/js/59.dfc5b378.js"><link rel="prefetch" href="/assets/js/6.c4f6085e.js"><link rel="prefetch" href="/assets/js/60.1d581ebe.js"><link rel="prefetch" href="/assets/js/61.385a5fe0.js"><link rel="prefetch" href="/assets/js/62.d1bb189d.js"><link rel="prefetch" href="/assets/js/63.999409e1.js"><link rel="prefetch" href="/assets/js/64.885cb476.js"><link rel="prefetch" href="/assets/js/65.e955dff3.js"><link rel="prefetch" href="/assets/js/66.48116b73.js"><link rel="prefetch" href="/assets/js/67.4a1543e0.js"><link rel="prefetch" href="/assets/js/68.dd3d79cb.js"><link rel="prefetch" href="/assets/js/69.e1889862.js"><link rel="prefetch" href="/assets/js/7.f9a4d79a.js"><link rel="prefetch" href="/assets/js/70.c2c9e610.js"><link rel="prefetch" href="/assets/js/71.d70dfd73.js"><link rel="prefetch" href="/assets/js/72.100533aa.js"><link rel="prefetch" href="/assets/js/73.26e6f18b.js"><link rel="prefetch" href="/assets/js/74.0650e362.js"><link rel="prefetch" href="/assets/js/75.c0156f05.js"><link rel="prefetch" href="/assets/js/76.df6ac65b.js"><link rel="prefetch" href="/assets/js/77.cd8ccde9.js"><link rel="prefetch" href="/assets/js/78.44c2e514.js"><link rel="prefetch" href="/assets/js/79.6321f68c.js"><link rel="prefetch" href="/assets/js/8.c48fcb6b.js"><link rel="prefetch" href="/assets/js/80.809b19c2.js"><link rel="prefetch" href="/assets/js/81.ca1c314f.js"><link rel="prefetch" href="/assets/js/82.693124ab.js"><link rel="prefetch" href="/assets/js/83.aa098740.js"><link rel="prefetch" href="/assets/js/84.74c5775b.js"><link rel="prefetch" href="/assets/js/85.30897b5d.js"><link rel="prefetch" href="/assets/js/86.b06cedfb.js"><link rel="prefetch" href="/assets/js/87.23131726.js"><link rel="prefetch" href="/assets/js/88.dab2ef95.js"><link rel="prefetch" href="/assets/js/89.35626385.js"><link rel="prefetch" href="/assets/js/9.73750180.js"><link rel="prefetch" href="/assets/js/90.25d56649.js"><link rel="prefetch" href="/assets/js/91.9a75ff45.js"><link rel="prefetch" href="/assets/js/92.f48516bc.js"><link rel="prefetch" href="/assets/js/93.6b879d43.js"><link rel="prefetch" href="/assets/js/94.d350b85c.js"><link rel="prefetch" href="/assets/js/95.a93da06d.js"><link rel="prefetch" href="/assets/js/96.97a4d5a7.js"><link rel="prefetch" href="/assets/js/97.9155fb6c.js"><link rel="prefetch" href="/assets/js/98.9f59c4bd.js"><link rel="prefetch" href="/assets/js/99.d2e59011.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.1b90a7f8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">新 V2Ray 白话文指南</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/app/tproxy.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/app/tproxy.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前言</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/" aria-current="page" class="sidebar-link">V2Ray 配置指南</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/prep/prep" class="sidebar-heading clickable"><span>开篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/basics/basics" class="sidebar-heading clickable"><span>基本篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/advanced/advanced" class="sidebar-heading clickable"><span>高级篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/app/app" class="sidebar-heading clickable open"><span>应用篇</span> <span class="arrow down"></span></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/app/transparent_proxy.html" class="sidebar-link">透明代理</a></li><li><a href="/app/tproxy.html" aria-current="page" class="active sidebar-link">透明代理(TPROXY)</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/tproxy.html#设置网关" class="sidebar-link">设置网关</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#树莓派安装配置-v2ray" class="sidebar-link">树莓派安装配置 V2Ray</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#配置透明代理" class="sidebar-link">配置透明代理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/tproxy.html#为-v2ray-配置透明代理的入站和-dns-分流" class="sidebar-link">为 V2Ray 配置透明代理的入站和 DNS 分流</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#配置透明代理规则" class="sidebar-link">配置透明代理规则</a></li></ul></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#开机自动运行透明代理规则" class="sidebar-link">开机自动运行透明代理规则</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#其他" class="sidebar-link">其他</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/tproxy.html#解决-too-many-open-files-问题" class="sidebar-link">解决 too many open files 问题</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#设定网关为静态-ip" class="sidebar-link">设定网关为静态 IP</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#设定-dhcp" class="sidebar-link">设定 DHCP</a></li></ul></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#备注" class="sidebar-link">备注</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#参考资料" class="sidebar-link">参考资料</a></li><li class="sidebar-sub-header"><a href="/app/tproxy.html#更新历史" class="sidebar-link">更新历史</a></li></ul></li><li><a href="/app/reverse.html" class="sidebar-link">反向代理</a></li><li><a href="/app/reverse2.html" class="sidebar-link">反向代理 2</a></li><li><a href="/app/parent.html" class="sidebar-link">前置代理</a></li><li><a href="/app/balance.html" class="sidebar-link">负载均衡</a></li><li><a href="/app/docker-deploy-v2ray.html" class="sidebar-link">Docker 部署 V2Ray</a></li><li><a href="/app/benchmark.html" class="sidebar-link">性能测试</a></li><li><a href="/app/optimization.html" class="sidebar-link">内存优化</a></li><li><a href="/app/mtproto.html" class="sidebar-link">MTProto 代理</a></li><li><a href="/app/tinc_proxy.html" class="sidebar-link">挂载 Tinc 局域网节点</a></li><li><a href="/app/android_without_root_use_v2ray.html" class="sidebar-link">Android 免 Root 运行 core</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/routing/routing" class="sidebar-heading clickable"><span>路由</span> <span class="arrow right"></span></a> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="透明代理-tproxy"><a href="#透明代理-tproxy" class="header-anchor">#</a> 透明代理(TPROXY)</h1> <p>原来出过一篇<a href="https://guide.v2fly.org/app/transparent_proxy.html" target="_blank" rel="noopener noreferrer">透明代理的教程<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，但过了许久，V2Ray 也已经迭代了好多个版本。原来的教程依旧可以正常使用，但随着 V2Ray 的更新，V2Ray 推出了新的透明代理方式—— TPROXY，原来的叫 REDIRECT。最近测试了一下 TPROXY ，效果还不错，主观感觉比 REDIRECT 好。并且在本文的透明代理中，DNS 服务将由 V2Ray 提供。不过这种方式需要 iptables 的 TPROXY 模块支持，有一些阉割版的系统会精简掉 TPROXY 模块，这种系统是不适用于本文的。</p> <p>普通家庭大多数是光纤入户接光猫调制解调，一个路由器的 WAN 口接光猫的 LAN 口，要上网的设备（如 PC 、电视盒子、手机）接路由器 LAN 口。本文的透明代理需要一台 Linux 主机接路由器 LAN 口，作为局域网中的网关，为其他接入局域网中的设备提供翻墙功能。这样的方式与我原来的透明代理教程是一样的，都是搭建在一个 Linux 主机上。这样可以透明代理的设备，有的人叫“透明网关”，也有的叫“旁路由”。我觉得这种不是很严肃的场合，叫什么都行，只要不妨碍理解。</p> <p>很多设备都可以做透明网关，路由器、开发板、个人电脑、虚拟机和 Android 设备等。路由器可能比较特殊点，因为它本身就可以充当网关。上面可能说得太抽象，我就举些实际的，比如说树莓派、香橙派、用 PC 装的 Linux 虚拟机、淘宝的工控机（如 j1900）、NAS、电视盒子（如翻车迅）、你刚配的牙膏厂或农厂的电脑，这些都没问题。至于到底用什么？这得看需求，我觉得网络 200M 以下搞个高性能的类树莓派的 SBC 就够了，200M 以上就得考虑 X86 主机了（如今甚火的软路由）。当然，到底怎么选择还是得看自己。</p> <p>本文假设你已经有一个设备（就以树莓派举例），将用来作网关（或说旁路由），并且已经安装好 Linux。关于系统，我更推荐 Debian 或 Debian 衍生版。为方面起见，本文均以 root 权限账户执行命令。并且有一台 PC 以便于操作。</p> <h2 id="设置网关"><a href="#设置网关" class="header-anchor">#</a> 设置网关</h2> <ol><li>用网线将树莓派接入路由器 LAN 口，假设分给树莓派的 IP 是 192.168.1.22。</li> <li>树莓派开启 IP 转发（需要开启 IP 转发才能作为网关）。命令为 <code>echo net.ipv4.ip_forward=1 &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p</code>。执行后将出现 net.ipv4.ip_forward=1 的提示。</li> <li>手动配置 PC 的网络，将默认网关指向树莓派的地址即 <code>192.168.1.22</code>。此时 PC 应当能正常上网（由于还没设置代理，“正常”是指可以上国内的网站）。</li></ol> <h2 id="树莓派安装配置-v2ray"><a href="#树莓派安装配置-v2ray" class="header-anchor">#</a> 树莓派安装配置 V2Ray</h2> <ol><li>安装 V2Ray。可以使用 V2Fly 提供的 <a href="https://github.com/v2fly/fhs-install-v2ray" target="_blank" rel="noopener noreferrer">fhs-install-v2ray<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 脚本安装，由于 GFW 会恶化对 GitHub 的访问，直接运行脚本几乎无法安装，建议先下载 V2Ray 的压缩包，然后用安装脚本通过 --local 参数进行安装。</li> <li>配置 V2Ray。按照前文教程将 V2Ray 配置成客户端形式。然后执行 <code>curl -so /dev/null -w &quot;%{http_code}&quot; google.com -x socks5://127.0.0.1:1080</code> 确认 V2Ray 已经可以翻墙(命令中 socks5 指 inbound 协议为 socks，1080 指该 inbound 端口是 1080)。如果执行这个命令出现了 301 或 200 这类数字的话代表可以翻墙，如果长时间没反应或者是 000 的话说明不可以翻墙。</li></ol> <h2 id="配置透明代理"><a href="#配置透明代理" class="header-anchor">#</a> 配置透明代理</h2> <h3 id="为-v2ray-配置透明代理的入站和-dns-分流"><a href="#为-v2ray-配置透明代理的入站和-dns-分流" class="header-anchor">#</a> 为 V2Ray 配置透明代理的入站和 DNS 分流</h3> <p>以下是 V2Ray 透明代理的配置示例，配置文件之后有说明。</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;inbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span><span class="token string">&quot;transparent&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">12345</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;dokodemo-door&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;network&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tcp,udp&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;followRedirect&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;sniffing&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;enabled&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;destOverride&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;http&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;tls&quot;</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;streamSettings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;sockopt&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">&quot;tproxy&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tproxy&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 透明代理使用 TPROXY 方式</span>
+          <span class="token property">&quot;mark&quot;</span><span class="token operator">:</span><span class="token number">255</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">1080</span><span class="token punctuation">,</span> 
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;socks&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 入口协议为 SOCKS 5</span>
+      <span class="token property">&quot;sniffing&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;enabled&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;destOverride&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;http&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;tls&quot;</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;auth&quot;</span><span class="token operator">:</span> <span class="token string">&quot;noauth&quot;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;outbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;proxy&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;vmess&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 代理服务器</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;vnext&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          ...
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;streamSettings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;sockopt&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">&quot;mark&quot;</span><span class="token operator">:</span> <span class="token number">255</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;mux&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;enabled&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;freedom&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;domainStrategy&quot;</span><span class="token operator">:</span> <span class="token string">&quot;UseIP&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;streamSettings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;sockopt&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">&quot;mark&quot;</span><span class="token operator">:</span> <span class="token number">255</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>      
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;block&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;blackhole&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;response&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;http&quot;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;dns-out&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span> <span class="token string">&quot;dns&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;streamSettings&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;sockopt&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">&quot;mark&quot;</span><span class="token operator">:</span> <span class="token number">255</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>  
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;dns&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;servers&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;223.5.5.5&quot;</span><span class="token punctuation">,</span> <span class="token comment">//中国大陆域名使用阿里的 DNS</span>
+        <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">53</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domains&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geosite:cn&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;ntp.org&quot;</span><span class="token punctuation">,</span>   <span class="token comment">// NTP 服务器</span>
+          <span class="token string">&quot;$myserver.address&quot;</span> <span class="token comment">// 此处改为你 VPS 的域名</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;114.114.114.114&quot;</span><span class="token punctuation">,</span> <span class="token comment">//中国大陆域名使用 114 的 DNS (备用)</span>
+        <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">53</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domains&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geosite:cn&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;ntp.org&quot;</span><span class="token punctuation">,</span>   <span class="token comment">// NTP 服务器</span>
+          <span class="token string">&quot;$myserver.address&quot;</span> <span class="token comment">// 此处改为你 VPS 的域名</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;8.8.8.8&quot;</span><span class="token punctuation">,</span> <span class="token comment">//非中国大陆域名使用 Google 的 DNS</span>
+        <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">53</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domains&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geosite:geolocation-!cn&quot;</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;address&quot;</span><span class="token operator">:</span> <span class="token string">&quot;1.1.1.1&quot;</span><span class="token punctuation">,</span> <span class="token comment">//非中国大陆域名使用 Cloudflare 的 DNS</span>
+        <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">53</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domains&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geosite:geolocation-!cn&quot;</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;routing&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;domainStrategy&quot;</span><span class="token operator">:</span> <span class="token string">&quot;IPOnDemand&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;rules&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span> <span class="token comment">// 劫持 53 端口 UDP 流量，使用 V2Ray 的 DNS</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;inboundTag&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;transparent&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">53</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;network&quot;</span><span class="token operator">:</span> <span class="token string">&quot;udp&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;dns-out&quot;</span> 
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>    
+      <span class="token punctuation">{</span> <span class="token comment">// 直连 123 端口 UDP 流量（NTP 协议）</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;inboundTag&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;transparent&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">123</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;network&quot;</span><span class="token operator">:</span> <span class="token string">&quot;udp&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span> 
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>    
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span> 
+        <span class="token property">&quot;ip&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span> 
+          <span class="token comment">// 设置 DNS 配置中的国内 DNS 服务器地址直连，以达到 DNS 分流目的</span>
+          <span class="token string">&quot;223.5.5.5&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;114.114.114.114&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;ip&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span> 
+          <span class="token comment">// 设置 DNS 配置中的国外 DNS 服务器地址走代理，以达到 DNS 分流目的</span>
+          <span class="token string">&quot;8.8.8.8&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;1.1.1.1&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;proxy&quot;</span> <span class="token comment">// 改为你自己代理的出站 tag</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> <span class="token comment">// 广告拦截</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span> 
+        <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geosite:category-ads-all&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;block&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> <span class="token comment">// BT 流量直连</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">&quot;bittorrent&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> <span class="token comment">// 直连中国大陆主流网站 ip 和 保留 ip</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span> 
+        <span class="token property">&quot;ip&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geoip:private&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;geoip:cn&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> <span class="token comment">// 直连中国大陆主流网站域名</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span> 
+        <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geosite:cn&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>以上是 V2Ray 透明代理的参考配置，关于配置有一些注意点及说明:</p> <ul><li>dokodemo-door 是用来接收透明代理的入站协议，followRedirect 项须为 true 以及 sockopt.tproxy 项须为 tproxy，建议开启 snifing，否则路由无法匹配域名；</li> <li>本节添加了 DNS 配置，用来对国内外域名进行 DNS 分流，需要 <code>DNS 配置</code>、<code>DNS 入站</code>、<code>DNS 出站</code>和<code>路由</code>四者配合，在本例中 DNS 入站直接使用透明代理入站，可参考<a href="https://steemit.com/cn/@v2ray/dns" target="_blank" rel="noopener noreferrer">DNS 及其应用<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>；</li> <li>在 DNS 配置中，依次配置了 Google、Cloudflare、114 和阿里的 DNS，由于在阿里的 DNS 中指定了 domain，所以匹配的域名会用阿里的 DNS 查询，其他的先查询 Google 的 DNS，如果查不到的话再依次查 Cloudflare 及 114 的。所以达到了国内外域名 DNS 分流，以及 DNS 备用。要注意把 NTP 服务器和你自己 VPS 域名也加入到直连的 DNS，否则会导致 V2Ray 无法与 VPS 正常连接；</li> <li>DNS 配置只是说明哪些域名查哪个 DNS，至于哪个 DNS 走代理哪个 DNS 直连要在 routing 里设置规则；</li> <li>routing 也要设置 123 端口的 UDP 流量直连，不然的话要是时间误差超出允许范围(90s)，要使用 NTP 校准时间就要先连上代理，但是连代理又要确保时间准确，结果就是既连不上代理，也无法自动校准时间；</li> <li>freedom 的出站设置 domainStrategy 为 UseIP，以避免直连时因为使用本机的 DNS 出现一些奇怪问题；</li> <li>注意要在 dokodemo inbound 和所有的 outbound 加一个 255 的 mark，这个 mark 与下文 iptables 命令中 <code>iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff</code> 配合，以直连 V2Ray 发出的流量（blackhole 可以不配置 mark）。</li></ul> <h3 id="配置透明代理规则"><a href="#配置透明代理规则" class="header-anchor">#</a> 配置透明代理规则</h3> <p>此部分分为 iptables 和 nftables，两者作用相同，择其一即可。</p> <h4 id="iptables-规则"><a href="#iptables-规则" class="header-anchor">#</a> iptables 规则</h4> <p>执行下面的命令开启透明代理。由于使用了 TPROXY 方式的透明代理，所以 TCP 流量也是使用 mangle 表。以下命令中，以 <code>#</code> 开头的为注释。</p> <div class="language-plain extra-class"><pre class="language-plain"><code># 设置策略路由
+ip rule add fwmark 1 table 100 
+ip route add local 0.0.0.0/0 dev lo table 100
+
+# 代理局域网设备
+iptables -t mangle -N V2RAY
+iptables -t mangle -A V2RAY -d 127.0.0.1/32 -j RETURN
+iptables -t mangle -A V2RAY -d 224.0.0.0/4 -j RETURN 
+iptables -t mangle -A V2RAY -d 255.255.255.255/32 -j RETURN 
+iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p tcp -j RETURN # 直连局域网，避免 V2Ray 无法启动时无法连网关的 SSH，如果你配置的是其他网段（如 10.x.x.x 等），则修改成自己的
+iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN # 直连局域网，53 端口除外（因为要使用 V2Ray 的 DNS)
+iptables -t mangle -A V2RAY -j RETURN -m mark --mark 0xff    # 直连 SO_MARK 为 0xff 的流量(0xff 是 16 进制数，数值上等同与上面V2Ray 配置的 255)，此规则目的是解决v2ray占用大量CPU（https://github.com/v2ray/v2ray-core/issues/2621）
+iptables -t mangle -A V2RAY -p udp -j TPROXY --on-ip 127.0.0.1 --on-port 12345 --tproxy-mark 1 # 给 UDP 打标记 1，转发至 12345 端口
+iptables -t mangle -A V2RAY -p tcp -j TPROXY --on-ip 127.0.0.1 --on-port 12345 --tproxy-mark 1 # 给 TCP 打标记 1，转发至 12345 端口
+iptables -t mangle -A PREROUTING -j V2RAY # 应用规则
+
+# 代理网关本机
+iptables -t mangle -N V2RAY_MASK 
+iptables -t mangle -A V2RAY_MASK -d 224.0.0.0/4 -j RETURN 
+iptables -t mangle -A V2RAY_MASK -d 255.255.255.255/32 -j RETURN 
+iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p tcp -j RETURN # 直连局域网
+iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN # 直连局域网，53 端口除外（因为要使用 V2Ray 的 DNS）
+iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff    # 直连 SO_MARK 为 0xff 的流量(0xff 是 16 进制数，数值上等同与上面V2Ray 配置的 255)，此规则目的是避免代理本机(网关)流量出现回环问题
+iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 1   # 给 UDP 打标记，重路由
+iptables -t mangle -A V2RAY_MASK -p tcp -j MARK --set-mark 1   # 给 TCP 打标记，重路由
+iptables -t mangle -A OUTPUT -j V2RAY_MASK # 应用规则
+
+# 新建 DIVERT 规则，避免已有连接的包二次通过 TPROXY，理论上有一定的性能提升
+iptables -t mangle -N DIVERT
+iptables -t mangle -A DIVERT -j MARK --set-mark 1
+iptables -t mangle -A DIVERT -j ACCEPT
+iptables -t mangle -I PREROUTING -p tcp -m socket -j DIVERT
+</code></pre></div><p>执行了以上 ip 和 iptables 命令后，局域网同网段的设备以及网关本身就可以直接翻墙了。</p> <p>关于 iptables 规则，比较容易理解，如果不太理解的话也可以 Google 搜索其他相关文章资料对比学习。在类 ss-redir 透明代理中，有两个观点非常深入人心：</p> <div class="language-plain extra-class"><pre class="language-plain"><code>1. UDP 只能 TPROXY
+2. TPROXY 不能用于 OUTPUT 链
+</code></pre></div><p>然后我们从这两个观点很容易得出一个推论：<strong>无法在提供透明代理的本机(即本例中的网关)上对 UDP 透明代理</strong>。
+这个结论好像并没有什么问题，对吧？但实际上，在本例的配置中无论是 TCP 还是 UDP，都可以实现在本机上的透明代理，而且都是用 TPROXY。那好像又跟前面的结论矛盾了？其实关键在于这三句命令：</p> <div class="language- extra-class"><pre class="language-text"><code>iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 1
+iptables -t mangle -A V2RAY_MASK -p tcp -j MARK --set-mark 1
+iptables -t mangle -A OUTPUT -j V2RAY_MASK
+</code></pre></div><p>这几句是说给 OUTPUT 链的 TCP 和 UDP 打个标记 1(OUTPUT 应用 V2RAY_MASK 链)。由于 Netfilter 的特性，在 OUTPUT 链打标记会使相应的包重路由到 PREROUTING 链上，在已经配置好了 PREROUTING 相关的透明代理的情况下，OUTPUT 链也可以透明代理了，也就是网关对自身的 UDP 流量透明代理自身（当然 TCP 也不在话下）。因为这是 netfilter 本身的特性，Shadowsocks 应该也可以用同样的方法对本机的 UDP 透明代理，但我没有实际测试过效果。</p> <h4 id="nftables-规则"><a href="#nftables-规则" class="header-anchor">#</a> nftables 规则</h4> <p>nftables 与 iptables 同样基于 netfilter 框架，早在 2014 年就引入 Linux 内核中，旨在改进 iptables 的一些问题并且将之替换。目前有不少 Linux 发行版默认网络过滤以 nftables 替换了 iptables，但是直到 4.19 的 Linux 内核才有 nft_tproxy 模块，这个模块是透明代理所必须的。如果使用 nftables 配置透明代理，必须具备 nft_tproxy 和 nft_socket 模块，可通过命令 <code>lsmod | grep nft</code> 查看。尽管 nftables 是趋势，可以预见的是在相当长的时间里 iptables 仍将是主流。以下 nftables 规则仅在 Debian 11 测试通过，暂未发现问题。</p> <p>以下是 nftables 规则语句，本质与 iptables 没什么差别。</p> <div class="language-plain extra-class"><pre class="language-plain"><code># 设置策略路由
+ip rule add fwmark 1 table 100 
+ip route add local 0.0.0.0/0 dev lo table 100
+
+#代理局域网设备
+nft add table v2ray
+nft add chain v2ray prerouting { type filter hook prerouting priority 0 \; }
+nft add rule v2ray prerouting ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
+nft add rule v2ray prerouting meta l4proto tcp ip daddr 192.168.0.0/16 return
+nft add rule v2ray prerouting ip daddr 192.168.0.0/16 udp dport != 53 return
+nft add rule v2ray prerouting mark 0xff return # 直连 0xff 流量
+nft add rule v2ray prerouting meta l4proto {tcp, udp} mark set 1 tproxy to 127.0.0.1:12345 accept # 转发至 V2Ray 12345 端口
+
+# 代理网关本机
+nft add chain v2ray output { type route hook output priority 0 \; }
+nft add rule v2ray output ip daddr {127.0.0.1/32, 224.0.0.0/4, 255.255.255.255/32} return
+nft add rule v2ray output meta l4proto tcp ip daddr 192.168.0.0/16 return
+nft add rule v2ray output ip daddr 192.168.0.0/16 udp dport != 53 return
+nft add rule v2ray output mark 0xff return # 直连 0xff 流量
+nft add rule v2ray output meta l4proto {tcp, udp} mark set 1 accept # 重路由至 prerouting
+
+# DIVERT 规则
+nft add table filter
+nft add chain filter divert { type filter hook prerouting priority -150 \; }
+nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1 accept
+</code></pre></div><h2 id="开机自动运行透明代理规则"><a href="#开机自动运行透明代理规则" class="header-anchor">#</a> 开机自动运行透明代理规则</h2> <p>由于策略路由以及 iptables/nftables 有重启会失效的特性，所以当测试配置没有问题之后，需要再弄个服务在开机时自动配置策略路由和 iptables，否则每次开机的时候就要手动执行一遍。</p> <ol><li>由于 iptables 命令有点多，所以先将 iptables 规则保存到 /etc/iptables/rules.v4 中。</li></ol> <div class="language-plain extra-class"><pre class="language-plain"><code>mkdir -p /etc/iptables &amp;&amp; iptables-save &gt; /etc/iptables/rules.v4
+</code></pre></div><p>如果是 nftables，则执行：</p> <div class="language-plain extra-class"><pre class="language-plain"><code>mkdir -p /etc/nftables &amp;&amp; nft list ruleset &gt; /etc/nftables/rules.v4
+</code></pre></div><ol start="2"><li>在 /etc/systemd/system/ 目录下创建一个名为 tproxyrule.service 的文件，然后添加以下内容并保存。</li></ol> <div class="language-plain extra-class"><pre class="language-plain"><code>[Unit]
+Description=Tproxy rule
+After=network.target
+Wants=network.target
+
+[Service]
+
+Type=oneshot
+RemainAfterExit=yes
+# 注意分号前后要有空格
+ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables-restore /etc/iptables/rules.v4
+ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables -t mangle -F
+# 如果是 nftables，则改为以下命令
+# ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/nft -f /etc/nftables/rules.v4
+# ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/nft flush ruleset
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div><ol start="3"><li>执行下面的命令使 tproxyrule.service 可以开机自动运行。</li></ol> <div class="language-plain extra-class"><pre class="language-plain"><code>systemctl enable tproxyrule
+</code></pre></div><h2 id="其他"><a href="#其他" class="header-anchor">#</a> 其他</h2> <h3 id="解决-too-many-open-files-问题"><a href="#解决-too-many-open-files-问题" class="header-anchor">#</a> 解决 too many open files 问题</h3> <p>对 UDP 透明代理比较容易出现“卡住”的情况，这个时候细心的朋友可能会发现日志中出现了非常多 &quot;too many open files&quot; 的语句，这主要是受到最大文件描述符数值的限制，把这个数值往大调就好了。设置步骤如下。</p> <ol><li>修改 /etc/systemd/system/v2ray.service 文件，在 <code>[Service]</code> 下加入 <code>LimitNPROC=500</code> 和 <code>LimitNOFILE=1000000</code>，修改后的内容如下。</li></ol> <div class="language-plain extra-class"><pre class="language-plain"><code>[Unit]
+Description=V2Ray Service
+Documentation=https://www.v2fly.org/
+After=network.target nss-lookup.target
+
+[Service]
+User=nobody
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/v2ray -config /usr/local/etc/v2ray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=500
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div><ol start="2"><li>执行 <code>systemctl daemon-reload &amp;&amp; systemctl restart v2ray</code> 生效。</li></ol> <h3 id="设定网关为静态-ip"><a href="#设定网关为静态-ip" class="header-anchor">#</a> 设定网关为静态 IP</h3> <p>最好给网关设成静态 IP，以免需要重启的时 IP 发生变化。如何设置请自行探究。
+提示一下，如果你用 nmcli 命令设置静态 IP，最好先另外添加一个 connection 进行配置，配置好之后在切换到新添加的这个 connection 来。因为如果在原有的 connection 上直接修改成静态 IP <strong>可能</strong>会导致<strong>无法透明代理</strong>。</p> <h3 id="设定-dhcp"><a href="#设定-dhcp" class="header-anchor">#</a> 设定 DHCP</h3> <p>在路由器上设定 DHCP，将网关地址指向网关设备，在本文的举例中即为树莓派的 IP 192.168.1.22； DNS 随意，因为已经配置了劫持 53 端口的 UDP，当然填常规的 DNS 也更是没有问题的。</p> <h2 id="备注"><a href="#备注" class="header-anchor">#</a> 备注</h2> <ol><li>TPROXY 与 REDIRECT 是针对 TCP 而言的两种透明代理模式，两者的差异主要在于 TPROXY 可以透明代理 IPV6，而 REDIRECT 不行，本文主要是将透明代理模式改为 TPROXY 并且使用了 V2Ray 的 DNS。但我没有 IPV6 环境，无法进行测试，所以本文只适用于 IPV4。</li> <li>据了解，到目前（2020.12）为止，在所知的具备透明代理功能的翻墙工具中，TCP 透明代理方式可以使用的 TPROXY 的除 V2Ray 外只有 Trojan-Go、Trojan-rs 和 Brook。所以你要找其他资料参考的话，要注意透明代理方式，因为大多数是 REDIRECT 模式的（包括 V2Ray 官网给的示例）。</li> <li>由于设计原因，V2Ray 不支持 Full Cone 类型的 NAT，详情见<a href="https://github.com/v2ray/v2ray-core/issues/1429" target="_blank" rel="noopener noreferrer">此 Issue<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</li></ol> <h2 id="参考资料"><a href="#参考资料" class="header-anchor">#</a> 参考资料</h2> <ul><li><a href="https://steemit.com/cn/@v2ray/dns" target="_blank" rel="noopener noreferrer">DNS 及其应用<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://medium.com/@TachyonDevel/%E6%BC%AB%E8%B0%88%E5%90%84%E7%A7%8D%E9%BB%91%E7%A7%91%E6%8A%80%E5%BC%8F-dns-%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-62c50e58cbd0" target="_blank" rel="noopener noreferrer">漫谈各种黑科技式 DNS 技术在代理环境中的应用<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://powerdns.org/tproxydoc/tproxy.md.html" target="_blank" rel="noopener noreferrer">Linux transparent proxy support<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://www.v2fly.org/config/protocols/dokodemo.html#%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%A0%B7%E4%BE%8B" target="_blank" rel="noopener noreferrer">V2Ray 透明代理样例<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://en.wikipedia.org/wiki/Iptables" target="_blank" rel="noopener noreferrer">iptables - Wikipedia<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://wiki.archlinux.org/index.php/nftables" target="_blank" rel="noopener noreferrer">Nftables - Archwiki<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://www.netfilter.org/projects/nftables/manpage.html" target="_blank" rel="noopener noreferrer">Man page of NFT<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://www.kernel.org/doc/html/latest/networking/tproxy.html" target="_blank" rel="noopener noreferrer">Transparent proxy support<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://wiki.nftables.org/wiki-nftables/index.php/Supported_features_compared_to_xtables" target="_blank" rel="noopener noreferrer">Nftables wiki<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://wiki.debian.org/nftables" target="_blank" rel="noopener noreferrer">Nftables - Debian Wiki<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://koswu.github.io/2019/08/19/tproxy-config-with-nftables/" target="_blank" rel="noopener noreferrer">包的路由转圈圈<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul> <h2 id="更新历史"><a href="#更新历史" class="header-anchor">#</a> 更新历史</h2> <ul><li>2019-10-19 初版</li> <li>2019-10-25 关于配置的说明</li> <li>2019-10-26 改善 DNS 配置</li> <li>2019-10-27 改进</li> <li>2019-10-28 解释重路由</li> <li>2020-08-31 添加 DIVERT 规则</li> <li>2020-09-29 添加 iptables 规则，解决 V2Ray 占用大量 CPU 的问题</li> <li>2020-11-27 新增 nftables</li> <li>2020-11-29 修改 DNS 配置以适应 v4.27.4 修改的 DNS 匹配顺序</li> <li>2020-12-04 补充支持 TPROXY 的工具</li> <li>2020-12-06 添加 dokodemo mark 和 --on-ip 参数</li> <li>2021-01-01 修复 iptables 可能无法开机启动问题</li></ul></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/v2fly/v2ray-step-by-step/edit/transifex/zh_CN/app/tproxy.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">5/27/2020, 7:40:13 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/app/transparent_proxy.html" class="prev">
+        透明代理
+      </a></span> <span class="next"><a href="/app/reverse.html">
+        反向代理
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.11f247ac.js" defer></script><script src="/assets/js/2.e676ec79.js" defer></script><script src="/assets/js/47.5baa5d78.js" defer></script>
+  </body>
+</html>

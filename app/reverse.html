@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>反向代理 | 新 V2Ray 白话文指南</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="V2Fly 社区维护的新手向教程。">
+    
+    <link rel="preload" href="/assets/css/0.styles.1b90a7f8.css" as="style"><link rel="preload" href="/assets/js/app.11f247ac.js" as="script"><link rel="preload" href="/assets/js/2.e676ec79.js" as="script"><link rel="preload" href="/assets/js/12.4586e087.js" as="script"><link rel="prefetch" href="/assets/js/10.4ffdc970.js"><link rel="prefetch" href="/assets/js/100.7c974c86.js"><link rel="prefetch" href="/assets/js/101.5b6fce86.js"><link rel="prefetch" href="/assets/js/102.4146af1c.js"><link rel="prefetch" href="/assets/js/103.8cf25788.js"><link rel="prefetch" href="/assets/js/104.15065e7a.js"><link rel="prefetch" href="/assets/js/105.51b5ba16.js"><link rel="prefetch" href="/assets/js/106.18a4245b.js"><link rel="prefetch" href="/assets/js/11.69c155a3.js"><link rel="prefetch" href="/assets/js/13.551a7f25.js"><link rel="prefetch" href="/assets/js/14.666f2a4c.js"><link rel="prefetch" href="/assets/js/15.bec91889.js"><link rel="prefetch" href="/assets/js/16.cfa20867.js"><link rel="prefetch" href="/assets/js/17.1438f443.js"><link rel="prefetch" href="/assets/js/18.15065ed6.js"><link rel="prefetch" href="/assets/js/19.7936348c.js"><link rel="prefetch" href="/assets/js/20.597905c8.js"><link rel="prefetch" href="/assets/js/21.fb9a9186.js"><link rel="prefetch" href="/assets/js/22.7171a2fa.js"><link rel="prefetch" href="/assets/js/23.eb633efc.js"><link rel="prefetch" href="/assets/js/24.efe1076e.js"><link rel="prefetch" href="/assets/js/25.a6579cfd.js"><link rel="prefetch" href="/assets/js/26.15732875.js"><link rel="prefetch" href="/assets/js/27.5c4bccd7.js"><link rel="prefetch" href="/assets/js/28.c3ed6bfc.js"><link rel="prefetch" href="/assets/js/29.498eb96c.js"><link rel="prefetch" href="/assets/js/3.17b07f63.js"><link rel="prefetch" href="/assets/js/30.bb66ca00.js"><link rel="prefetch" href="/assets/js/31.f4e75936.js"><link rel="prefetch" href="/assets/js/32.3ff04109.js"><link rel="prefetch" href="/assets/js/33.8b071e05.js"><link rel="prefetch" href="/assets/js/34.db8006b5.js"><link rel="prefetch" href="/assets/js/35.f9c0e427.js"><link rel="prefetch" href="/assets/js/36.605f49cc.js"><link rel="prefetch" href="/assets/js/37.abd848e8.js"><link rel="prefetch" href="/assets/js/38.96ac5224.js"><link rel="prefetch" href="/assets/js/39.dc147656.js"><link rel="prefetch" href="/assets/js/4.aa294e3d.js"><link rel="prefetch" href="/assets/js/40.16b8efc5.js"><link rel="prefetch" href="/assets/js/41.7c4a98a6.js"><link rel="prefetch" href="/assets/js/42.ad8fe014.js"><link rel="prefetch" href="/assets/js/43.2ca0d0f6.js"><link rel="prefetch" href="/assets/js/44.b78f507d.js"><link rel="prefetch" href="/assets/js/45.2a2122d2.js"><link rel="prefetch" href="/assets/js/46.54c82a65.js"><link rel="prefetch" href="/assets/js/47.5baa5d78.js"><link rel="prefetch" href="/assets/js/48.32d1228b.js"><link rel="prefetch" href="/assets/js/49.ef859e66.js"><link rel="prefetch" href="/assets/js/5.3765c642.js"><link rel="prefetch" href="/assets/js/50.cc9f3854.js"><link rel="prefetch" href="/assets/js/51.dc15e1ed.js"><link rel="prefetch" href="/assets/js/52.d0f49d7a.js"><link rel="prefetch" href="/assets/js/53.3518a838.js"><link rel="prefetch" href="/assets/js/54.f0662c33.js"><link rel="prefetch" href="/assets/js/55.192fbc60.js"><link rel="prefetch" href="/assets/js/56.ed0f67e4.js"><link rel="prefetch" href="/assets/js/57.bca465b6.js"><link rel="prefetch" href="/assets/js/58.fcedf3b6.js"><link rel="prefetch" href="/assets/js/59.dfc5b378.js"><link rel="prefetch" href="/assets/js/6.c4f6085e.js"><link rel="prefetch" href="/assets/js/60.1d581ebe.js"><link rel="prefetch" href="/assets/js/61.385a5fe0.js"><link rel="prefetch" href="/assets/js/62.d1bb189d.js"><link rel="prefetch" href="/assets/js/63.999409e1.js"><link rel="prefetch" href="/assets/js/64.885cb476.js"><link rel="prefetch" href="/assets/js/65.e955dff3.js"><link rel="prefetch" href="/assets/js/66.48116b73.js"><link rel="prefetch" href="/assets/js/67.4a1543e0.js"><link rel="prefetch" href="/assets/js/68.dd3d79cb.js"><link rel="prefetch" href="/assets/js/69.e1889862.js"><link rel="prefetch" href="/assets/js/7.f9a4d79a.js"><link rel="prefetch" href="/assets/js/70.c2c9e610.js"><link rel="prefetch" href="/assets/js/71.d70dfd73.js"><link rel="prefetch" href="/assets/js/72.100533aa.js"><link rel="prefetch" href="/assets/js/73.26e6f18b.js"><link rel="prefetch" href="/assets/js/74.0650e362.js"><link rel="prefetch" href="/assets/js/75.c0156f05.js"><link rel="prefetch" href="/assets/js/76.df6ac65b.js"><link rel="prefetch" href="/assets/js/77.cd8ccde9.js"><link rel="prefetch" href="/assets/js/78.44c2e514.js"><link rel="prefetch" href="/assets/js/79.6321f68c.js"><link rel="prefetch" href="/assets/js/8.c48fcb6b.js"><link rel="prefetch" href="/assets/js/80.809b19c2.js"><link rel="prefetch" href="/assets/js/81.ca1c314f.js"><link rel="prefetch" href="/assets/js/82.693124ab.js"><link rel="prefetch" href="/assets/js/83.aa098740.js"><link rel="prefetch" href="/assets/js/84.74c5775b.js"><link rel="prefetch" href="/assets/js/85.30897b5d.js"><link rel="prefetch" href="/assets/js/86.b06cedfb.js"><link rel="prefetch" href="/assets/js/87.23131726.js"><link rel="prefetch" href="/assets/js/88.dab2ef95.js"><link rel="prefetch" href="/assets/js/89.35626385.js"><link rel="prefetch" href="/assets/js/9.73750180.js"><link rel="prefetch" href="/assets/js/90.25d56649.js"><link rel="prefetch" href="/assets/js/91.9a75ff45.js"><link rel="prefetch" href="/assets/js/92.f48516bc.js"><link rel="prefetch" href="/assets/js/93.6b879d43.js"><link rel="prefetch" href="/assets/js/94.d350b85c.js"><link rel="prefetch" href="/assets/js/95.a93da06d.js"><link rel="prefetch" href="/assets/js/96.97a4d5a7.js"><link rel="prefetch" href="/assets/js/97.9155fb6c.js"><link rel="prefetch" href="/assets/js/98.9f59c4bd.js"><link rel="prefetch" href="/assets/js/99.d2e59011.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.1b90a7f8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">新 V2Ray 白话文指南</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/app/reverse.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/app/reverse.html" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/app/reverse.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/app/reverse.html" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前言</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/" aria-current="page" class="sidebar-link">V2Ray 配置指南</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/prep/prep" class="sidebar-heading clickable"><span>开篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/basics/basics" class="sidebar-heading clickable"><span>基本篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/advanced/advanced" class="sidebar-heading clickable"><span>高级篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/app/app" class="sidebar-heading clickable open"><span>应用篇</span> <span class="arrow down"></span></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/app/transparent_proxy.html" class="sidebar-link">透明代理</a></li><li><a href="/app/tproxy.html" class="sidebar-link">透明代理(TPROXY)</a></li><li><a href="/app/reverse.html" aria-current="page" class="active sidebar-link">反向代理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/reverse.html#原理" class="sidebar-link">原理</a></li><li class="sidebar-sub-header"><a href="/app/reverse.html#配置" class="sidebar-link">配置</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/app/reverse.html#a-的配置" class="sidebar-link">A 的配置</a></li><li class="sidebar-sub-header"><a href="/app/reverse.html#b-的配置" class="sidebar-link">B 的配置</a></li></ul></li><li class="sidebar-sub-header"><a href="/app/reverse.html#访问" class="sidebar-link">访问</a></li></ul></li><li><a href="/app/reverse2.html" class="sidebar-link">反向代理 2</a></li><li><a href="/app/parent.html" class="sidebar-link">前置代理</a></li><li><a href="/app/balance.html" class="sidebar-link">负载均衡</a></li><li><a href="/app/docker-deploy-v2ray.html" class="sidebar-link">Docker 部署 V2Ray</a></li><li><a href="/app/benchmark.html" class="sidebar-link">性能测试</a></li><li><a href="/app/optimization.html" class="sidebar-link">内存优化</a></li><li><a href="/app/mtproto.html" class="sidebar-link">MTProto 代理</a></li><li><a href="/app/tinc_proxy.html" class="sidebar-link">挂载 Tinc 局域网节点</a></li><li><a href="/app/android_without_root_use_v2ray.html" class="sidebar-link">Android 免 Root 运行 core</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/routing/routing" class="sidebar-heading clickable"><span>路由</span> <span class="arrow right"></span></a> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="反向代理"><a href="#反向代理" class="header-anchor">#</a> 反向代理</h1> <p>反向代理是一个呼声比较高的功能请求，从 v2.x 版本时就有不少人询问开发者能否加入这个功能，直至 v4.0 终于推出了。反向代理的主要是用来作内网穿透，其实就是利用 VPS 访问不具有公网 IP 的内网服务器。具体的例子是，家里有一台 NAS，因为没有公网 IP，正常情况下在外面（离开了家里的网络）没法直接访问这台 NAS，但是通过反向代理就可以。如果看到这样的举例还不明白有什么用，说明你没有相关的需求，不必再折腾了。</p> <p>提到反向代理，就不得不提一下如今广为推崇的 FRP，我不欲比较两者在反向代理上孰优孰劣，我只是想提一句，V2Ray 的配置相较来说会难以理解一些，希望做好准备。</p> <h2 id="原理"><a href="#原理" class="header-anchor">#</a> 原理</h2> <p>为了易于理解，本节约定有 3 种设备，名为 A, B, C。其中 A 为不具备公网 IP 的内网服务器，运行了 NAS 或个人网盘等；B 为具有公网 IP 的服务器，如平常我们购买的 VPS；C 为想要访问 NAS 或私有网盘的设备（本节假设你已经搭建好了私有网盘，监听的端口为 80）。这 3 种的每一种设备都可以是一台或多台，我们先以每种设备都是 1 台来说明。为了能够建立反向代理连接，A 和 B 都要运行 V2Ray，C 可以不运行 V2Ray 。在设置好配置文件并运行 V2Ray 之后，反向代理中连接建立的次序为：</p> <ol><li>A 会主动向 B 发起请求，建立起一个连接；</li> <li>用户在 C 上向 B 发起请求，欲访问 A 上的私有网盘；</li> <li>B 接受 C 的请求，通过 A 向 B 建立的连接转发给 A(即 B 反向连接了 A)；</li></ol> <p>以上过程效果就相当于 C 向 A 发起请求，达到了访问 A 的私有网盘的目的。A 向 B 发起请求，A 需要一个 outbound ，B 需要一个 inbound（因为 A 的 outbound 是连接到 B 的 inbound，具备 inbound 和 outbound 的协议有 3 种：VMess, Shadowsocks 和 Socks。本节以 VMess 为例）；C 向 B 发起请求，B 还需要一个 inbound，C 不运行 V2（ B 的 inbound 要接受不是来自 V2 的流量，只能是任意门 dokodemo-door）；因为是 A 来访问最终的服务器(私有网盘)，所以 A 还需有一个 outbound，即 freedom。也就是说 A 需要两个 outbound（VMess 和 freedom），B 需要两个 inbound(VMess 和 dokodemo-door)。然后为了让 A 能够主动连接 B，A 需要配置反向代理(reverse)；同样的，为了能够让 B 反向连接 A，B 也需要配置反向代理(reverse)。最后还要配置好路由。</p> <p><img src="/assets/img/block_of_reverse-doko.6abc2d13.png" alt=""></p> <h2 id="配置"><a href="#配置" class="header-anchor">#</a> 配置</h2> <p>以下给出具体配置，请结合原理部分的描述进行理解。</p> <h3 id="a-的配置"><a href="#a-的配置" class="header-anchor">#</a> A 的配置</h3> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>  
+  <span class="token property">&quot;reverse&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span> 
+    <span class="token comment">// 这是 A 的反向代理设置，必须有下面的 bridges 对象</span>
+    <span class="token property">&quot;bridges&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+      <span class="token punctuation">{</span>  
+        <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span><span class="token string">&quot;bridge&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 关于 A 的反向代理标签，在路由中会用到</span>
+        <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span><span class="token string">&quot;private.cloud.com&quot;</span> <span class="token comment">// A 和 B 反向代理通信的域名，可以自己取一个，可以不是自己购买的域名，但必须跟下面 B 中的 reverse 配置的域名一致</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;outbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>  
+      <span class="token comment">//A连接B的outbound  </span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span><span class="token string">&quot;tunnel&quot;</span><span class="token punctuation">,</span> <span class="token comment">// A 连接 B 的 outbound 的标签，在路由中会用到</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span><span class="token string">&quot;vmess&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span>  
+        <span class="token property">&quot;vnext&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token punctuation">{</span>  
+            <span class="token property">&quot;address&quot;</span><span class="token operator">:</span><span class="token string">&quot;serveraddr.com&quot;</span><span class="token punctuation">,</span> <span class="token comment">// B 地址，IP 或 实际的域名</span>
+            <span class="token property">&quot;port&quot;</span><span class="token operator">:</span><span class="token number">16823</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;users&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+              <span class="token punctuation">{</span>  
+                <span class="token property">&quot;id&quot;</span><span class="token operator">:</span><span class="token string">&quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;</span><span class="token punctuation">,</span>
+                <span class="token property">&quot;alterId&quot;</span><span class="token operator">:</span><span class="token number">64</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 另一个 outbound，最终连接私有网盘    </span>
+    <span class="token punctuation">{</span>  
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span><span class="token string">&quot;freedom&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span>  
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span><span class="token string">&quot;out&quot;</span>
+    <span class="token punctuation">}</span>    
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;routing&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span>   
+    <span class="token property">&quot;rules&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+      <span class="token punctuation">{</span>  
+        <span class="token comment">// 配置 A 主动连接 B 的路由规则</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span><span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;inboundTag&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token string">&quot;bridge&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token string">&quot;full:private.cloud.com&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span><span class="token string">&quot;tunnel&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>  
+        <span class="token comment">// 反向连接访问私有网盘的规则</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span><span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;inboundTag&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token string">&quot;bridge&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span><span class="token string">&quot;out&quot;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="b-的配置"><a href="#b-的配置" class="header-anchor">#</a> B 的配置</h3> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>  
+  <span class="token property">&quot;reverse&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span>  <span class="token comment">//这是 B 的反向代理设置，必须有下面的 portals 对象</span>
+    <span class="token property">&quot;portals&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+      <span class="token punctuation">{</span>  
+        <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span><span class="token string">&quot;portal&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span><span class="token string">&quot;private.cloud.com&quot;</span>        <span class="token comment">// 必须和上面 A 设定的域名一样</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;inbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>  
+      <span class="token comment">// 接受 C 的inbound</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span><span class="token string">&quot;external&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 标签，路由中用到</span>
+      <span class="token property">&quot;port&quot;</span><span class="token operator">:</span><span class="token number">80</span><span class="token punctuation">,</span>
+      <span class="token comment">// 开放 80 端口，用于接收外部的 HTTP 访问 </span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span><span class="token string">&quot;dokodemo-door&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span>  
+          <span class="token property">&quot;address&quot;</span><span class="token operator">:</span><span class="token string">&quot;127.0.0.1&quot;</span><span class="token punctuation">,</span>
+          <span class="token property">&quot;port&quot;</span><span class="token operator">:</span><span class="token number">80</span><span class="token punctuation">,</span> <span class="token comment">//假设 NAS 监听的端口为 80</span>
+          <span class="token property">&quot;network&quot;</span><span class="token operator">:</span><span class="token string">&quot;tcp&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 另一个 inbound，接受 A 主动发起的请求  </span>
+    <span class="token punctuation">{</span>  
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tunnel&quot;</span><span class="token punctuation">,</span><span class="token comment">// 标签，路由中用到</span>
+      <span class="token property">&quot;port&quot;</span><span class="token operator">:</span><span class="token number">16823</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;protocol&quot;</span><span class="token operator">:</span><span class="token string">&quot;vmess&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;settings&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span>  
+        <span class="token property">&quot;clients&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token punctuation">{</span>  
+            <span class="token property">&quot;id&quot;</span><span class="token operator">:</span><span class="token string">&quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;alterId&quot;</span><span class="token operator">:</span><span class="token number">64</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;routing&quot;</span><span class="token operator">:</span><span class="token punctuation">{</span>  
+    <span class="token property">&quot;rules&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+      <span class="token punctuation">{</span>  <span class="token comment">//路由规则，接收 C 请求后发给 A</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span><span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;inboundTag&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token string">&quot;external&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span><span class="token string">&quot;portal&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>  <span class="token comment">//路由规则，让 B 能够识别这是 A 主动发起的反向代理连接</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span><span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;inboundTag&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token string">&quot;tunnel&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span><span class="token punctuation">[</span>  
+          <span class="token string">&quot;full:private.cloud.com&quot;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span><span class="token string">&quot;portal&quot;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="访问"><a href="#访问" class="header-anchor">#</a> 访问</h2> <p>配置好 A 和 B 的 V2Ray 配置后，先后运行 A 和 B 的 V2Ray，同时搭建在 A 私有网盘也要运行。然后 C 接入跟 A 不同的网络（比如说到邻居家蹭网），用浏览器访问 B 的 IP 或域名，这时就能内网穿透访问私有网盘了。</p> <h4 id="更新历史"><a href="#更新历史" class="header-anchor">#</a> 更新历史</h4> <ul><li>2018-10-31 初版</li> <li>2019-01-13 V4.0+ 配置格式</li></ul></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/v2fly/v2ray-step-by-step/edit/transifex/zh_CN/app/reverse.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">5/27/2020, 7:40:13 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/app/tproxy.html" class="prev">
+        透明代理(TPROXY)
+      </a></span> <span class="next"><a href="/app/reverse2.html">
+        反向代理 2
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.11f247ac.js" defer></script><script src="/assets/js/2.e676ec79.js" defer></script><script src="/assets/js/12.4586e087.js" defer></script>
+  </body>
+</html>

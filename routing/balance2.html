@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>负载均衡 2 | 新 V2Ray 白话文指南</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="V2Fly 社区维护的新手向教程。">
+    
+    <link rel="preload" href="/assets/css/0.styles.1b90a7f8.css" as="style"><link rel="preload" href="/assets/js/app.11f247ac.js" as="script"><link rel="preload" href="/assets/js/2.e676ec79.js" as="script"><link rel="preload" href="/assets/js/101.5b6fce86.js" as="script"><link rel="prefetch" href="/assets/js/10.4ffdc970.js"><link rel="prefetch" href="/assets/js/100.7c974c86.js"><link rel="prefetch" href="/assets/js/102.4146af1c.js"><link rel="prefetch" href="/assets/js/103.8cf25788.js"><link rel="prefetch" href="/assets/js/104.15065e7a.js"><link rel="prefetch" href="/assets/js/105.51b5ba16.js"><link rel="prefetch" href="/assets/js/106.18a4245b.js"><link rel="prefetch" href="/assets/js/11.69c155a3.js"><link rel="prefetch" href="/assets/js/12.4586e087.js"><link rel="prefetch" href="/assets/js/13.551a7f25.js"><link rel="prefetch" href="/assets/js/14.666f2a4c.js"><link rel="prefetch" href="/assets/js/15.bec91889.js"><link rel="prefetch" href="/assets/js/16.cfa20867.js"><link rel="prefetch" href="/assets/js/17.1438f443.js"><link rel="prefetch" href="/assets/js/18.15065ed6.js"><link rel="prefetch" href="/assets/js/19.7936348c.js"><link rel="prefetch" href="/assets/js/20.597905c8.js"><link rel="prefetch" href="/assets/js/21.fb9a9186.js"><link rel="prefetch" href="/assets/js/22.7171a2fa.js"><link rel="prefetch" href="/assets/js/23.eb633efc.js"><link rel="prefetch" href="/assets/js/24.efe1076e.js"><link rel="prefetch" href="/assets/js/25.a6579cfd.js"><link rel="prefetch" href="/assets/js/26.15732875.js"><link rel="prefetch" href="/assets/js/27.5c4bccd7.js"><link rel="prefetch" href="/assets/js/28.c3ed6bfc.js"><link rel="prefetch" href="/assets/js/29.498eb96c.js"><link rel="prefetch" href="/assets/js/3.17b07f63.js"><link rel="prefetch" href="/assets/js/30.bb66ca00.js"><link rel="prefetch" href="/assets/js/31.f4e75936.js"><link rel="prefetch" href="/assets/js/32.3ff04109.js"><link rel="prefetch" href="/assets/js/33.8b071e05.js"><link rel="prefetch" href="/assets/js/34.db8006b5.js"><link rel="prefetch" href="/assets/js/35.f9c0e427.js"><link rel="prefetch" href="/assets/js/36.605f49cc.js"><link rel="prefetch" href="/assets/js/37.abd848e8.js"><link rel="prefetch" href="/assets/js/38.96ac5224.js"><link rel="prefetch" href="/assets/js/39.dc147656.js"><link rel="prefetch" href="/assets/js/4.aa294e3d.js"><link rel="prefetch" href="/assets/js/40.16b8efc5.js"><link rel="prefetch" href="/assets/js/41.7c4a98a6.js"><link rel="prefetch" href="/assets/js/42.ad8fe014.js"><link rel="prefetch" href="/assets/js/43.2ca0d0f6.js"><link rel="prefetch" href="/assets/js/44.b78f507d.js"><link rel="prefetch" href="/assets/js/45.2a2122d2.js"><link rel="prefetch" href="/assets/js/46.54c82a65.js"><link rel="prefetch" href="/assets/js/47.5baa5d78.js"><link rel="prefetch" href="/assets/js/48.32d1228b.js"><link rel="prefetch" href="/assets/js/49.ef859e66.js"><link rel="prefetch" href="/assets/js/5.3765c642.js"><link rel="prefetch" href="/assets/js/50.cc9f3854.js"><link rel="prefetch" href="/assets/js/51.dc15e1ed.js"><link rel="prefetch" href="/assets/js/52.d0f49d7a.js"><link rel="prefetch" href="/assets/js/53.3518a838.js"><link rel="prefetch" href="/assets/js/54.f0662c33.js"><link rel="prefetch" href="/assets/js/55.192fbc60.js"><link rel="prefetch" href="/assets/js/56.ed0f67e4.js"><link rel="prefetch" href="/assets/js/57.bca465b6.js"><link rel="prefetch" href="/assets/js/58.fcedf3b6.js"><link rel="prefetch" href="/assets/js/59.dfc5b378.js"><link rel="prefetch" href="/assets/js/6.c4f6085e.js"><link rel="prefetch" href="/assets/js/60.1d581ebe.js"><link rel="prefetch" href="/assets/js/61.385a5fe0.js"><link rel="prefetch" href="/assets/js/62.d1bb189d.js"><link rel="prefetch" href="/assets/js/63.999409e1.js"><link rel="prefetch" href="/assets/js/64.885cb476.js"><link rel="prefetch" href="/assets/js/65.e955dff3.js"><link rel="prefetch" href="/assets/js/66.48116b73.js"><link rel="prefetch" href="/assets/js/67.4a1543e0.js"><link rel="prefetch" href="/assets/js/68.dd3d79cb.js"><link rel="prefetch" href="/assets/js/69.e1889862.js"><link rel="prefetch" href="/assets/js/7.f9a4d79a.js"><link rel="prefetch" href="/assets/js/70.c2c9e610.js"><link rel="prefetch" href="/assets/js/71.d70dfd73.js"><link rel="prefetch" href="/assets/js/72.100533aa.js"><link rel="prefetch" href="/assets/js/73.26e6f18b.js"><link rel="prefetch" href="/assets/js/74.0650e362.js"><link rel="prefetch" href="/assets/js/75.c0156f05.js"><link rel="prefetch" href="/assets/js/76.df6ac65b.js"><link rel="prefetch" href="/assets/js/77.cd8ccde9.js"><link rel="prefetch" href="/assets/js/78.44c2e514.js"><link rel="prefetch" href="/assets/js/79.6321f68c.js"><link rel="prefetch" href="/assets/js/8.c48fcb6b.js"><link rel="prefetch" href="/assets/js/80.809b19c2.js"><link rel="prefetch" href="/assets/js/81.ca1c314f.js"><link rel="prefetch" href="/assets/js/82.693124ab.js"><link rel="prefetch" href="/assets/js/83.aa098740.js"><link rel="prefetch" href="/assets/js/84.74c5775b.js"><link rel="prefetch" href="/assets/js/85.30897b5d.js"><link rel="prefetch" href="/assets/js/86.b06cedfb.js"><link rel="prefetch" href="/assets/js/87.23131726.js"><link rel="prefetch" href="/assets/js/88.dab2ef95.js"><link rel="prefetch" href="/assets/js/89.35626385.js"><link rel="prefetch" href="/assets/js/9.73750180.js"><link rel="prefetch" href="/assets/js/90.25d56649.js"><link rel="prefetch" href="/assets/js/91.9a75ff45.js"><link rel="prefetch" href="/assets/js/92.f48516bc.js"><link rel="prefetch" href="/assets/js/93.6b879d43.js"><link rel="prefetch" href="/assets/js/94.d350b85c.js"><link rel="prefetch" href="/assets/js/95.a93da06d.js"><link rel="prefetch" href="/assets/js/96.97a4d5a7.js"><link rel="prefetch" href="/assets/js/97.9155fb6c.js"><link rel="prefetch" href="/assets/js/98.9f59c4bd.js"><link rel="prefetch" href="/assets/js/99.d2e59011.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.1b90a7f8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">新 V2Ray 白话文指南</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/routing/balance2.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/routing/balance2.html" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="https://v2fly.org" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  官方手册
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/routing/balance2.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en_US/routing/balance2.html" class="nav-link">
+  en-US
+</a></li></ul></div></div> <a href="https://github.com/v2fly/v2ray-step-by-step" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>前言</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/" aria-current="page" class="sidebar-link">V2Ray 配置指南</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/prep/prep" class="sidebar-heading clickable"><span>开篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/basics/basics" class="sidebar-heading clickable"><span>基本篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/advanced/advanced" class="sidebar-heading clickable"><span>高级篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/app/app" class="sidebar-heading clickable"><span>应用篇</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/routing/routing" class="sidebar-heading clickable open"><span>路由</span> <span class="arrow down"></span></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/routing/sitedata.html" class="sidebar-link">域名文件</a></li><li><a href="/routing/bittorrent.html" class="sidebar-link">禁用 BT</a></li><li><a href="/routing/balance2.html" aria-current="page" class="active sidebar-link">负载均衡 2</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/routing/balance2.html#配置" class="sidebar-link">配置</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="负载均衡-2"><a href="#负载均衡-2" class="header-anchor">#</a> 负载均衡 2</h1> <p>在前面的章节当中有提到过利用 V2Ray 的一个特性来实现负载均衡。但是由于这种负载均衡是投机取巧利用配置实现的，最终的效果不尽如人意，也就在特殊情况下用一用而已，也有人认为这种轮询的机制压根算不上负载均衡。不过经过漫长的等待，V2Ray 终于可均衡负载了，但是可能 V2Ray 认为时机还不成熟，官方文档上并没有负载均衡方面的描述。我研究了一番源代码，粗略测试了几分钟，V2Ray v4.3 版本可以均衡负载了，于是放出本篇教程给大伙尝尝鲜。</p> <h2 id="配置"><a href="#配置" class="header-anchor">#</a> 配置</h2> <p>负载均衡的配置位于 routing 字段，仅需在客户端上配置即可。在 routing 当中，配置一个 balancers 数组,代表这负载均衡的规则，每一个对象包含负载均衡唯一的标签，均衡策略(目前的策略好像只有随机选择)以及可选择的出站代理。然后在路由规则中根据需要配置特定的流量进行负载均衡。在本例中，最后一个路由规则为负载均衡。根据示例可以知道目的地址是私有 IP 或中国大陆的流量直连，其余的所有流量是负载均衡 b1(即 在 jp1 和 jp2 两者之间选择)。本例中没有使用到 b2 的负载均衡。</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+
+  <span class="token property">&quot;inbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    ...
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;outbounds&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;us1&quot;</span><span class="token punctuation">,</span>
+      ...
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;jp1&quot;</span><span class="token punctuation">,</span>
+      ...
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;jp2&quot;</span><span class="token punctuation">,</span>
+      ...
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;hk1&quot;</span><span class="token punctuation">,</span>
+      ...
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span><span class="token punctuation">,</span>
+      ...
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;routing&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;domainStrategy&quot;</span><span class="token operator">:</span> <span class="token string">&quot;IPOnDemand&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;balancers&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;b1&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;selector&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;jp1&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;jp2&quot;</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;tag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;b2&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;selector&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;us1&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;hk1&quot;</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;rules&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;ip&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geoip:private&quot;</span><span class="token punctuation">,</span>
+          <span class="token string">&quot;geoip:cn&quot;</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;outboundTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;direct&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;domain&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">&quot;geosite:cn&quot;</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;field&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;network&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tcp,udp&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;balancerTag&quot;</span><span class="token operator">:</span> <span class="token string">&quot;b1&quot;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>从配置中可以看出，V2Ray 的负载均衡同样有着高度灵活的优点，可以针对指定的流量进行负载均衡，也可以按需配置多个负载均衡，不同底层传输配置的出站协议也可以负载均衡，可以说 V2Ray 的路由有多灵活那么它的负载均衡就有多灵活。</p> <p>可能是刚刚推出的原因，现在的均衡策略只有随机选择，随着时间的推进应该会陆续有其他的策略。</p> <h4 id="更新历史"><a href="#更新历史" class="header-anchor">#</a> 更新历史</h4> <ul><li>2018-11-09 初版</li> <li>2019-11-01 修正某些情况下 IP 规则无法匹配</li></ul></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/v2fly/v2ray-step-by-step/edit/transifex/zh_CN/routing/balance2.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">5/27/2020, 7:38:01 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/routing/bittorrent.html" class="prev">
+        禁用 BT
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.11f247ac.js" defer></script><script src="/assets/js/2.e676ec79.js" defer></script><script src="/assets/js/101.5b6fce86.js" defer></script>
+  </body>
+</html>
