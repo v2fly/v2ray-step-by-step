@@ -126,8 +126,7 @@ v2ctl api --server=127.0.0.1:10085 StatsService.GetStats \
 注意如果在 Windows 的 CMD 内运行，里面的引号要特别处理：
 
 ```cmd
-v2ctl.exe api --server="127.0.0.1:10085" StatsService.GetStats \
-  "name: """"inbound>>>statin>>>traffic>>>downlink"""" reset: false"
+v2ctl.exe api --server="127.0.0.1:10085" StatsService.GetStats "name: """"inbound>>>statin>>>traffic>>>downlink"""" reset: false"
 ```
 
 输出例子：
