@@ -112,13 +112,11 @@ V2Ray 内包含了流量记录器功能，但是默认并不启用。流量统�
 * `GetStats` 用来其中一个的记录，接受 `name` 和 `reset`，name 可参考 QueryStats 的输出结果构建，reset 使该单元数值置零。
 
 ```bash
-v2ctl api --server=127.0.0.1:10085 StatsService.QueryStats \
-  'pattern: "" reset: false'
+v2ctl api --server=127.0.0.1:10085 StatsService.QueryStats 'pattern: "" reset: false'
 ```
 
 ```bash
-v2ctl api --server=127.0.0.1:10085 StatsService.GetStats \
-  'name: "inbound>>>api>>>traffic>>>downlink" reset: false'
+v2ctl api --server=127.0.0.1:10085 StatsService.GetStats 'name: "inbound>>>api>>>traffic>>>downlink" reset: false'
 ```
 
 *注：GetStats 参数 name 需做修改，可选值为 QueryStats 的结果。*
