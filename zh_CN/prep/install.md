@@ -39,13 +39,15 @@ Sun 22 Jan 16:16:23 GMT 2017
 执行命令：`su`
 之后输入管理员密码（此处的密码是默认隐藏的，不要以为没打上去）。
 
-执行以后命令行形如：
+切换成 root 账户后 后命令行形如：
 
 ```console
 user@host:~$ su
 Password: 
 root@host:/home/user# 
 ```
+
+某些云服务器默认不提供root的密码，只提供了管理员(`sudoer`)级的账户。这时可尝试`sudo su -`来切换成 root 账户。
 
 -----
 
