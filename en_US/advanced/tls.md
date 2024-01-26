@@ -65,6 +65,14 @@ $ sudo apt-get -y install netcat
 
 ### Generate certificate with acme.sh
 
+#### Register your account
+
+Use the following command to register you email first:
+
+```bash
+ ~/.acme.sh/acme.sh --register-account -m your_email@mydomain.me 
+```
+
 #### Generate Certificate
 
 To generate certificate, simply run the following command:
@@ -126,6 +134,7 @@ $ sudo ~/.acme.sh/acme.sh --renew -d mydomain.com --force
 
 Place certificate and private key into `/etc/v2ray` folder:
 ```
+$ sudo mkdir -p /etc/v2ray
 $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
 ```
 
@@ -141,6 +150,24 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
 
 ### Server-side configuration
 
+If you have read an older document, you probably saw `alterId` in the config. You should not set "alterId", per https://github.com/miladrahimi/v2ray-docker-compose/issues/57
+
+Some clients might have an alterId as a mandatory field. In this situation, put `0`.
+
+To know where to put the server side config file, run the command
+
+```bash
+systemctl status v2ray
+```
+
+This command will reveal the commandline used to launch v2ray:
+
+```bash
+/usr/local/bin/v2ray run -config /usr/local/etc/v2ray/config.json
+```
+
+Use the following for `/usr/local/etc/v2ray/config.json`
+
 ```json
 {
   "inbounds": [
@@ -151,7 +178,6 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
         "clients": [
           {
             "id": "23ad6b10-8d1a-40f7-8ad0-e3e35cd38297",  
-            "alterId": 64
           }
         ]
       },
@@ -177,6 +203,34 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
   ]
 }
 ```
+
+Then, restart v2ray:
+
+```bash
+systemctl restart v2ray
+systemctl status v2ray
+```
+
+If you see errors when checking its status, `cat /var/log/syslog` to see the actual errors.You will likely run into a permission issue that prevents certificate files from being loaded. This is because v2ray isn't run as the root user by default. To fix it, we need to specify the user in the systemctl service config (https://github.com/shadowsocks/v2ray-plugin/issues/54). 
+
+Run `systemctl status v2ray` to locate the service config file `/etc/systemd/system/v2ray.service`
+
+add `user=root` under [Service]:
+
+```
+[Service]
+User=root
+...
+```
+
+Then reload and verify v2ray runs.
+
+```bash
+systemctl daemon-reload
+systemctl restart v2ray
+systemctl status v2ray
+```
+
 
 ### Client-side configuraion
 
@@ -205,8 +259,7 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
             "port": 443,
             "users": [
               {
-                "id": "23ad6b10-8d1a-40f7-8ad0-e3e35cd38297",
-                "alterId": 64
+                "id": "23ad6b10-8d1a-40f7-8ad0-e3e35cd38297"
               }
             ]
           }
@@ -220,6 +273,8 @@ $ sudo ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ra
   ]
 }
 ```
+
+
 
 ## Verify
 
@@ -251,3 +306,4 @@ Here it is your certificate information. In this screenshot, we can see it is va
 - 2017-12-31 Typo fixed.
 - 2018-04-05 Update
 - 2018-11-17 Adapted for V4.0+
+- 2023-07-03 Add a few troubleshooting tips and missing steps
