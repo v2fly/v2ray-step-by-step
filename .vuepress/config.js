@@ -140,8 +140,8 @@ function i18nSidebar(locale) {
       title: i18n(locale, 'practical'),
       path: i18nPath(locale, '/app/app'),
       children: i18nPath(locale, [
-        'app/transparent_proxy',
         'app/tproxy',
+        'app/transparent_proxy',
         'app/reverse',
         'app/reverse2',
         'app/parent',
