@@ -165,6 +165,15 @@ mydomain.me
   </Location>
 </VirtualHost>
 ```
+#### Apache 配置（2.4.47及以上，无需proxy_wstunnel模块，需要proxy_http模块）
+```plain
+<Location "/ray/">
+    ProxyPass http://127.0.0.1:10000/ray/ upgrade=WebSocket
+    ProxyAddHeaders Off
+    ProxyPreserveHost On
+    RequestHeader append X-Forwarded-For %{REMOTE_ADDR}s
+  </Location>
+```
 
 ### 客户端配置
 
