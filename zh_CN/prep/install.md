@@ -56,121 +56,31 @@ root@host:/home/user#
 在 Linux 操作系统， V2Ray 的安装有脚本安装、手动安装、编译安装 3 种方式，选择其中一种即可，本指南仅提供使用使用脚本安装的方法，并仅推荐使用脚本安装，该脚本由 V2Ray 官方提供。该脚本仅可以在 Debian 系列或者支持 Systemd 的 Linux 操作系统使用。
 
 **除非你是大佬，或者能够自行处理类似 command not found 的问题，否则请你使用 Debian 8.x 以上或者 Ubuntu 16.04 以上的 Linux 系统。**
-本指南默认使用 Debian 10 系统作为示范。
 
-### 安装依赖软件
 
-首先安装脚本的依赖软件，根据你的 Linux 发行版选择以下命令。
 
-**注意：下文中需要你输入的命令均以 $ 开头，其他内容均来自系统执行命令的反馈，你可以通过比较自己屏幕上和文档中内容的异同来判断安装是否正确。**
-
-Debian/Ubuntu:
-
-```console
-$ apt update
-$ apt install curl
-```
-
-CentOS/RedHat :
-
-```console
-$ yum makecache
-$ yum install curl
-```
-
-Fedora:
-
-```console
-$ dnf makecache
-$ dnf install curl
-```
-
-openSUSE/SUSE:
-
-```console
-$ zypper refresh
-$ zypper install curl
-```
-
-### 下载安装脚本
-
-下载主程序安装脚本：
-
-```console
-$ curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
-100 21613  100 21613    0     0   8732      0  0:00:02  0:00:02 --:--:--  8736
-```
 
 ### 执行安装
+脚本地址 https://github.com/v2fly/fhs-install-v2ray
 
-安装 V2ray 主程序：
+###安裝和更新 V2Ray
 
+// 安裝執行檔和 .dat 資料檔
 ```console
-$ bash install-release.sh
-Downloading V2Ray archive: https://github.com/v2fly/v2ray-core/releases/download/v4.27.0/v2ray-linux-64.zip
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100   631  100   631    0     0    331      0  0:00:01  0:00:01 --:--:--   331
-  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
-100 12.2M  100 12.2M    0     0   841k      0  0:00:14  0:00:14 --:--:-- 1899k
-Downloading verification file for V2Ray archive: https://github.com/v2fly/v2ray-core/releases/download/v4.27.0/v2ray-linux-64.zip.dgst
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100   636  100   636    0     0    294      0  0:00:02  0:00:02 --:--:--   295
-  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
-100   590  100   590    0     0    133      0  0:00:04  0:00:04 --:--:--   282
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-Suggested packages:
-  zip
-The following NEW packages will be installed:
-  unzip
-0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
-Need to get 172 kB of archives.
-After this operation, 580 kB of additional disk space will be used.
-Get:1 http://mirrors.163.com/debian buster/main amd64 unzip amd64 6.0-23+deb10u1 [172 kB]
-Fetched 172 kB in 1s (173 kB/s)   
-Selecting previously unselected package unzip.
-(Reading database ... 31383 files and directories currently installed.)
-Preparing to unpack .../unzip_6.0-23+deb10u1_amd64.deb ...
-Unpacking unzip (6.0-23+deb10u1) ...
-Setting up unzip (6.0-23+deb10u1) ...
-Processing triggers for mime-support (3.62) ...
-Processing triggers for man-db (2.8.5-2) ...
-info: unzip is installed.
-info: Extract the V2Ray package to /tmp/tmp.vk9AF2EqKA/ and prepare it for installation.
-installed: /usr/local/bin/v2ray
-installed: /usr/local/bin/v2ctl
-installed: /usr/local/share/v2ray/geoip.dat
-installed: /usr/local/share/v2ray/geosite.dat
-installed: /usr/local/etc/v2ray/00_log.json
-installed: /usr/local/etc/v2ray/01_api.json
-installed: /usr/local/etc/v2ray/02_dns.json
-installed: /usr/local/etc/v2ray/03_routing.json
-installed: /usr/local/etc/v2ray/04_policy.json
-installed: /usr/local/etc/v2ray/05_inbounds.json
-installed: /usr/local/etc/v2ray/06_outbounds.json
-installed: /usr/local/etc/v2ray/07_transport.json
-installed: /usr/local/etc/v2ray/08_stats.json
-installed: /usr/local/etc/v2ray/09_reverse.json
-installed: /var/log/v2ray/
-installed: /var/log/v2ray/access.log
-installed: /var/log/v2ray/error.log
-installed: /etc/systemd/system/v2ray.service
-installed: /etc/systemd/system/v2ray@.service
-removed: /tmp/tmp.vk9AF2EqKA/
-info: V2Ray v4.27.0 is installed.
-You may need to execute a command to remove dependent software: apt remove curl unzip
-Please execute the command: systemctl enable v2ray; systemctl start v2ray
+# bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+```
+
+
+###安裝最新發行的 geoip.dat 和 geosite.dat
+```console
+// 只更新 .dat 資料檔
+# bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+```
+
+
+###移除 V2Ray
+```console
+# bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
 ```
 
 看到类似于这样的提示就算安装成功了。如果安装不成功脚本会有提示语句，这个时候你应当按照提示除错，除错后再重新执行一遍脚本安装 V2Ray。对于错误提示如果看不懂，使用翻译软件翻译一下就好。
