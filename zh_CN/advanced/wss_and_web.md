@@ -90,7 +90,7 @@ server {
         return 404;
     }
     proxy_redirect off;
-    proxy_pass http://127.0.0.1:10000; # 假设WebSocket监听在环回地址的10000端口上
+    proxy_pass http://127.0.0.1:10000/ray; # 假设WebSocket监听在环回地址的10000端口上
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
