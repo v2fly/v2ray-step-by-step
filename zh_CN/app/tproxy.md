@@ -25,7 +25,7 @@
 
 以下是 V2Ray 透明代理的配置示例，配置文件之后有说明。
 
-```json
+```jsonc
 {
   "inbounds": [
     {
@@ -45,8 +45,7 @@
       },
       "streamSettings": {
         "sockopt": {
-          "tproxy": "tproxy", // 透明代理使用 TPROXY 方式
-          "mark":255
+          "tproxy": "tproxy" // 透明代理使用 TPROXY 方式
         }
       }
     },
@@ -225,8 +224,9 @@
 * DNS 配置只是说明哪些域名查哪个 DNS，至于哪个 DNS 走代理哪个 DNS 直连要在 routing 里设置规则；
 * routing 也要设置 123 端口的 UDP 流量直连，不然的话要是时间误差超出允许范围(90s)，要使用 NTP 校准时间就要先连上代理，但是连代理又要确保时间准确，结果就是既连不上代理，也无法自动校准时间；
 * freedom 的出站设置 domainStrategy 为 UseIP，以避免直连时因为使用本机的 DNS 出现一些奇怪问题；
-* 注意要在 dokodemo inbound 和所有的 outbound 加一个 255 的 mark，这个 mark 与下文 iptables 命令中 `iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff` 配合，以直连 V2Ray 发出的流量（blackhole 可以不配置 mark）。
-
+* 注意 SO_MASK 的语义，此处我们占用 SO_MASK 从右开始的第1和第2 bit：
+  * 第一 bit 为 1 时，表示是重新路由过来的数据包
+  * 第二 bit 为 1 时，表示是 V2Ray 发出的数据包；所以这就要求我们在所有的outbound上配置`streamSettings.sockopt.mark`为255；路由器收到这种数据包，一般直接放行走物理网络即可
 
 ### 配置透明代理规则
 
@@ -238,35 +238,49 @@
 
 ```plain
 # 设置策略路由
-ip rule add fwmark 1 table 100 
+ip rule add fwmark 0x1/0x3 table 100
 ip route add local 0.0.0.0/0 dev lo table 100
 
 # 代理局域网设备
 iptables -t mangle -N V2RAY
+# 直连 SO_MARK 第二 bit 为1的流量，此规则目的是避免代理本机(网关)流量出现回环问题
+# https://github.com/v2ray/v2ray-core/issues/2621
+iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0x2/0x2
+# 本机、多播、广播网段直接不过V2RAY转发
 iptables -t mangle -A V2RAY -d 127.0.0.1/32 -j RETURN
 iptables -t mangle -A V2RAY -d 224.0.0.0/4 -j RETURN 
-iptables -t mangle -A V2RAY -d 255.255.255.255/32 -j RETURN 
-iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p tcp -j RETURN # 直连局域网，避免 V2Ray 无法启动时无法连网关的 SSH，如果你配置的是其他网段（如 10.x.x.x 等），则修改成自己的
-iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN # 直连局域网，53 端口除外（因为要使用 V2Ray 的 DNS)
-iptables -t mangle -A V2RAY -j RETURN -m mark --mark 0xff    # 直连 SO_MARK 为 0xff 的流量(0xff 是 16 进制数，数值上等同与上面V2Ray 配置的 255)，此规则目的是解决v2ray占用大量CPU（https://github.com/v2ray/v2ray-core/issues/2621）
-iptables -t mangle -A V2RAY -p udp -j TPROXY --on-ip 127.0.0.1 --on-port 12345 --tproxy-mark 1 # 给 UDP 打标记 1，转发至 12345 端口
-iptables -t mangle -A V2RAY -p tcp -j TPROXY --on-ip 127.0.0.1 --on-port 12345 --tproxy-mark 1 # 给 TCP 打标记 1，转发至 12345 端口
-iptables -t mangle -A PREROUTING -j V2RAY # 应用规则
+iptables -t mangle -A V2RAY -d 255.255.255.255/32 -j RETURN
+# 直连局域网，避免 V2Ray 无法启动时无法连网关的 SSH，如果你配置的是其他网段，则修改成自己的
+# 53 端口除外（因为要使用 V2Ray 的 DNS 代理）
+iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p tcp ! --dport 53 -j RETURN
+iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN
+# 给 UDP 打标记 1，转发至 12345 端口
+iptables -t mangle -A V2RAY -p udp -j TPROXY --on-port 12345 --tproxy-mark 0x1/0x3
+# 给 TCP 打标记 1，转发至 12345 端口
+iptables -t mangle -A V2RAY -p tcp -j TPROXY --on-port 12345 --tproxy-mark 0x1/0x3
+# 应用规则：规则插入到 PREROUTING 链
+iptables -t mangle -A PREROUTING -j V2RAY
 
 # 代理网关本机
-iptables -t mangle -N V2RAY_MASK 
-iptables -t mangle -A V2RAY_MASK -d 224.0.0.0/4 -j RETURN 
-iptables -t mangle -A V2RAY_MASK -d 255.255.255.255/32 -j RETURN 
-iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p tcp -j RETURN # 直连局域网
-iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN # 直连局域网，53 端口除外（因为要使用 V2Ray 的 DNS）
-iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0xff    # 直连 SO_MARK 为 0xff 的流量(0xff 是 16 进制数，数值上等同与上面V2Ray 配置的 255)，此规则目的是避免代理本机(网关)流量出现回环问题
-iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 1   # 给 UDP 打标记，重路由
-iptables -t mangle -A V2RAY_MASK -p tcp -j MARK --set-mark 1   # 给 TCP 打标记，重路由
-iptables -t mangle -A OUTPUT -j V2RAY_MASK # 应用规则
+iptables -t mangle -N V2RAY_MASK
+# 直连 SO_MARK 第二 bit 为1的流量，此规则目的是避免代理本机(网关)流量出现回环问题
+iptables -t mangle -A V2RAY_MASK -j RETURN -m mark --mark 0x2/0x2
+# 本机、多播、广播网段直接不过V2RAY转发
+iptables -t mangle -A V2RAY_MASK -d 224.0.0.0/4 -j RETURN
+iptables -t mangle -A V2RAY_MASK -d 255.255.255.255/32 -j RETURN
+# 直连局域网，53 端口除外（因为要使用 V2Ray 的 DNS 代理）
+iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p tcp ! --dport 53 -j RETURN
+iptables -t mangle -A V2RAY_MASK -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN
+# 给 UDP 打标记，重路由
+iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 0x1/0x3
+# 给 TCP 打标记，重路由
+iptables -t mangle -A V2RAY_MASK -p tcp -j MARK --set-mark 0x1/0x3
+# 应用规则：规则插入到 PREROUTING 链
+iptables -t mangle -A OUTPUT -j V2RAY_MASK
 
 # 新建 DIVERT 规则，避免已有连接的包二次通过 TPROXY，理论上有一定的性能提升
 iptables -t mangle -N DIVERT
-iptables -t mangle -A DIVERT -j MARK --set-mark 1
+iptables -t mangle -A DIVERT -j MARK --set-mark 0x1/0x3
 iptables -t mangle -A DIVERT -j ACCEPT
 iptables -t mangle -I PREROUTING -p tcp -m socket -j DIVERT
 ```
@@ -281,8 +295,8 @@ iptables -t mangle -I PREROUTING -p tcp -m socket -j DIVERT
 然后我们从这两个观点很容易得出一个推论：**无法在提供透明代理的本机(即本例中的网关)上对 UDP 透明代理**。
 这个结论好像并没有什么问题，对吧？但实际上，在本例的配置中无论是 TCP 还是 UDP，都可以实现在本机上的透明代理，而且都是用 TPROXY。那好像又跟前面的结论矛盾了？其实关键在于这三句命令：
 ```
-iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 1
-iptables -t mangle -A V2RAY_MASK -p tcp -j MARK --set-mark 1
+iptables -t mangle -A V2RAY_MASK -p udp -j MARK --set-mark 0x1/0x3
+iptables -t mangle -A V2RAY_MASK -p tcp -j MARK --set-mark 0x1/0x3
 iptables -t mangle -A OUTPUT -j V2RAY_MASK
 ```
 这几句是说给 OUTPUT 链的 TCP 和 UDP 打个标记 1(OUTPUT 应用 V2RAY_MASK 链)。由于 Netfilter 的特性，在 OUTPUT 链打标记会使相应的包重路由到 PREROUTING 链上，在已经配置好了 PREROUTING 相关的透明代理的情况下，OUTPUT 链也可以透明代理了，也就是网关对自身的 UDP 流量透明代理自身（当然 TCP 也不在话下）。因为这是 netfilter 本身的特性，Shadowsocks 应该也可以用同样的方法对本机的 UDP 透明代理，但我没有实际测试过效果。
@@ -346,8 +360,8 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
   Type=oneshot
   RemainAfterExit=yes
   # 注意分号前后要有空格
-  ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables-restore /etc/iptables/rules.v4
-  ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables -t mangle -F
+  ExecStart=/sbin/ip rule add fwmark 0x1/0x3 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables-restore /etc/iptables/rules.v4
+  ExecStop=/sbin/ip rule del fwmark 0x1/0x3 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables -t mangle -F
   # 如果是 nftables，则改为以下命令
   # ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/nft -f /etc/nftables/rules.v4
   # ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/nft flush ruleset
@@ -432,3 +446,4 @@ nft add rule filter divert meta l4proto tcp socket transparent 1 meta mark set 1
 - 2020-12-04 补充支持 TPROXY 的工具
 - 2020-12-06 添加 dokodemo mark 和 --on-ip 参数
 - 2021-01-01 修复 iptables 可能无法开机启动问题
+- 2024-03-31 只占用SO_MASK从右开始第1、2 bit，防止与路由器其他使用SO_MASK的功能冲突
