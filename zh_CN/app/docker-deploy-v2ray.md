@@ -88,6 +88,26 @@ $ sudo docker run -d --name v2ray -e TZ=Asia/Shanghai -v /etc/v2ray:/etc/v2ray -
 
 另外，如果开启了动态端口，`-p` 标记可以多次使用来绑定多个端口。具体用法是在指令中再加上多个 `-p` 标记即可。
 
+## 使用 Docker Compose 部署
+如果你熟悉并了解如何使用Docker Compose, 可使用以下 `compose.yaml`部署：
+```
+version: '3.8'
+services:
+  v2fly:
+    image: 'v2fly/v2fly-core:latest'
+    container_name: v2fly
+    volumes: 
+      - /your/path/to/config:/etc/v2ray
+      - /your/path/to/log:/var/log/v2ray
+    ports:
+      - 9999:9999
+    environment:
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    command: run -c /etc/v2ray/config.json
+```
+
+
 ## 更新策略
 
 ### 手动更新
