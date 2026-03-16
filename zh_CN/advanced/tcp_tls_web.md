@@ -16,6 +16,8 @@
 
 HaProxy 监听 443 端口，处理 TLS 之后，将 HTTP 流量交由 Web 服务器处理，非 HTTP 流量交由 V2Ray 按 Vmess 处理。
 
+![Difference between TCP TLS WEB and WS TLS WEB](../resource/images/diff_between_tcp_tls_web_and_wss.png)
+
 ## 实现
 
 本次方案使用 HaProxy，Caddy/Nginx（Web 服务器的使用不是本教程的重点，可以用 httpd 等替代），V2Ray，服务器系统为 Debian 10。  
@@ -61,6 +63,10 @@ HaProxy 监听 443 端口，处理 TLS 之后，将 HTTP 流量交由 Web 服务
 
 Caddy 直接替换
 ```cfg
+example.com {
+    redir https://example.com
+}
+
 http://example.com:8080 {
     root /var/www/html
 }
@@ -68,6 +74,13 @@ http://example.com:8080 {
 
 Nginx 在 http{} 里面添加
 ```conf
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+
+  return 301 https://$host$request_uri;
+}
+
 server {
   listen 8080;
   server_name example.com;
@@ -80,6 +93,8 @@ server {
 * 实际服务请根据需要部署，也可以用 httpd 之类的替代
 
 * 似乎很多 Trojan 教程直接监听 80 端口，其实很多 HTTPS 网站 80 端口通常是重定向到 HTTPS
+
+* 注：需要配置 HTTPS 重定向，否则 acme.sh 无法更新证书。
 
 6. 修改 HaProxy 配置文件。
 
@@ -196,3 +211,5 @@ backend vmess
     * 中间人看来，该方法在建立 TLS 连接后，比 wss 少一次握手，即 TLS 建立后直接发送请求并获得响应，该行为是符合正常的 HTTPS 请求的。
     * 主动探测时，如 TLS 建立后发送 HTTP 请求，则被发给 Web 服务器按正常 HTTP 请求处理。如发送非 HTTP 请求，会被发给 V2Ray 处理，如 Vmess 认证失败，连接将被关闭，向 HTTPS 服务器发送非 HTTPS 请求，连接被关闭是正常的行为。
     * 如果您还认为存在被检测的的可能，请提出检测方法。
+
+*注：启用 CDN 可能会导致 VMESS 包被丢弃，但网页能够正常访问。可以解除 CDN 或者参考 [CDN章节](https://guide.v2fly.org/advanced/cdn.html) 解决。
